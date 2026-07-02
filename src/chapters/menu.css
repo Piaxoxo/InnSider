@@ -17,117 +17,33 @@
   max-width: 50ch;
 }
 
-/* ── Seasonal triptych ─────────────────────────────────────────────────── */
-.menu__season {
-  margin-top: clamp(2.6rem, 6vh, 4.4rem);
-}
-.menu__season-label {
-  display: block;
-  font-family: var(--sans);
-  font-size: 0.66rem;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 1.2rem;
-}
-.menu__season-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(0.8rem, 2vw, 1.6rem);
-}
-.menu__season-item {
-  position: relative;
-  border-radius: 10px;
-  overflow: hidden;
-}
-.menu__season-item .ph {
-  transition: transform 1s var(--ease-lux);
-}
-.menu__season-item:hover .ph {
-  transform: scale(1.05);
-}
-.menu__season-item figcaption {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  padding: 1.1rem 1rem 0.9rem;
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 0.95rem;
-  color: var(--warm-white);
-  background: linear-gradient(0deg, rgba(10, 9, 8, 0.8), transparent);
-}
-
 .menu__body {
   margin-top: clamp(3rem, 8vh, 6rem);
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
-  gap: clamp(2rem, 6vw, 6rem);
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: clamp(2rem, 6vw, 5rem);
   align-items: start;
 }
 
-/* ── Featured plate ────────────────────────────────────────────────────── */
-.menu__feature {
+/* ── Verified dish list ────────────────────────────────────────────────── */
+.menu__card {
   position: sticky;
-  top: 14vh;
+  top: 12vh;
 }
-.menu__feature-frame {
-  position: relative;
-  border-radius: 12px;
-  overflow: hidden;
-  isolation: isolate;
-}
-.menu__feature-media {
-  width: 100%;
-}
-.menu__feature-glow {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background: radial-gradient(60% 50% at 50% 40%, transparent 40%, rgba(10, 9, 8, 0.5) 100%);
-}
-.menu__feature-caption {
-  margin-top: 1.2rem;
-  display: flex;
-  align-items: baseline;
-  gap: 0.8rem;
-}
-.menu__pairing-label {
-  font-family: var(--sans);
-  font-size: 0.62rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--stone-dim);
-}
-.menu__pairing {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 1.1rem;
-  color: var(--gold-bright);
-}
-
-/* ── Dish list ─────────────────────────────────────────────────────────── */
 .menu__list {
   list-style: none;
 }
 .menu__row {
   width: 100%;
-  text-align: left;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 1.5rem;
-  padding: clamp(1.3rem, 3vh, 2rem) 0;
+  padding: clamp(1.2rem, 3vh, 1.9rem) 0;
   border-top: 1px solid var(--line);
-  transition: padding-left 0.5s var(--ease-lux);
 }
 .menu__list li:last-child .menu__row {
   border-bottom: 1px solid var(--line);
-}
-.menu__row.is-active {
-  padding-left: clamp(0.6rem, 1.6vw, 1.4rem);
 }
 .menu__row-tag {
   font-family: var(--sans);
@@ -135,18 +51,14 @@
   letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--gold);
-  opacity: 0.75;
+  opacity: 0.8;
 }
 .menu__row-name {
   font-family: var(--display);
   font-weight: 400;
-  font-size: clamp(1.4rem, 2.6vw, 2.1rem);
-  line-height: 1.1;
+  font-size: clamp(1.35rem, 2.4vw, 2rem);
+  line-height: 1.12;
   margin: 0.5rem 0 0.2rem;
-  color: var(--stone);
-  transition: color 0.4s var(--ease-lux);
-}
-.menu__row.is-active .menu__row-name {
   color: var(--warm-white);
 }
 .menu__row-en {
@@ -156,25 +68,72 @@
   color: var(--ink-faint);
 }
 .menu__row-note {
-  margin-top: 0.7rem;
+  margin-top: 0.6rem;
   max-width: 44ch;
   font-size: 0.92rem;
   color: var(--ink-soft);
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: max-height 0.6s var(--ease-lux), opacity 0.5s, margin-top 0.5s;
-}
-.menu__row.is-active .menu__row-note {
-  max-height: 6em;
-  opacity: 1;
 }
 .menu__row-price {
   font-family: var(--serif);
   font-size: 1.2rem;
   color: var(--gold-bright);
   white-space: nowrap;
-  padding-top: 1.6rem;
+  padding-top: 1.5rem;
+}
+.menu__lunch {
+  margin-top: clamp(1.4rem, 3vh, 2rem);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.02rem;
+  color: var(--stone);
+  max-width: 40ch;
+}
+
+/* ── Gaumenfreuden gallery (real photos, neutral captions) ─────────────── */
+.menu__plates-label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.66rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.2rem;
+}
+.menu__plates-grid {
+  column-count: 2;
+  column-gap: clamp(0.8rem, 2vw, 1.4rem);
+}
+.menu__plate {
+  position: relative;
+  break-inside: avoid;
+  margin-bottom: clamp(0.8rem, 2vw, 1.4rem);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.menu__plate .ph {
+  transition: transform 1s var(--ease-lux);
+}
+.menu__plate:hover .ph {
+  transform: scale(1.05);
+}
+.menu__plate figcaption {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 1rem 1rem 0.85rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--warm-white);
+  background: linear-gradient(0deg, rgba(10, 9, 8, 0.82), transparent);
+  transform: translateY(25%);
+  opacity: 0;
+  transition: transform 0.6s var(--ease-lux), opacity 0.5s;
+}
+.menu__plate:hover figcaption {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 .menu__foot {
@@ -189,19 +148,18 @@
   .menu__body {
     grid-template-columns: 1fr;
   }
-  .menu__season-grid {
-    grid-template-columns: 1fr;
-    max-width: 460px;
-  }
-  .menu__feature {
+  .menu__card {
     position: relative;
     top: 0;
+  }
+}
+@media (max-width: 520px) {
+  .menu__plates-grid {
+    column-count: 1;
     max-width: 460px;
   }
-  /* On mobile the note is always shown for tapability. */
-  .menu__row-note {
-    max-height: 6em;
+  .menu__plate figcaption {
+    transform: translateY(0);
     opacity: 1;
-    margin-top: 0.7rem;
   }
 }

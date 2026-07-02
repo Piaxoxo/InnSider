@@ -38,7 +38,7 @@ export function Bar() {
 
           <figure className="bar__portrait">
             <Placeholder slot={media.barServer} />
-            <figcaption>The room in good hands.</figcaption>
+            <figcaption>Das Lokal in guten Händen.</figcaption>
           </figure>
         </div>
 

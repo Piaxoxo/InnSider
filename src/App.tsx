@@ -56,7 +56,7 @@ export default function App() {
   return (
     <>
       <a className="skip-link" href="#dream">
-        Skip to content
+        Zum Inhalt springen
       </a>
 
       <Atmosphere />

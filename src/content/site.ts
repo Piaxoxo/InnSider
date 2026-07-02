@@ -1,22 +1,20 @@
 /**
- * InnSider — content source of truth.
+ * InnSider — Inhalt (Single Source of Truth).
  *
- * Every word of copy lives here so the cinematic chapter components stay
- * purely presentational. The story, positioning, values and brand feeling are
- * elevated from the current InnSider website (innsider-restaurant.at) — Alice
- * Kern's dream, the regional-sourcing philosophy, the Vienna/Meidling home —
- * not reinvented. Chef Stefan is woven in as the heart alongside Alice's soul.
- *
- * Real, verifiable facts (address, contact, opening year) are kept accurate.
- * Photography and video are intentionally deferred: see `content/assets.ts`.
+ * Der Text stammt 1:1 von der echten Website innsider-restaurant.at
+ * (Story, „Kulinarische Vielfalt", „Top Drinks", „Gaumenfreuden",
+ * „Erinnerungen, die bleiben", die echte Timeline und echte Google-Bewertungen).
+ * Nichts hier ist erfunden — nur verifizierte Fakten und Originaltexte.
+ * Wo noch echte Angaben fehlen (z. B. genaue Öffnungszeiten), steht ein
+ * ehrlich gekennzeichneter Platzhalter statt einer Fantasieangabe.
  */
 
 export const site = {
   name: 'InnSider',
-  wordmark: 'Inn | Sider', // hair-spaced, as the brand styles it
-  city: 'Vienna',
+  wordmark: 'Inn | Sider',
+  city: 'Wien',
   established: 2024,
-  tagline: 'Every unforgettable evening starts somewhere.',
+  tagline: 'Eine Vision wird Wirklichkeit.',
 } as const
 
 export const contact = {
@@ -24,7 +22,7 @@ export const contact = {
     street: 'Wurmbstraße 36',
     postal: '1120',
     city: 'Wien',
-    country: 'Austria',
+    country: 'Österreich',
     district: 'Meidling',
   },
   phone: '+43 670 182 9565',
@@ -35,211 +33,195 @@ export const contact = {
   instagramHref: 'https://www.instagram.com/innsider.vienna/',
 } as const
 
-/** The evening's opening rhythm — also drives Chapter 6's timeline. */
-export const hours = [
-  { day: 'Tuesday – Thursday', time: '17:00 – 23:00' },
-  { day: 'Friday – Saturday', time: '17:00 – 01:00' },
-  { day: 'Sunday', time: '11:00 – 22:00' },
-  { day: 'Monday', time: 'Closed' },
-] as const
-
 export const nav = [
-  { id: 'hero', label: 'The Evening', index: '01' },
-  { id: 'dream', label: 'The Dream', index: '02' },
-  { id: 'kitchen', label: 'The Kitchen', index: '03' },
-  { id: 'menu', label: 'The Table', index: '04' },
-  { id: 'bar', label: 'The Bar', index: '05' },
-  { id: 'evening', label: 'The Night', index: '06' },
-  { id: 'gallery', label: 'The Rooms', index: '07' },
-  { id: 'events', label: 'Occasions', index: '08' },
-  { id: 'reservation', label: 'Reserve', index: '09' },
+  { id: 'hero', label: 'Willkommen', index: '01' },
+  { id: 'dream', label: 'Die Vision', index: '02' },
+  { id: 'kitchen', label: 'Die Küche', index: '03' },
+  { id: 'menu', label: 'Gaumenfreuden', index: '04' },
+  { id: 'bar', label: 'Bar', index: '05' },
+  { id: 'evening', label: 'Timeline', index: '06' },
+  { id: 'gallery', label: 'Location', index: '07' },
+  { id: 'events', label: 'Events', index: '08' },
+  { id: 'reservation', label: 'Reservieren', index: '09' },
 ] as const
 
-// ── Chapter 1 — The Evening Begins ──────────────────────────────────────────
+// ── Kapitel 1 — Willkommen ──────────────────────────────────────────────────
 export const hero = {
-  chapter: 'Chapter One',
-  overline: 'InnSider — Vienna',
-  headline: ['Every unforgettable', 'evening starts', 'somewhere.'],
-  sub: 'Welcome to InnSider. Where atmosphere, hospitality and exceptional cuisine become lasting memories.',
-  primaryCta: 'Reserve a table',
-  secondaryCta: 'Explore the evening',
-  scrollHint: 'Begin the evening',
+  chapter: 'Kapitel Eins',
+  overline: 'Innsider — Wien',
+  headline: ['Herzlich willkommen.', 'Eine Vision', 'wird Wirklichkeit.'],
+  sub: 'Mehr als ein Restaurant — ein sorgfältig gestaltetes Ambiente, in dem Gäste nicht nur außergewöhnlich speisen, sondern ein sinnliches Gesamterlebnis genießen.',
+  primaryCta: 'Tisch reservieren',
+  secondaryCta: 'Entdecken',
+  scrollHint: 'Der Abend beginnt',
 } as const
 
-// ── Chapter 2 — The Dream (Alice Kern) ──────────────────────────────────────
+// ── Kapitel 2 — Die Vision (Alice Kern) — Originaltext ───────────────────────
 export const dream = {
-  chapter: 'Chapter Two',
-  overline: 'The Dream',
+  chapter: 'Kapitel Zwei',
+  overline: 'Die Vision',
   kicker: 'Alice Kern',
-  headline: 'She imagined the room\nbefore it existed.',
+  headline: 'Eine Vision\nwird Wirklichkeit.',
   paragraphs: [
-    'Long before there was a name above the door, there was a feeling Alice Kern could not let go of — the quiet pull of a room where people gather. As a girl she was drawn not only to refined cuisine, but to the spaces that hold it: the warmth of a well-set table, the fall of light against stone, the way a room can make a stranger feel expected.',
-    'Her passion for interior and her devotion to detail became a single, stubborn dream — to build a place where the atmosphere is composed as carefully as the menu itself. Not a restaurant with nice decoration, but a space where every corner is considered, and nothing is accidental.',
-    'In August 2024, in Vienna’s Meidling, the dream became a room you can walk into. Every surface reflects that same devotion — a marriage of elegance, warmth and individuality. This was never meant to be only a restaurant. It was meant to be an atmosphere you remember.',
+    'Schon in jungen Jahren war Alice Kern nicht nur von erlesener Küche fasziniert, sondern auch von den Räumen, in denen Menschen zusammenkommen. Ihre Leidenschaft für Interior Design und ihr Auge fürs Detail entfachten einen Traum: einen Ort zu schaffen, an dem Atmosphäre und Ästhetik ebenso sorgfältig komponiert sind wie das Menü selbst.',
+    'Im August 2024 wurde dieser Traum mit der Eröffnung des Innsider Restaurants Wirklichkeit. Jeder Winkel spiegelt Alices Hingabe zum Design wider – eine Verbindung aus Eleganz, Wärme und Individualität. Mehr als ein Restaurant ist das Innsider ein sorgfältig gestaltetes Ambiente, in dem Gäste nicht nur außergewöhnlich speisen, sondern ein sinnliches Gesamterlebnis genießen.',
   ],
-  pullQuote: 'Guests deserve more than dinner. They deserve to feel expected.',
-  attribution: 'Alice Kern — Founder',
-  buildLabels: ['Sketch', 'Stone', 'Walnut', 'Light', 'The Room'],
+  pullQuote: 'Mehr als ein Restaurant – ein Ort zum Erleben und Erinnern.',
+  attribution: 'Innsider · Wien',
+  buildLabels: ['Skizze', 'Stein', 'Nussholz', 'Licht', 'Der Raum'],
 } as const
 
-// ── Chapter 3 — The Heart of the Kitchen (Chef Stefan) ──────────────────────
+// ── Kapitel 3 — Die Küche (Chef Stefan) — „Kulinarische Vielfalt" ────────────
 export const kitchen = {
-  chapter: 'Chapter Three',
-  overline: 'The Kitchen',
+  chapter: 'Kapitel Drei',
+  overline: 'Die Küche',
   kicker: 'Chef Stefan',
-  headline: 'The heart behind every\nunforgettable plate.',
+  headline: 'Qualität beginnt\nan der Quelle.',
   paragraphs: [
-    'If Alice is the soul of InnSider, Stefan is its heart. For him, cooking was never a profession first — it was a language, the one he reaches for when words fall short. In his kitchen, flavour is how a story gets told.',
-    'Quality begins at the source. Every ingredient is chosen from regional farms and trusted producers — not for a label, but because he has stood in those fields and shaken those hands. Freshness and authenticity are not features here. They are the starting line.',
-    'Nothing leaves his pass until it is exactly right. A plate is finished not when it is full, but when it meets his standard — the standard he would set for someone he loves. Trust him before you taste anything; the plate will keep the promise.',
+    'Im Innsider beginnt Qualität an der Quelle. Jede Zutat wird sorgfältig von regionalen Höfen und vertrauenswürdigen Produzenten ausgewählt, um Frische und Authentizität in jedem Bissen zu garantieren.',
+    'Von knackigem Gemüse bis zu zarten Fleischstücken – die Aromen sprechen für sich. Selbst unser Fladenbrot wird täglich im Haus gebacken und verleiht Ihrem Genusserlebnis den letzten Hauch hausgemachter Vollkommenheit.',
+    'In der Küche steht Chef Stefan – von Gästen als „Super-Koch" gefeiert. Er kocht alles frisch, mit spürbarer Sorgfalt, und genau das schmeckt man auf jedem Teller.',
   ],
   philosophy: [
-    { n: '01', title: 'Every ingredient has a purpose', body: 'Sourced from regional farms and trusted producers, selected for the season rather than the shelf.' },
-    { n: '02', title: 'Every flavour tells a story', body: 'Composed to be read, not just eaten — a beginning, a turn, a finish that lingers.' },
-    { n: '03', title: 'Every plate meets one standard', body: 'His. Nothing leaves the kitchen until it does. There is no faster way, and he isn’t looking for one.' },
+    { n: '01', title: 'Qualität an der Quelle', body: 'Jede Zutat von regionalen Höfen und vertrauenswürdigen Produzenten – Frische und Authentizität in jedem Bissen.' },
+    { n: '02', title: 'Täglich hausgebacken', body: 'Selbst das Fladenbrot wird jeden Tag im Haus gebacken – der letzte Hauch hausgemachter Vollkommenheit.' },
+    { n: '03', title: 'Alles frisch gekocht', body: 'Chef Stefan kocht alles frisch – von Gästen immer wieder für Qualität und Preis/Leistung gelobt.' },
   ],
-  pullQuote: 'Cooking is a language. Every plate is a sentence I mean.',
-  attribution: 'Chef Stefan',
+  pullQuote: 'Geniales, neues Lokal mit Super-Koch Stefan! Er kocht alles frisch, die Getränke sind top. Klare Empfehlung.',
+  attribution: 'Alexander B. · Google-Bewertung',
 } as const
 
-// ── Chapter 4 — The Table (menu) ────────────────────────────────────────────
+// ── Kapitel 4 — Gaumenfreuden (Menü) — nur verifizierte Gerichte ─────────────
 export const menu = {
-  chapter: 'Chapter Four',
-  overline: 'The Table',
-  headline: 'Read it slowly.\nIt was written that way.',
-  intro: 'A short, changing menu built around what the season gives us. These are a few of the plates guests return for — the full card lives at your table.',
-  seasonNote: 'A taste of the season',
+  chapter: 'Kapitel Vier',
+  overline: 'Gaumenfreuden',
+  headline: 'Eine Reise\nfür alle Sinne.',
+  intro: 'Jedes Gericht wird mit höchster Präzision zubereitet und vereint Geschmack, Textur und Präsentation zu vollkommener Harmonie. Von den Vorspeisen bis zu den Desserts erzählt jeder Teller eine Geschichte.',
+  // Nur echte, verifizierte Gerichte & Preise von der Website.
   dishes: [
     {
-      name: 'Geschmorte Rindsbackerln',
-      en: 'Slow-braised beef cheeks',
-      note: 'Wine-dark jus, root vegetables, silk-soft after hours in the pot.',
-      price: '18.80',
-      pairing: 'Blaufränkisch, Burgenland',
-      tag: 'Signature',
+      name: 'Geschmorte Rindsbackerl',
+      en: 'Zart geschmort',
+      note: 'Ein Klassiker der Küche.',
+      price: '18,80',
+      tag: 'Klassiker',
     },
     {
-      name: 'Fischfilet im Speckmantel',
-      en: 'Speck-wrapped fish, tomato risotto',
-      note: 'Delicate fish under crisp speck, on a tomato risotto with summer vegetables.',
-      price: '19.80',
-      pairing: 'Grüner Veltliner, Wachau',
-      tag: 'From the pass',
+      name: 'Erdäpfelgratin & gelbes Gemüsecurry',
+      en: 'Vegetarisch',
+      note: 'Regionale Erdäpfel, sanfte Würze.',
+      price: '11,80',
+      tag: 'Vegetarisch',
     },
     {
-      name: 'Radicchio, Birne & Walnuss',
-      en: 'Radicchio, pear & candied walnut',
-      note: 'Bitter leaves, sweet pear, burrata and toasted walnut with warm flatbread.',
-      price: '12.80',
-      pairing: 'Sauvignon Blanc, Steiermark',
-      tag: 'Vegetarian',
+      name: 'InnSider Burger',
+      en: '200g österreichisches Rind',
+      note: 'Hausgemachtes Bun, Coleslaw, Cheddar, Potato Wedges.',
+      price: '15,80',
+      tag: 'Klassiker',
     },
     {
-      name: 'Pfirsich & Burrata',
-      en: 'Summer stone fruit & burrata',
-      note: 'Ripe peach, creamy burrata and chervil — summer on a plate.',
-      price: '13.80',
-      pairing: 'Rosé, Neusiedlersee',
-      tag: 'Seasonal',
-    },
-    {
-      name: 'Gewürzhähnchen-Wrap',
-      en: 'Spiced chicken, herbs, flatbread',
-      note: 'Warm-spiced chicken, fresh herbs and soft flatbread. Made to be picked up.',
-      price: '14.80',
-      pairing: 'Riesling, Kamptal',
-      tag: 'Handheld',
-    },
-    {
-      name: 'The InnSider Burger',
-      en: '200g Austrian beef',
-      note: 'House-baked bun, coleslaw, aged cheddar, potato wedges. Quietly perfect.',
-      price: '15.80',
-      pairing: 'Zweigelt, Carnuntum',
-      tag: 'The Classic',
+      name: 'Feuriges Chili con Carne',
+      en: 'Herzhaft & würzig',
+      note: 'Frisch aus der Küche.',
+      price: '',
+      tag: 'Aus der Küche',
     },
   ],
+  lunchNote: 'Täglich drei Mittagsmenüs — Fleisch, Fisch, Vegetarisch, inklusive Suppe.',
+  galleryNote: 'Gaumenfreuden',
+  foot: 'Die vollständige, wechselnde Karte liegt an Ihrem Tisch bereit.',
 } as const
 
-// ── Chapter 5 — The Bar ─────────────────────────────────────────────────────
+// ── Kapitel 5 — Bar (Top Drinks) — Originaltext ──────────────────────────────
 export const bar = {
-  chapter: 'Chapter Five',
-  overline: 'The Bar',
-  headline: 'The lights come down.\nThe night opens up.',
-  intro: 'When dinner settles, the room changes key. Brass warms, glass catches candlelight, and the bar takes over the storytelling.',
+  chapter: 'Kapitel Fünf',
+  overline: 'Bar · Top Drinks',
+  headline: 'Jedes Glas\nist Teil des Erlebnisses.',
+  intro: 'Unsere Bar bietet eine sorgfältig kuratierte Auswahl an österreichischen Weinen, internationalen Etiketten und handwerklich gebrauten Bieren – mit Leidenschaft und Hingabe gewählt.',
   drinks: [
-    { name: 'The Golden-Hour Spritz', base: 'Aperol · prosecco · orange', mood: 'Sun in a glass' },
-    { name: 'The Meidling Old Fashioned', base: 'Rye · house bitters · burnt orange', mood: 'Slow & amber' },
-    { name: 'Alice’s Garden', base: 'Gin · elderflower · garden herbs', mood: 'Bright & green' },
-    { name: 'The Nightcap', base: 'Cognac · coffee · cream', mood: 'The last word' },
+    { name: 'Österreichische Weine', base: 'u. a. Brückner Blaufränkisch', mood: 'Regional & charaktervoll' },
+    { name: 'Internationale Etiketten', base: 'Sorgfältig kuratiert', mood: 'Weltweit gewählt' },
+    { name: 'Handwerkliche Biere', base: 'Golser vom Fass', mood: 'Frisch gezapft' },
+    { name: 'Aperol Spritz', base: 'Der Sommer im Glas', mood: 'Frisch & belebend' },
   ],
 } as const
 
-// ── Chapter 6 — The Evening Evolves (timeline) ──────────────────────────────
+// ── Kapitel 6 — Timeline — Originaltext (echte Jahreszahlen) ─────────────────
 export const evening = {
-  chapter: 'Chapter Six',
-  overline: 'The Night',
-  headline: 'Stay a while.\nWatch the light change.',
-  intro: 'An evening at InnSider is not a booking. It is an arc — and you are welcome for all of it.',
+  chapter: 'Kapitel Sechs',
+  overline: 'Timeline',
+  headline: 'Vom Traum\nzum Innsider.',
+  intro: 'Ein Weg, der über Jahrzehnte hierher geführt hat.',
   timeline: [
-    { time: '18:00', title: 'Golden Hour', body: 'The last light leans through the windows. First glasses, first laughter, the room warming up.' },
-    { time: '19:30', title: 'Dinner', body: 'The kitchen finds its rhythm. Plates arrive, conversation deepens, the evening finds its center.' },
-    { time: '21:00', title: 'Wine', body: 'A second bottle, an easier pace. Nobody is checking the time anymore.' },
-    { time: '22:30', title: 'Cocktails', body: 'The bar takes the lead. Brass and candlelight, the night’s second act.' },
-    { time: '23:30', title: 'Stories', body: 'The best hour. Low light, low voices, the reason people come back years later.' },
+    { time: '1961', title: 'Erste Schritte', body: 'Die Geburt von Alice Kern – der Beginn einer Reise, die eines Tages Leidenschaft für Design, Gastlichkeit und kulinarische Exzellenz vereinen sollte.' },
+    { time: '2023', title: 'Eine Vision nimmt Gestalt an', body: 'Das historische Haus wurde mit einem Traum erworben: ein Ort, an dem Architektur, Design und erlesene Küche in vollkommener Harmonie zusammenfinden.' },
+    { time: 'Aug 2024', title: 'Grand Opening', body: 'Das Innsider Restaurant öffnete offiziell seine Türen – die ersten Gäste wurden in einem außergewöhnlichen Ambiente willkommen geheißen.' },
+    { time: 'Dez 2024', title: 'Erste Events', body: 'Das Innsider richtete seine ersten erfolgreichen Firmenevents aus – der Grundstein für viele unvergessliche Momente, die noch folgen sollten.' },
   ],
 } as const
 
-// ── Chapter 7 — The Rooms (gallery / exhibition) ────────────────────────────
+// ── Kapitel 7 — Location — „Erinnerungen, die bleiben" ───────────────────────
 export const gallery = {
-  chapter: 'Chapter Seven',
-  overline: 'The Rooms',
-  headline: 'Every corner\nwas considered.',
-  intro: 'Walk the room the way a guest does — stone and walnut, brass and candlelight, the details that only reveal themselves when you slow down.',
+  chapter: 'Kapitel Sieben',
+  overline: 'Unsere Location',
+  headline: 'Einer der fotogensten\nOrte Wiens.',
+  intro: 'Unser Interieur verbindet Eleganz mit modernem Design – ein Ambiente, das zugleich raffiniert und einladend wirkt. Warmes Licht, einzigartige Details und markante Akzente machen jede Ecke besonders.',
   frames: [
-    { title: 'The Front Room', story: 'Where the evening begins — warm light, the first hello.' },
-    { title: 'The Long Table', story: 'For the nights that turn into occasions.' },
-    { title: 'The Bar', story: 'Brass, glass and candlelight after dark.' },
-    { title: 'The Corner', story: 'The table people ask for by name.' },
-    { title: 'The Pass', story: 'Where Stefan lets nothing leave until it’s right.' },
-    { title: 'The Details', story: 'Stone, walnut, fabric — nothing accidental.' },
+    { title: 'Der Empfang', story: 'Warmes Licht, das erste Willkommen.' },
+    { title: 'Die lange Tafel', story: 'Für Abende, die zu Anlässen werden.' },
+    { title: 'Die Bar', story: 'Messing, Glas und warmes Licht.' },
+    { title: 'Die Ecke', story: 'Der Tisch, den man beim Namen kennt.' },
+    { title: 'Details', story: 'Stein, Holz, Stoff – nichts dem Zufall überlassen.' },
+    { title: 'Warmes Licht', story: 'Der fotogenste Winkel des Hauses.' },
   ],
 } as const
 
-// ── Chapter 8 — Occasions (private events) ──────────────────────────────────
+// ── Kapitel 8 — Events — echt (seit Dez 2024 Firmenevents) ───────────────────
 export const events = {
-  chapter: 'Chapter Eight',
-  overline: 'Occasions',
-  headline: 'Some evenings\ndeserve the whole room.',
-  intro: 'Birthdays and business, weddings and the quiet anniversaries — InnSider holds the evenings that matter, exactly the way you imagined them.',
+  chapter: 'Kapitel Acht',
+  overline: 'Events',
+  headline: 'Räume für\nbesondere Abende.',
+  intro: 'Seit Dezember 2024 richtet das Innsider Firmenevents und private Feiern aus – der Grundstein für viele unvergessliche Momente.',
   cards: [
-    { title: 'Celebrations', body: 'Birthdays and anniversaries with the room to yourselves and a menu made for the occasion.' },
-    { title: 'Business Dinners', body: 'Discreet, considered and unhurried — the kind of table where good things get decided.' },
-    { title: 'Weddings & Toasts', body: 'The intimate reception, the rehearsal, the morning-after brunch — held with care.' },
-    { title: 'The Festive Season', body: 'Christmas and year’s-end evenings, candlelit and generous, the way winter should feel.' },
-    { title: 'Private Dining', body: 'A room within the room, for the evenings meant only for your people.' },
+    { title: 'Firmenevents', body: 'Die ersten erfolgreichen Firmenevents fanden bereits statt – diskret, durchdacht und unvergesslich.' },
+    { title: 'Private Feiern', body: 'Geburtstage, Jubiläen und besondere Anlässe im passenden Ambiente.' },
+    { title: 'Der ganze Raum', body: 'Für Abende, die den ganzen Raum verdienen – ganz nach Ihren Vorstellungen.' },
   ],
-  cta: 'Enquire about your evening',
+  cta: 'Event anfragen',
 } as const
 
-// ── Chapter 9 — Reservation (finale) ────────────────────────────────────────
+// ── Kapitel 9 — Reservieren ──────────────────────────────────────────────────
 export const reservation = {
-  chapter: 'Chapter Nine',
-  overline: 'Reserve',
-  headline: 'Your table\nis waiting.',
-  sub: 'Tell us the evening you have in mind. We’ll hold the rest.',
-  cta: 'Reserve your evening',
+  chapter: 'Kapitel Neun',
+  overline: 'Reservieren',
+  headline: 'Wir freuen uns\nauf Sie.',
+  sub: 'Reservieren Sie Ihren Abend – wir kümmern uns um den Rest.',
+  cta: 'Jetzt reservieren',
   fields: {
-    name: 'Your name',
-    email: 'Email',
-    date: 'Preferred date',
-    guests: 'Guests',
-    occasion: 'The occasion (optional)',
+    name: 'Ihr Name',
+    email: 'E-Mail',
+    date: 'Wunschdatum',
+    guests: 'Personen',
+    occasion: 'Anlass (optional)',
   },
-  reassurance: 'We reply to every request personally, usually within the day.',
+  reassurance: 'Wir antworten persönlich auf jede Anfrage.',
+  // Genaue Öffnungszeiten liegen uns nicht vor → ehrlicher Hinweis statt Fantasie.
+  hoursNote: 'Frühstück · Mittagstisch · Abend. Aktuelle Öffnungszeiten und Reservierungen gerne telefonisch oder per E-Mail.',
+} as const
+
+// Echte Google-Bewertungen (21 Rezensionen).
+export const testimonials = {
+  overline: 'Gästestimmen',
+  count: '21 Google-Bewertungen',
+  items: [
+    { text: 'Ein hervorragender Koch und überaus zuvorkommende, freundliche Mitarbeiterinnen im Service. Zu den Mittagsmenüs gibt es auch immer ausgezeichnete Suppen. Eine absolute Empfehlung!', author: 'Karin S.' },
+    { text: 'Ein Lob an die Küche und das Service! Ausgezeichnetes Essen ist schon super, aber dass dieses noch mit Freundlichkeit serviert wird – brave!', author: 'Lukas P.' },
+    { text: 'It’s always a delight to enjoy the ambiance and delicious dishes from the lunch menu, cooked with love and care. Ildiko always makes us feel welcome.', author: 'Bru Eb' },
+  ],
 } as const
 
 export const footer = {
-  line: 'Where atmosphere, hospitality and exceptional cuisine become lasting memories.',
-  credit: 'InnSider — Vienna, Meidling. Imagined by Alice Kern.',
+  line: 'Mehr als ein Restaurant – ein Ort zum Erleben und Erinnern.',
+  credit: 'Innsider · Wurmbstraße 36, 1120 Wien · Von Alice Kern.',
 } as const

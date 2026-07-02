@@ -73,10 +73,10 @@ export function Placeholder({
           <span className="ph__corner ph__corner--tl" />
           <span className="ph__corner ph__corner--br" />
           <div className="ph__meta">
-            <span className="ph__kind">{slot.kind === 'video' ? '◈ Film' : '◈ Photograph'}</span>
+            <span className="ph__kind">{slot.kind === 'video' ? '◈ Video' : '◈ Foto'}</span>
             <span className="ph__label">{slot.label}</span>
             <span className="ph__note">{slot.note}</span>
-            <span className="ph__await">Premium asset to be delivered</span>
+            <span className="ph__await">Foto folgt in Kürze</span>
           </div>
         </div>
       )}

@@ -45,7 +45,7 @@ export function Loader({ onDone }: { onDone: () => void }) {
           transition={{ duration: reduced ? 0.3 : 1.1, ease: [0.76, 0, 0.24, 1] }}
         >
           <div className="loader__inner">
-            <span className="loader__overline">Vienna — Meidling</span>
+            <span className="loader__overline">Wien — Meidling</span>
 
             <div className="loader__wordmark" aria-label={site.name}>
               <span className="loader__mask">
@@ -61,7 +61,7 @@ export function Loader({ onDone }: { onDone: () => void }) {
             </div>
 
             <div className="loader__foot">
-              <span className="loader__tag">Every unforgettable evening starts somewhere</span>
+              <span className="loader__tag">Eine Vision wird Wirklichkeit</span>
               <span className="loader__count">{String(count).padStart(3, '0')}</span>
             </div>
 

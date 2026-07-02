@@ -155,6 +155,53 @@
   color: var(--stone);
 }
 
+/* ── Gästestimmen (echte Google-Bewertungen) ───────────────────────────── */
+.reservation__voices {
+  margin-top: clamp(3.5rem, 9vh, 7rem);
+  padding-top: clamp(2rem, 5vh, 3.4rem);
+  border-top: 1px solid var(--line);
+}
+.reservation__voices-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: clamp(1.6rem, 4vh, 2.6rem);
+}
+.reservation__voices-count {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.reservation__voices-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.4rem, 3vw, 2.6rem);
+}
+.reservation__voice blockquote {
+  font-family: var(--serif);
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.reservation__voice figcaption {
+  margin-top: 1rem;
+  font-family: var(--sans);
+  font-size: 0.66rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+@media (max-width: 760px) {
+  .reservation__voices-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
 /* ── Footer ────────────────────────────────────────────────────────────── */
 .reservation__footer {
   margin-top: clamp(5rem, 14vh, 11rem);

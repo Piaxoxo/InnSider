@@ -1,7 +1,7 @@
 import { useRef, useState, type FormEvent } from 'react'
 import { Heading } from '../components/Heading'
 import { useReveal } from '../hooks/useReveal'
-import { reservation, contact, hours, footer, site } from '../content/site'
+import { reservation, contact, footer, site, testimonials } from '../content/site'
 import './reservation.css'
 
 /**
@@ -14,6 +14,7 @@ import './reservation.css'
 export function Reservation() {
   const headRef = useReveal<HTMLDivElement>({ selector: '[data-reveal]', y: 30 })
   const formRef = useReveal<HTMLDivElement>({ selector: '[data-reveal-f]', y: 26, stagger: 0.08 })
+  const voicesRef = useReveal<HTMLDivElement>({ selector: '[data-reveal-v]', y: 30, stagger: 0.1 })
   const [sent, setSent] = useState(false)
   const nameRef = useRef<HTMLInputElement>(null)
 
@@ -36,7 +37,7 @@ export function Reservation() {
   }
 
   return (
-    <section id="reservation" className="chapter reservation" aria-label="Reserve">
+    <section id="reservation" className="chapter reservation" aria-label="Reservieren">
       <div className="reservation__wrap">
         <div className="reservation__head" ref={headRef}>
           <span className="overline" data-reveal>
@@ -89,10 +90,10 @@ export function Reservation() {
           ) : (
             <div className="reservation__confirm" role="status">
               <span className="reservation__confirm-mark">✦</span>
-              <h3>Your request is on its way.</h3>
+              <h3>Ihre Anfrage ist unterwegs.</h3>
               <p>
-                We reply to every request personally, usually within the day. If your email client
-                didn’t open, write to us directly at{' '}
+                Wir antworten persönlich auf jede Anfrage, meist noch am selben Tag. Falls sich Ihr
+                E-Mail-Programm nicht geöffnet hat, schreiben Sie uns direkt an{' '}
                 <a href={contact.emailHref}>{contact.email}</a>.
               </p>
             </div>
@@ -100,7 +101,7 @@ export function Reservation() {
 
           <aside className="reservation__aside">
             <div className="reservation__block">
-              <span className="reservation__block-title">Find us</span>
+              <span className="reservation__block-title">So finden Sie uns</span>
               <p>
                 {contact.address.street}
                 <br />
@@ -108,7 +109,7 @@ export function Reservation() {
               </p>
             </div>
             <div className="reservation__block">
-              <span className="reservation__block-title">Speak to us</span>
+              <span className="reservation__block-title">Kontakt</span>
               <p>
                 <a href={contact.phoneHref}>{contact.phone}</a>
                 <br />
@@ -116,17 +117,26 @@ export function Reservation() {
               </p>
             </div>
             <div className="reservation__block">
-              <span className="reservation__block-title">Hours</span>
-              <ul className="reservation__hours">
-                {hours.map((h) => (
-                  <li key={h.day}>
-                    <span>{h.day}</span>
-                    <span>{h.time}</span>
-                  </li>
-                ))}
-              </ul>
+              <span className="reservation__block-title">Öffnungszeiten</span>
+              <p>{reservation.hoursNote}</p>
             </div>
           </aside>
+        </div>
+
+        {/* Echte Google-Bewertungen */}
+        <div className="reservation__voices" ref={voicesRef}>
+          <div className="reservation__voices-head" data-reveal-v>
+            <span className="overline">{testimonials.overline}</span>
+            <span className="reservation__voices-count">{testimonials.count}</span>
+          </div>
+          <div className="reservation__voices-grid">
+            {testimonials.items.map((t) => (
+              <figure className="reservation__voice" key={t.author} data-reveal-v>
+                <blockquote>„{t.text}"</blockquote>
+                <figcaption>{t.author}</figcaption>
+              </figure>
+            ))}
+          </div>
         </div>
       </div>
 

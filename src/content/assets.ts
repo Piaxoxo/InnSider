@@ -57,25 +57,24 @@ export const media = {
   stefanHands: live('stefan-hands', R, 'The craft', 'A finished plate, close — radicchio, burrata, chervil, a rose.', '/media/craft-salad-macro.jpg'),
   kitchenFire: slot('kitchen-fire', 'video', 16 / 9, 'Kitchen motion', 'Loop: flame, knife, steam — cinematic, shallow depth of field.'),
 
-  // ── The Table — real InnSider plates (two signatures still await their hero) ──
-  dishBeef: slot('dish-beef', 'image', R, 'Rindsbackerln', 'Slow-braised beef cheeks, wine-dark jus — hero shot on stone.'),
-  // DELIVERED — speck-wrapped fish on tomato risotto by the window.
-  dishFish: live('dish-fish', RP, 'Fischfilet im Speckmantel', 'Speck-wrapped fish on tomato risotto and summer vegetables.', '/media/dish-fish-risotto.jpg'),
-  // DELIVERED — radicchio, pear, walnut and burrata, overhead.
-  dishRadicchio: live('dish-radicchio', R, 'Radicchio, Birne & Walnuss', 'Radicchio, pear, candied walnut and burrata with flatbread.', '/media/dish-radicchio.jpg'),
-  // DELIVERED — summer peach and burrata, close.
-  dishPeach: live('dish-peach', R, 'Pfirsich & Burrata', 'Summer stone fruit, burrata and chervil.', '/media/dish-peach-burrata.jpg'),
-  // DELIVERED — spiced chicken wrap, herbs.
-  dishChicken: live('dish-chicken', R, 'Gewürzhähnchen-Wrap', 'Spiced chicken, herbs and flatbread.', '/media/dish-chicken-wrap.jpg'),
-  dishBurger: slot('dish-burger', 'image', R, 'The InnSider Burger', '200g Austrian beef, house bun — hero shot.'),
+  // ── Gaumenfreuden — echte Fotos aus der Küche (neutrale, nicht erfundene
+  // Bild-Beschriftungen; die verifizierte Karte steht in content/site.ts) ──
+  // DELIVERED — Teller aus der Küche.
+  dishFish: live('dish-fish', RP, 'Aus der Küche', 'Frisch angerichtet.', '/media/dish-fish-risotto.jpg'),
+  // DELIVERED — Salatteller.
+  dishRadicchio: live('dish-radicchio', R, 'Frisch & regional', 'Knackig, saisonal.', '/media/dish-radicchio.jpg'),
+  // DELIVERED — sommerlicher Teller.
+  dishPeach: live('dish-peach', R, 'Sommerlich', 'Leicht und frisch.', '/media/dish-peach-burrata.jpg'),
+  // DELIVERED — Teller vom Mittagstisch.
+  dishChicken: live('dish-chicken', R, 'Vom Mittagstisch', 'Täglich frisch zubereitet.', '/media/dish-chicken-wrap.jpg'),
 
-  // Seasonal triptych — ambient plates under the menu intro.
-  // DELIVERED — soup of the day with garden flowers.
-  seasonSoup: live('season-soup', R, 'Soup of the day', 'Chilled seasonal soup, garden herbs and flowers.', '/media/season-soup.jpg'),
-  // DELIVERED — peach and radicchio salad, window light.
-  seasonSalad: live('season-salad', R, 'From the garden', 'Peach, radicchio and chervil in the window light.', '/media/season-salad.jpg'),
-  // DELIVERED — a rose resting on the plate rim.
-  seasonRose: live('season-rose', R, 'The detail', 'A rose on the plate rim — nothing here is accidental.', '/media/season-rose.jpg'),
+  // „A taste of the season" — weitere Teller.
+  // DELIVERED — Suppe (echt: Gäste loben die ausgezeichneten Suppen).
+  seasonSoup: live('season-soup', R, 'Suppe des Tages', 'Zu jedem Mittagsmenü.', '/media/season-soup.jpg'),
+  // DELIVERED — Salat im Fensterlicht.
+  seasonSalad: live('season-salad', R, 'Aus dem Garten', 'Frisch und leicht.', '/media/season-salad.jpg'),
+  // DELIVERED — Detail am Tellerrand.
+  seasonRose: live('season-rose', R, 'Liebe zum Detail', 'Nichts dem Zufall überlassen.', '/media/season-rose.jpg'),
 
   // ── The Bar — cocktails & a golden-hour guest ──
   // DELIVERED — the Aperol spritz in full sun.

@@ -62,13 +62,13 @@ export function Nav({ visible }: { visible: boolean }) {
 
         <div className="nav__right">
           <button className="nav__reserve" onClick={() => go('reservation')}>
-            Reserve
+            Reservieren
           </button>
           <button
             className={`nav__toggle ${open ? 'is-open' : ''}`}
             onClick={() => setOpen((o) => !o)}
             aria-expanded={open}
-            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-label={open ? 'Menü schließen' : 'Menü öffnen'}
           >
             <span />
             <span />

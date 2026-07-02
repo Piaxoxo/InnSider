@@ -83,7 +83,7 @@ export function Events() {
         )}
 
         <div className="events__cta">
-          <p className="events__cta-text">Tell us what you’re celebrating.</p>
+          <p className="events__cta-text">Erzählen Sie uns von Ihrem Anlass.</p>
           <button className="btn btn--gold" onClick={() => scrollToId('reservation')}>
             {events.cta}
             <span className="btn__arrow">→</span>
