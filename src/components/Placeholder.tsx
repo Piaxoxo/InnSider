@@ -32,6 +32,10 @@ export function Placeholder({
   // If a pre-wired asset 404s (not delivered yet), gracefully show the stub.
   const [failed, setFailed] = useState(false)
   const showMedia = !!slot.src && !failed
+  // Resolve public/media paths against the deploy base (root on Vercel,
+  // /innsider/ on GitHub project Pages) so the same src works either place.
+  const resolvedSrc =
+    slot.src && slot.src.startsWith('/') ? import.meta.env.BASE_URL + slot.src.slice(1) : slot.src
 
   return (
     <div
@@ -44,7 +48,7 @@ export function Placeholder({
         slot.kind === 'video' ? (
           <video
             className="ph__media"
-            src={slot.src!}
+            src={resolvedSrc!}
             autoPlay
             muted
             loop
@@ -55,7 +59,7 @@ export function Placeholder({
         ) : (
           <img
             className="ph__media"
-            src={slot.src!}
+            src={resolvedSrc!}
             alt={slot.label}
             loading={eager ? 'eager' : 'lazy'}
             decoding="async"
