@@ -33,10 +33,10 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
-      - name: Build (project-pages base path)
+      - name: Build (relative base — works at any Pages sub-path / casing)
         run: npm run build
         env:
-          BASE_PATH: /innsider/
+          BASE_PATH: ./
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
