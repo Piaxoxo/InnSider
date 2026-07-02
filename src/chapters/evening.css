@@ -1,0 +1,109 @@
+.evening__wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+}
+.evening__head {
+  text-align: center;
+  max-width: 40ch;
+  margin: 0 auto clamp(3rem, 9vh, 7rem);
+}
+.evening__head-top {
+  display: flex;
+  justify-content: center;
+  gap: 1.4rem;
+  margin-bottom: 1.6rem;
+}
+.evening__headline {
+  margin: 0 auto;
+}
+.evening__intro {
+  margin: 1.6rem auto 0;
+}
+
+/* ── Track ─────────────────────────────────────────────────────────────── */
+.evening__track {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  padding-left: clamp(3rem, 8vw, 7rem);
+}
+.evening__progress {
+  position: absolute;
+  left: clamp(3rem, 8vw, 7rem);
+  top: 0.6rem;
+  bottom: 0.6rem;
+  width: 1px;
+  background: var(--line);
+  transform: translateX(-50%);
+}
+.evening__progress-fill {
+  position: absolute;
+  inset: 0;
+  transform-origin: top;
+  transform: scaleY(0);
+  background: linear-gradient(var(--gold-bright), var(--bronze));
+}
+
+.evening__rows {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.4rem, 6vh, 4.4rem);
+}
+.evening__row {
+  position: relative;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: baseline;
+  opacity: 0.32;
+  filter: blur(1px);
+  transition: opacity 0.8s var(--ease-lux), filter 0.8s var(--ease-lux);
+}
+.evening__row.is-lit {
+  opacity: 1;
+  filter: blur(0);
+}
+.evening__dot {
+  position: absolute;
+  left: calc(clamp(3rem, 8vw, 7rem) * -1);
+  top: 0.5em;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--charcoal-2);
+  border: 1px solid var(--stone-dim);
+  transform: translateX(-50%);
+  transition: background 0.6s, border-color 0.6s, box-shadow 0.6s;
+}
+.evening__row.is-lit .evening__dot {
+  background: var(--gold);
+  border-color: var(--gold-bright);
+  box-shadow: 0 0 18px 2px rgba(201, 169, 106, 0.5);
+}
+.evening__time {
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1;
+  color: var(--gold-bright);
+  font-variant-numeric: tabular-nums;
+}
+.evening__row-title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: var(--fs-h3);
+  color: var(--warm-white);
+  margin-bottom: 0.6rem;
+}
+.evening__row-body {
+  color: var(--ink-soft);
+  max-width: 44ch;
+}
+
+@media (max-width: 640px) {
+  .evening__row {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+}

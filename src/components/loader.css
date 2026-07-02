@@ -1,0 +1,111 @@
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-loader);
+  background:
+    radial-gradient(90% 70% at 50% 30%, #191410, #0a0908 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+.loader__inner {
+  width: min(90vw, 900px);
+  padding: 0 var(--pad-x);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1.4rem, 4vh, 3rem);
+  text-align: center;
+}
+
+.loader__overline {
+  font-family: var(--sans);
+  font-size: 0.66rem;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.8;
+}
+
+.loader__wordmark {
+  position: relative;
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(3rem, 12vw, 9rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--warm-white);
+}
+.loader__mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+}
+.loader__mask > span {
+  display: block;
+}
+
+/* Warm light sweep across the wordmark. */
+.loader__sweep {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 35%,
+    rgba(217, 189, 134, 0.55) 50%,
+    transparent 65%
+  );
+  mix-blend-mode: overlay;
+  transform: translateX(-120%);
+  animation: loader-sweep 2.2s var(--ease-lux) 0.6s forwards;
+}
+@keyframes loader-sweep {
+  to {
+    transform: translateX(120%);
+  }
+}
+
+.loader__foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 100%;
+  gap: 1rem;
+}
+.loader__tag {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(0.85rem, 2vw, 1.15rem);
+  color: var(--ink-soft);
+}
+.loader__count {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  font-variant-numeric: tabular-nums;
+}
+
+.loader__bar {
+  width: 100%;
+  height: 1px;
+  background: var(--line);
+  overflow: hidden;
+}
+.loader__fill {
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform-origin: left;
+  background: linear-gradient(90deg, var(--bronze), var(--gold-bright));
+}
+
+@media (max-width: 600px) {
+  .loader__foot {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+  }
+}

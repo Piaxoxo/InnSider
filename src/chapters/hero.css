@@ -1,0 +1,130 @@
+.hero {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: max(18vh, 8rem);
+  padding-bottom: 12vh;
+  overflow: hidden;
+}
+
+.hero__rail {
+  position: absolute;
+  left: var(--pad-x);
+  top: 50%;
+  transform: translateY(-50%) rotate(180deg);
+  writing-mode: vertical-rl;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  font-family: var(--sans);
+  font-size: 0.66rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.hero__rail-line {
+  width: 1px;
+  height: 5rem;
+  background: linear-gradient(var(--gold), transparent);
+}
+
+.hero__inner {
+  position: relative;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  width: 100%;
+  will-change: transform, opacity;
+}
+
+.hero__title {
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: var(--fs-h1);
+  line-height: 0.96;
+  letter-spacing: -0.025em;
+  color: var(--warm-white);
+  margin: clamp(1.2rem, 3vh, 2.4rem) 0;
+  text-wrap: balance;
+}
+.hero__line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+}
+.hero__line > span {
+  display: block;
+  will-change: transform;
+}
+.hero__line:nth-child(2) > span {
+  color: var(--gold-bright);
+  font-family: var(--serif);
+  font-style: italic;
+}
+
+.hero__sub {
+  margin-top: 0.5rem;
+  max-width: 46ch;
+  color: var(--ink-soft);
+}
+
+.hero__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: clamp(2rem, 5vh, 3.4rem);
+}
+
+.hero__hint {
+  position: absolute;
+  bottom: clamp(1.6rem, 4vh, 3rem);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  color: var(--ink-faint);
+}
+.hero__hint-label {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+}
+.hero__hint-track {
+  width: 1px;
+  height: 46px;
+  background: var(--line);
+  position: relative;
+  overflow: hidden;
+}
+.hero__hint-dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background: linear-gradient(var(--gold-bright), transparent);
+  animation: hint-fall 2.2s var(--ease-in-out) infinite;
+}
+@keyframes hint-fall {
+  0% {
+    transform: translateY(-100%);
+  }
+  60%,
+  100% {
+    transform: translateY(250%);
+  }
+}
+
+@media (max-width: 760px) {
+  .hero__rail {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero__hint-dot {
+    animation: none;
+  }
+}

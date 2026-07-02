@@ -1,0 +1,120 @@
+.bar {
+  position: relative;
+  overflow: hidden;
+}
+.bar__motion {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.5;
+}
+.bar__motion .ph {
+  height: 100%;
+  aspect-ratio: auto !important;
+}
+.bar__motion-veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, var(--black) 0%, rgba(10, 9, 8, 0.6) 40%, var(--black) 100%);
+}
+
+.bar__wrap {
+  position: relative;
+  z-index: 1;
+  max-width: var(--maxw);
+  margin: 0 auto;
+}
+.bar__head-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: clamp(1.4rem, 4vh, 2.6rem);
+}
+.bar__headline {
+  max-width: 16ch;
+}
+.bar__intro {
+  margin-top: 1.6rem;
+  max-width: 48ch;
+}
+
+.bar__cards {
+  margin-top: clamp(3rem, 8vh, 6rem);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1rem, 2vw, 1.6rem);
+}
+.bar__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 3rem;
+  min-height: clamp(320px, 42vh, 460px);
+  padding: clamp(1.4rem, 2.4vw, 2rem);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: linear-gradient(165deg, rgba(31, 26, 20, 0.6), rgba(10, 9, 8, 0.4));
+  backdrop-filter: blur(6px);
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.6s var(--ease-lux), border-color 0.6s var(--ease-lux),
+    background 0.6s var(--ease-lux);
+}
+.bar__card:hover {
+  transform: translateY(-10px);
+  border-color: var(--line-strong);
+  background: linear-gradient(165deg, rgba(42, 34, 24, 0.7), rgba(17, 13, 10, 0.5));
+}
+.bar__card-sheen {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(130deg, transparent 40%, rgba(201, 169, 106, 0.16) 50%, transparent 62%);
+  transform: translateY(60%);
+  transition: transform 0.9s var(--ease-lux);
+}
+.bar__card:hover .bar__card-sheen {
+  transform: translateY(-20%);
+}
+.bar__card-index {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--gold);
+}
+.bar__card-name {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(1.3rem, 2vw, 1.7rem);
+  line-height: 1.12;
+  color: var(--warm-white);
+}
+.bar__card-base {
+  margin-top: 0.7rem;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+.bar__card-mood {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--gold-bright);
+}
+
+@media (max-width: 1000px) {
+  .bar__cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .bar__cards {
+    grid-template-columns: 1fr;
+  }
+  .bar__card {
+    min-height: auto;
+    gap: 2rem;
+  }
+}

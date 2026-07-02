@@ -1,0 +1,111 @@
+.gallery__head {
+  max-width: var(--maxw);
+  margin: 0 auto clamp(3rem, 8vh, 6rem);
+}
+.gallery__head-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: clamp(1.4rem, 4vh, 2.6rem);
+}
+.gallery__headline {
+  max-width: 14ch;
+}
+.gallery__intro {
+  margin-top: 1.6rem;
+  max-width: 48ch;
+}
+
+/* ── Asymmetric exhibit ────────────────────────────────────────────────── */
+.gallery__exhibit {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: clamp(1rem, 2.5vw, 2.4rem);
+  align-items: start;
+}
+.gallery__frame {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  will-change: transform;
+}
+.gallery__frame .ph {
+  transition: transform 1s var(--ease-lux);
+}
+.gallery__frame:hover .ph {
+  transform: scale(1.04);
+}
+
+/* Deliberately uneven placement + vertical offsets for an editorial rhythm. */
+.gallery__frame--1 {
+  grid-column: 1 / 6;
+}
+.gallery__frame--2 {
+  grid-column: 7 / 13;
+  margin-top: clamp(2rem, 8vh, 7rem);
+}
+.gallery__frame--3 {
+  grid-column: 2 / 6;
+  margin-top: clamp(1rem, 4vh, 3rem);
+}
+.gallery__frame--4 {
+  grid-column: 7 / 11;
+  margin-top: clamp(-2rem, -4vh, -1rem);
+}
+.gallery__frame--5 {
+  grid-column: 1 / 7;
+  margin-top: clamp(1rem, 5vh, 4rem);
+}
+.gallery__frame--6 {
+  grid-column: 8 / 13;
+  margin-top: clamp(-1rem, -6vh, 2rem);
+}
+
+.gallery__caption {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: clamp(1rem, 2vw, 1.6rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  background: linear-gradient(0deg, rgba(10, 9, 8, 0.85), transparent);
+  transform: translateY(30%);
+  opacity: 0;
+  transition: transform 0.6s var(--ease-lux), opacity 0.5s var(--ease-lux);
+}
+.gallery__frame:hover .gallery__caption {
+  transform: translateY(0);
+  opacity: 1;
+}
+.gallery__caption-title {
+  font-family: var(--display);
+  font-size: clamp(1.2rem, 2vw, 1.7rem);
+  color: var(--warm-white);
+}
+.gallery__caption-story {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--gold-bright);
+}
+
+@media (max-width: 760px) {
+  .gallery__exhibit {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .gallery__frame[class] {
+    grid-column: auto;
+    margin-top: 0;
+  }
+  /* Touch: captions always visible. */
+  .gallery__caption {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

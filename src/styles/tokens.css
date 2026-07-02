@@ -1,0 +1,60 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   InnSider — design tokens
+   Dark luxury: stone, marble, walnut, brass, candlelight.
+   Warm, editorial, generous. No saturated colour.
+   ───────────────────────────────────────────────────────────────────────── */
+:root {
+  /* Palette */
+  --warm-white: #f2ece1;
+  --stone: #b8ad9c;
+  --stone-dim: #7c7568;
+  --black: #0a0908;
+  --charcoal: #17140f;
+  --charcoal-2: #1f1a14;
+  --gold: #c9a96a;
+  --gold-bright: #d9bd86;
+  --bronze: #8c6a3f;
+  --amber: #e0a458;
+  --olive: #6b6f4a;
+
+  /* Semantic */
+  --bg: var(--black);
+  --ink: var(--warm-white);
+  --ink-soft: rgba(242, 236, 225, 0.66);
+  --ink-faint: rgba(242, 236, 225, 0.38);
+  --line: rgba(242, 236, 225, 0.14);
+  --line-strong: rgba(201, 169, 106, 0.4);
+
+  /* Type families */
+  --serif: 'Cormorant Garamond', 'Fraunces', Georgia, 'Times New Roman', serif;
+  --display: 'Fraunces', 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+
+  /* Fluid type scale — editorial, breathing */
+  --fs-overline: clamp(0.68rem, 0.62rem + 0.3vw, 0.8rem);
+  --fs-body: clamp(1rem, 0.96rem + 0.35vw, 1.2rem);
+  --fs-lead: clamp(1.2rem, 1rem + 1vw, 1.7rem);
+  --fs-h3: clamp(1.5rem, 1.1rem + 1.8vw, 2.4rem);
+  --fs-h2: clamp(2.4rem, 1.4rem + 4.4vw, 5rem);
+  --fs-h1: clamp(3rem, 1.2rem + 8vw, 9.5rem);
+  --fs-mega: clamp(3.6rem, 1rem + 11vw, 13rem);
+
+  /* Rhythm */
+  --pad-x: clamp(1.4rem, 6vw, 8rem);
+  --chapter-py: clamp(7rem, 16vh, 16rem);
+  --maxw: 1600px;
+  --measure: 42ch;
+
+  /* Motion */
+  --ease-lux: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0.05, 0.36, 1);
+  --dur-slow: 1.2s;
+  --dur-med: 0.7s;
+
+  /* Depth */
+  --z-atmosphere: 0;
+  --z-content: 1;
+  --z-nav: 40;
+  --z-cursor: 60;
+  --z-loader: 90;
+}

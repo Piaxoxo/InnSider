@@ -1,0 +1,279 @@
+@import './tokens.css';
+
+/* ── Reset ─────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: auto; /* Lenis owns scrolling */
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--fs-body);
+  font-weight: 300;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  /* Warm the black so pure #000 never appears — cand_light never lets it. */
+  background-image: radial-gradient(140% 120% at 50% -10%, rgba(201, 169, 106, 0.05), transparent 60%);
+}
+
+/* Hide the native cursor only where the custom cursor is active (desktop). */
+body.has-custom-cursor {
+  cursor: none;
+}
+
+img,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: rgba(201, 169, 106, 0.28);
+  color: var(--warm-white);
+}
+
+/* ── Layout scaffolding ────────────────────────────────────────────────── */
+#root {
+  position: relative;
+  z-index: var(--z-content);
+}
+
+.chapter {
+  position: relative;
+  padding: var(--chapter-py) var(--pad-x);
+  z-index: var(--z-content);
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 inline;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ── Type utilities ────────────────────────────────────────────────────── */
+.overline {
+  font-family: var(--sans);
+  font-size: var(--fs-overline);
+  font-weight: 400;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9em;
+}
+.overline::before {
+  content: '';
+  width: clamp(1.6rem, 4vw, 3.4rem);
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+.chapter-index {
+  font-family: var(--sans);
+  font-size: var(--fs-overline);
+  letter-spacing: 0.3em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+}
+
+.display {
+  font-family: var(--display);
+  font-weight: 300;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  font-size: var(--fs-h2);
+}
+
+.display--hero {
+  font-size: var(--fs-h1);
+}
+
+.display em,
+.serif-em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--gold-bright);
+}
+
+.lead {
+  font-family: var(--serif);
+  font-size: var(--fs-lead);
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: var(--measure);
+}
+
+.body {
+  color: var(--ink-soft);
+  max-width: var(--measure);
+}
+.body + .body {
+  margin-top: 1.3em;
+}
+
+.kicker {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: var(--fs-h3);
+  color: var(--gold-bright);
+  font-weight: 300;
+}
+
+/* ── Buttons ───────────────────────────────────────────────────────────── */
+.btn {
+  --_pad-y: 1.05em;
+  --_pad-x: 2.2em;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8em;
+  padding: var(--_pad-y) var(--_pad-x);
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  overflow: hidden;
+  transition: color 0.5s var(--ease-lux), border-color 0.5s var(--ease-lux);
+  isolation: isolate;
+}
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  transform: translateY(101%);
+  transition: transform 0.6s var(--ease-lux);
+}
+.btn:hover::before {
+  transform: translateY(0);
+}
+
+.btn--gold {
+  color: var(--black);
+  background: linear-gradient(180deg, var(--gold-bright), var(--gold));
+}
+.btn--gold::before {
+  background: var(--warm-white);
+}
+
+.btn--ghost {
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+}
+.btn--ghost::before {
+  background: var(--gold);
+}
+.btn--ghost:hover {
+  color: var(--black);
+  border-color: var(--gold);
+}
+
+.btn__arrow {
+  transition: transform 0.5s var(--ease-lux);
+}
+.btn:hover .btn__arrow {
+  transform: translateX(4px);
+}
+
+/* ── Reveal primitives (driven by GSAP; safe defaults if JS/animation off) ─ */
+.reveal-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.04em; /* room for descenders during clip */
+}
+.reveal-line > span {
+  display: block;
+  will-change: transform;
+}
+
+/* ── Accessibility: honour reduced motion ──────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  body.has-custom-cursor {
+    cursor: auto;
+  }
+}
+
+/* Focus visibility for keyboard users. */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 1rem;
+  z-index: 100;
+  background: var(--gold);
+  color: var(--black);
+  padding: 0.8em 1.4em;
+  border-radius: 6px;
+  transition: top 0.3s var(--ease-lux);
+}
+.skip-link:focus {
+  top: 1rem;
+}

@@ -1,0 +1,16 @@
+.atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-atmosphere);
+  pointer-events: none;
+  /* Fallback warmth before the canvas paints its first frame. */
+  background:
+    radial-gradient(60% 50% at 18% 34%, rgba(201, 169, 106, 0.18), transparent 60%),
+    var(--black);
+}
+
+.atmosphere canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
