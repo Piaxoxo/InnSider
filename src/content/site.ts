@@ -108,6 +108,7 @@ export const menu = {
   overline: 'The Table',
   headline: 'Read it slowly.\nIt was written that way.',
   intro: 'A short, changing menu built around what the season gives us. These are a few of the plates guests return for — the full card lives at your table.',
+  seasonNote: 'A taste of the season',
   dishes: [
     {
       name: 'Geschmorte Rindsbackerln',
@@ -118,12 +119,36 @@ export const menu = {
       tag: 'Signature',
     },
     {
-      name: 'Erdäpfelgratin & Gelbes Gemüsecurry',
-      en: 'Potato gratin, yellow vegetable curry',
-      note: 'Comfort and spice in one plate — regional potatoes, gentle warmth.',
-      price: '11.80',
+      name: 'Fischfilet im Speckmantel',
+      en: 'Speck-wrapped fish, tomato risotto',
+      note: 'Delicate fish under crisp speck, on a tomato risotto with summer vegetables.',
+      price: '19.80',
       pairing: 'Grüner Veltliner, Wachau',
+      tag: 'From the pass',
+    },
+    {
+      name: 'Radicchio, Birne & Walnuss',
+      en: 'Radicchio, pear & candied walnut',
+      note: 'Bitter leaves, sweet pear, burrata and toasted walnut with warm flatbread.',
+      price: '12.80',
+      pairing: 'Sauvignon Blanc, Steiermark',
       tag: 'Vegetarian',
+    },
+    {
+      name: 'Pfirsich & Burrata',
+      en: 'Summer stone fruit & burrata',
+      note: 'Ripe peach, creamy burrata and chervil — summer on a plate.',
+      price: '13.80',
+      pairing: 'Rosé, Neusiedlersee',
+      tag: 'Seasonal',
+    },
+    {
+      name: 'Gewürzhähnchen-Wrap',
+      en: 'Spiced chicken, herbs, flatbread',
+      note: 'Warm-spiced chicken, fresh herbs and soft flatbread. Made to be picked up.',
+      price: '14.80',
+      pairing: 'Riesling, Kamptal',
+      tag: 'Handheld',
     },
     {
       name: 'The InnSider Burger',
@@ -132,14 +157,6 @@ export const menu = {
       price: '15.80',
       pairing: 'Zweigelt, Carnuntum',
       tag: 'The Classic',
-    },
-    {
-      name: 'Seasonal Catch',
-      en: 'From the day’s market',
-      note: 'Whatever arrived fresh this morning, treated with the respect it earned.',
-      price: 'Daily',
-      pairing: 'Chef’s pour',
-      tag: 'Off-menu',
     },
   ],
 } as const
@@ -151,9 +168,9 @@ export const bar = {
   headline: 'The lights come down.\nThe night opens up.',
   intro: 'When dinner settles, the room changes key. Brass warms, glass catches candlelight, and the bar takes over the storytelling.',
   drinks: [
+    { name: 'The Golden-Hour Spritz', base: 'Aperol · prosecco · orange', mood: 'Sun in a glass' },
     { name: 'The Meidling Old Fashioned', base: 'Rye · house bitters · burnt orange', mood: 'Slow & amber' },
     { name: 'Alice’s Garden', base: 'Gin · elderflower · garden herbs', mood: 'Bright & green' },
-    { name: 'Smoke & Stone', base: 'Mezcal · walnut · smoked ice', mood: 'Dark & quiet' },
     { name: 'The Nightcap', base: 'Cognac · coffee · cream', mood: 'The last word' },
   ],
 } as const

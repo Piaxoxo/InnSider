@@ -134,6 +134,45 @@
   color: var(--gold-bright);
 }
 
+/* ── Cocktails in the glass ────────────────────────────────────────────── */
+.bar__glass {
+  margin-top: clamp(1rem, 2.5vw, 1.6rem);
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: clamp(1rem, 2.5vw, 1.6rem);
+}
+.bar__glass-item {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.bar__glass-item .ph {
+  transition: transform 1.1s var(--ease-lux);
+}
+.bar__glass-item:hover .ph {
+  transform: scale(1.04);
+}
+.bar__glass-item figcaption {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 1.2rem 1.1rem 1rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--warm-white);
+  background: linear-gradient(0deg, rgba(10, 9, 8, 0.82), transparent);
+}
+/* The guest frame is landscape-tall; crop the portrait to sit level with the drink. */
+.bar__glass-item--guest .ph {
+  aspect-ratio: auto !important;
+  height: 100%;
+}
+.bar__glass-item--guest {
+  min-height: 0;
+}
+
 @media (max-width: 1000px) {
   .bar__cards {
     grid-template-columns: repeat(2, 1fr);
@@ -144,6 +183,14 @@
   }
   .bar__portrait {
     max-width: 420px;
+  }
+  .bar__glass {
+    grid-template-columns: 1fr;
+    max-width: 460px;
+  }
+  .bar__glass-item--guest .ph {
+    aspect-ratio: 2 / 3 !important;
+    height: auto;
   }
 }
 @media (max-width: 560px) {

@@ -17,6 +17,48 @@
   max-width: 50ch;
 }
 
+/* ── Seasonal triptych ─────────────────────────────────────────────────── */
+.menu__season {
+  margin-top: clamp(2.6rem, 6vh, 4.4rem);
+}
+.menu__season-label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.66rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.2rem;
+}
+.menu__season-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(0.8rem, 2vw, 1.6rem);
+}
+.menu__season-item {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.menu__season-item .ph {
+  transition: transform 1s var(--ease-lux);
+}
+.menu__season-item:hover .ph {
+  transform: scale(1.05);
+}
+.menu__season-item figcaption {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 1.1rem 1rem 0.9rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--warm-white);
+  background: linear-gradient(0deg, rgba(10, 9, 8, 0.8), transparent);
+}
+
 .menu__body {
   margin-top: clamp(3rem, 8vh, 6rem);
   display: grid;
@@ -146,6 +188,10 @@
 @media (max-width: 900px) {
   .menu__body {
     grid-template-columns: 1fr;
+  }
+  .menu__season-grid {
+    grid-template-columns: 1fr;
+    max-width: 460px;
   }
   .menu__feature {
     position: relative;

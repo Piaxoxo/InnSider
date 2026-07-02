@@ -7,9 +7,19 @@ import { menu } from '../content/site'
 import { media } from '../content/assets'
 import './menu.css'
 
-// Rotate the three delivered dish slots across the four menu entries so each
-// selection lights a distinct frame; the fourth reuses the hero plate.
-const dishSlots = [media.dishHero, media.dish2, media.dish3, media.dishHero]
+// One frame per dish, in menu order. Real photos where delivered; the two
+// signatures (beef cheeks, burger) hold their placeholder until shot.
+const dishSlots = [
+  media.dishBeef,
+  media.dishFish,
+  media.dishRadicchio,
+  media.dishPeach,
+  media.dishChicken,
+  media.dishBurger,
+]
+
+// Ambient "taste of the season" plates shown beneath the intro.
+const seasonSlots = [media.seasonSoup, media.seasonSalad, media.seasonRose]
 
 /**
  * Chapter Four — The Table.
@@ -19,6 +29,7 @@ const dishSlots = [media.dishHero, media.dish2, media.dish3, media.dishHero]
 export function Menu() {
   const [active, setActive] = useState(0)
   const headRef = useReveal<HTMLDivElement>({ selector: '[data-reveal]', y: 28 })
+  const seasonRef = useReveal<HTMLDivElement>({ selector: '[data-reveal-s]', y: 36, stagger: 0.1 })
   const listRef = useReveal<HTMLUListElement>({ selector: '.menu__row', y: 30, stagger: 0.1 })
   const dish = menu.dishes[active]
 
@@ -34,6 +45,21 @@ export function Menu() {
           <p className="lead menu__intro" data-reveal>
             {menu.intro}
           </p>
+        </div>
+
+        {/* A taste of the season — ambient plates. */}
+        <div className="menu__season" ref={seasonRef}>
+          <span className="menu__season-label" data-reveal-s>
+            {menu.seasonNote}
+          </span>
+          <div className="menu__season-grid">
+            {seasonSlots.map((s) => (
+              <figure className="menu__season-item" key={s.id} data-reveal-s data-cursor="hover">
+                <Placeholder slot={s} />
+                <figcaption>{s.label}</figcaption>
+              </figure>
+            ))}
+          </div>
         </div>
 
         <div className="menu__body">
@@ -87,7 +113,7 @@ export function Menu() {
                     <p className="menu__row-note">{d.note}</p>
                   </div>
                   <span className="menu__row-price">
-                    {d.price === 'Daily' ? d.price : `€ ${d.price}`}
+                    {/^\d/.test(d.price) ? `€ ${d.price}` : d.price}
                   </span>
                 </button>
               </li>

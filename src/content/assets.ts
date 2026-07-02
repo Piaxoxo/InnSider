@@ -53,15 +53,36 @@ export const media = {
   aliceRoom: live('alice-room', R, 'The room she built', 'InnSider facade — guests at the window, brick, brass, summer light.', '/media/innsider-facade-guests.jpg'),
 
   stefanPortrait: slot('stefan-portrait', 'image', 3 / 4, 'Chef Stefan', 'At the pass, mid-motion, steam and fire behind — the heart of the kitchen.'),
-  stefanHands: slot('stefan-hands', 'image', 4 / 5, 'The craft', 'Macro of hands plating — herbs, sauce, tension of the final touch.'),
+  // DELIVERED — a plated close-up: radicchio, burrata and a rose, the craft.
+  stefanHands: live('stefan-hands', R, 'The craft', 'A finished plate, close — radicchio, burrata, chervil, a rose.', '/media/craft-salad-macro.jpg'),
   kitchenFire: slot('kitchen-fire', 'video', 16 / 9, 'Kitchen motion', 'Loop: flame, knife, steam — cinematic, shallow depth of field.'),
 
-  dishHero: slot('dish-hero', 'image', 4 / 5, 'Signature plate', 'Overhead, cinematic, single hero dish on stone — steam optional.'),
-  dish2: slot('dish-2', 'image', 1, 'Plate detail', 'Close macro, texture and sauce, shallow focus.'),
-  dish3: slot('dish-3', 'image', 1, 'Plate detail', 'Close macro, contrasting colour and texture.'),
+  // ── The Table — real InnSider plates (two signatures still await their hero) ──
+  dishBeef: slot('dish-beef', 'image', R, 'Rindsbackerln', 'Slow-braised beef cheeks, wine-dark jus — hero shot on stone.'),
+  // DELIVERED — speck-wrapped fish on tomato risotto by the window.
+  dishFish: live('dish-fish', RP, 'Fischfilet im Speckmantel', 'Speck-wrapped fish on tomato risotto and summer vegetables.', '/media/dish-fish-risotto.jpg'),
+  // DELIVERED — radicchio, pear, walnut and burrata, overhead.
+  dishRadicchio: live('dish-radicchio', R, 'Radicchio, Birne & Walnuss', 'Radicchio, pear, candied walnut and burrata with flatbread.', '/media/dish-radicchio.jpg'),
+  // DELIVERED — summer peach and burrata, close.
+  dishPeach: live('dish-peach', R, 'Pfirsich & Burrata', 'Summer stone fruit, burrata and chervil.', '/media/dish-peach-burrata.jpg'),
+  // DELIVERED — spiced chicken wrap, herbs.
+  dishChicken: live('dish-chicken', R, 'Gewürzhähnchen-Wrap', 'Spiced chicken, herbs and flatbread.', '/media/dish-chicken-wrap.jpg'),
+  dishBurger: slot('dish-burger', 'image', R, 'The InnSider Burger', '200g Austrian beef, house bun — hero shot.'),
 
-  cocktail1: slot('cocktail-1', 'image', 3 / 4, 'Signature cocktail', 'Dark background, single light source, ice and reflection.'),
-  cocktail2: slot('cocktail-2', 'image', 3 / 4, 'Signature cocktail', 'Golden reflection, smoke or citrus twist.'),
+  // Seasonal triptych — ambient plates under the menu intro.
+  // DELIVERED — soup of the day with garden flowers.
+  seasonSoup: live('season-soup', R, 'Soup of the day', 'Chilled seasonal soup, garden herbs and flowers.', '/media/season-soup.jpg'),
+  // DELIVERED — peach and radicchio salad, window light.
+  seasonSalad: live('season-salad', R, 'From the garden', 'Peach, radicchio and chervil in the window light.', '/media/season-salad.jpg'),
+  // DELIVERED — a rose resting on the plate rim.
+  seasonRose: live('season-rose', R, 'The detail', 'A rose on the plate rim — nothing here is accidental.', '/media/season-rose.jpg'),
+
+  // ── The Bar — cocktails & a golden-hour guest ──
+  // DELIVERED — the Aperol spritz in full sun.
+  cocktailAperol: live('cocktail-aperol', RP, 'The Spritz', 'Aperol, orange and ice, glowing in the afternoon sun.', '/media/cocktail-aperol.jpg'),
+  // DELIVERED — a guest at the window bar with a spritz, golden light.
+  barGuest: live('bar-guest', RP, 'Golden hour', 'A guest at the window bar, spritz in hand, sun on brick.', '/media/bar-guest-aperol.jpg'),
+
   // DELIVERED — friends toasting at the brick bar counter, beer and Aperol.
   // Drives the Bar chapter's full-bleed backdrop.
   barScene: live('bar-scene', R, 'The bar after dark', 'A toast at the counter — brick, brass and good company.', '/media/bar-cheers.jpg'),
@@ -83,6 +104,18 @@ export const media = {
 
   // DELIVERED — the full room: bar, industrial lights, tables ready.
   eventsRoom: live('events-room', 16 / 9, 'The whole room', 'The dining room and bar, dressed and ready for the evening.', '/media/interior-bar-wide.jpg'),
+
+  // ── Occasions — real celebration moments ──
+  // DELIVERED — a bottle of Moët rosé glowing in the sun.
+  eventChampagne: live('event-champagne', RP, 'To celebrate', 'A bottle of rosé champagne, caught in the afternoon light.', '/media/event-champagne.jpg'),
+  // DELIVERED — a long table of friends over dinner, phones and laughter.
+  eventGathering: live('event-gathering', R, 'The table, full', 'A long table of friends, mid-celebration — the room at its warmest.', '/media/event-gathering.jpg'),
+  // DELIVERED — an evening dinner in close conversation.
+  eventDinner: live('event-dinner', R, 'Deep in the evening', 'Dinner and drinks, conversation leaning in.', '/media/event-dinner.jpg'),
+  // DELIVERED — guests mingling and welcomed at a party.
+  eventWelcome: live('event-welcome', R, 'Arrivals', 'Coats still on, first hellos — a gathering coming together.', '/media/event-welcome.jpg'),
+  // DELIVERED — two guests in a warm embrace at an event.
+  eventEmbrace: live('event-embrace', R, 'Reunions', 'An embrace across the room — the reason people come back.', '/media/event-embrace.jpg'),
 } as const
 
 export type MediaKey = keyof typeof media

@@ -14,6 +14,7 @@ import './bar.css'
 export function Bar() {
   const headRef = useReveal<HTMLDivElement>({ selector: '[data-reveal]', y: 28 })
   const cardsRef = useReveal<HTMLDivElement>({ selector: '.bar__card', y: 50, stagger: 0.12 })
+  const glassRef = useReveal<HTMLDivElement>({ selector: '.bar__glass-item', y: 44, stagger: 0.15 })
 
   return (
     <section id="bar" className="chapter bar" aria-label="The bar">
@@ -53,6 +54,18 @@ export function Bar() {
               <span className="bar__card-mood">{d.mood}</span>
             </article>
           ))}
+        </div>
+
+        {/* Cocktails in the glass — the spritz and a golden-hour guest. */}
+        <div className="bar__glass" ref={glassRef}>
+          <figure className="bar__glass-item bar__glass-item--drink" data-cursor="hover">
+            <Placeholder slot={media.cocktailAperol} />
+            <figcaption>{media.cocktailAperol.label}</figcaption>
+          </figure>
+          <figure className="bar__glass-item bar__glass-item--guest" data-cursor="hover">
+            <Placeholder slot={media.barGuest} />
+            <figcaption>{media.barGuest.label}</figcaption>
+          </figure>
         </div>
       </div>
     </section>

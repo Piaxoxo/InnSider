@@ -89,6 +89,76 @@
   transform: scaleX(1);
 }
 
+/* ── Moments collage ───────────────────────────────────────────────────── */
+.events__moments {
+  margin-top: clamp(2.5rem, 7vh, 5rem);
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: clamp(0.8rem, 2vw, 1.6rem);
+  align-items: start;
+}
+.events__moment {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.events__moment .ph {
+  transition: transform 1s var(--ease-lux);
+}
+.events__moment:hover .ph {
+  transform: scale(1.04);
+}
+.events__moment figcaption {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 1.1rem 1rem 0.9rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--warm-white);
+  background: linear-gradient(0deg, rgba(10, 9, 8, 0.82), transparent);
+  transform: translateY(20%);
+  opacity: 0;
+  transition: transform 0.6s var(--ease-lux), opacity 0.5s;
+}
+.events__moment:hover figcaption {
+  transform: translateY(0);
+  opacity: 1;
+}
+/* Asymmetric spans: one tall portrait anchor + wide landscapes. */
+.events__moment--1 {
+  grid-column: span 4;
+}
+.events__moment--2 {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+.events__moment--3 {
+  grid-column: span 3;
+}
+.events__moment--4 {
+  grid-column: span 3;
+}
+.events__moment--5 {
+  grid-column: span 4;
+}
+
+@media (max-width: 760px) {
+  .events__moments {
+    grid-template-columns: 1fr 1fr;
+  }
+  .events__moment[class] {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .events__moment figcaption {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 /* ── CTA ───────────────────────────────────────────────────────────────── */
 .events__cta {
   margin-top: clamp(3rem, 8vh, 5.5rem);

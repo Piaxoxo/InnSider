@@ -1,32 +1,37 @@
 Drop delivered photography & video here.
 Filenames must match the `src` paths set in src/content/assets.ts.
 
-── DELIVERED BRAND PHOTOS — save the shared photos as these exact names ──
-(All are already wired into the site. Until a file exists its frame shows the
-premium placeholder and the layout does NOT break — add the file and the frame
-lights up automatically, no code change.)
+Every slot is already wired. Until a file exists its frame shows the premium
+placeholder and the layout does NOT break — add the file and the frame lights
+up automatically, no code change.
 
-  innsider-facade-guests.jpg  -> "The room she built" (Ch.2 The Dream)
-                                 Exterior: guests at the window counters.
-  interior-bar-wide.jpg       -> "The whole room"     (Ch.8 Occasions)
-                                 The full dining room + bar, dressed and ready.
-  bar-cheers.jpg              -> Bar backdrop          (Ch.5 The Bar)
-                                 Friends toasting at the brick bar counter.
-  server-table.jpg            -> "Hospitality"         (Ch.5 The Bar)
-                                 A server mid-conversation with guests.
-  guest-portrait.jpg          -> "The welcome"         (Ch.7 The Rooms)
-                                 Smiling guest on the street at golden hour.
-  wine-pour-table.jpg         -> "The long table"      (Ch.7 The Rooms)
-                                 Red wine poured at the dinner table.
-  bar-counter-detail.jpg      -> "The bar"             (Ch.7 The Rooms)
-                                 The counter: taps, glassware, reclaimed wood.
-  interior-nook-teal.jpg      -> "The corner"          (Ch.7 The Rooms)
-                                 Teal reading nook with the vintage-camera wall.
-  beer-taps.jpg               -> "On tap"              (Ch.7 The Rooms)
-                                 The golser beer taps, close and gleaming.
-  wine-fridge-brueckner.jpg   -> "The cellar"          (Ch.7 The Rooms)
-                                 Hand drawing a Blaufraenkisch from the rack.
+── INTERIORS / PEOPLE ──────────────────────────────────────────────────────
+  innsider-facade-guests.jpg   "The room she built"  (Ch.2 The Dream)
+  interior-bar-wide.jpg        "The whole room"      (Ch.8 Occasions)
+  bar-cheers.jpg               Bar backdrop          (Ch.5 The Bar)
+  server-table.jpg             "Hospitality"         (Ch.5 The Bar)
+  guest-portrait.jpg           "The welcome"         (Ch.7 The Rooms)
+  wine-pour-table.jpg          "The long table"      (Ch.7 The Rooms)
+  bar-counter-detail.jpg       "The bar"             (Ch.7 The Rooms)
+  interior-nook-teal.jpg       "The corner"          (Ch.7 The Rooms)
+  beer-taps.jpg                "On tap"              (Ch.7 The Rooms)
+  wine-fridge-brueckner.jpg    "The cellar"          (Ch.7 The Rooms)
 
-── STILL AWAITING ── (optional; placeholders describe the brief for each)
-  Portraits of Alice Kern and Chef Stefan, close-up food/plating, cocktails,
-  and the hero/kitchen motion loops. See src/content/assets.ts for specs.
+── FOOD ────────────────────────────────────────────────────────────────────
+  dish-fish-risotto.jpg        "Fischfilet im Speckmantel"   (Ch.4 The Table)
+  dish-radicchio.jpg           "Radicchio, Birne & Walnuss"  (Ch.4 The Table)
+  dish-peach-burrata.jpg       "Pfirsich & Burrata"          (Ch.4 The Table)
+  dish-chicken-wrap.jpg        "Gewuerzhaehnchen-Wrap"       (Ch.4 The Table)
+  season-soup.jpg              "Soup of the day"             (Ch.4 triptych)
+  season-salad.jpg             "From the garden"             (Ch.4 triptych)
+  season-rose.jpg              "The detail"                  (Ch.4 triptych)
+  craft-salad-macro.jpg        "The craft"                   (Ch.3 The Kitchen)
+
+── DRINKS ──────────────────────────────────────────────────────────────────
+  cocktail-aperol.jpg          "The Spritz"       (Ch.5 The Bar)
+  bar-guest-aperol.jpg         "Golden hour"      (Ch.5 The Bar)
+
+── STILL AWAITING ── (placeholders describe the brief for each)
+  Portraits of Alice Kern and Chef Stefan; hero shots of the two signatures
+  (Rindsbackerln beef cheeks, the InnSider Burger); the hero + kitchen motion
+  loops. See src/content/assets.ts for the shot specs.

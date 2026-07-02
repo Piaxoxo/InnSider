@@ -11,9 +11,19 @@ import './events.css'
  * The evenings that deserve the whole room. An editorial header over a wide
  * private-room frame, then the occasions as a warm, hover-lifting list.
  */
+// Real celebration moments — a collage of evenings that mattered.
+const moments = [
+  media.eventGathering,
+  media.eventChampagne,
+  media.eventWelcome,
+  media.eventEmbrace,
+  media.eventDinner,
+]
+
 export function Events() {
   const headRef = useReveal<HTMLDivElement>({ selector: '[data-reveal]', y: 28 })
   const listRef = useReveal<HTMLDivElement>({ selector: '.events__card', y: 40, stagger: 0.1 })
+  const momentsRef = useReveal<HTMLDivElement>({ selector: '.events__moment', y: 44, stagger: 0.1 })
 
   return (
     <section id="events" className="chapter events" aria-label="Occasions — private events">
@@ -41,6 +51,16 @@ export function Events() {
               <p className="events__card-body">{c.body}</p>
               <span className="events__card-line" aria-hidden="true" />
             </article>
+          ))}
+        </div>
+
+        {/* Real celebration moments — an asymmetric collage. */}
+        <div className="events__moments" ref={momentsRef}>
+          {moments.map((m, i) => (
+            <figure className={`events__moment events__moment--${i + 1}`} key={m.id} data-cursor="hover">
+              <Placeholder slot={m} />
+              <figcaption>{m.label}</figcaption>
+            </figure>
           ))}
         </div>
 
