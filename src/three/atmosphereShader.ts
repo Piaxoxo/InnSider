@@ -1,11 +1,12 @@
 /**
- * Atmosphere shader — the evening's living light.
+ * Atmosphere shader — the evening's living light (v2, "edel").
  *
- * A single fullscreen fragment shader that renders warm volumetric light:
- * a drifting glow (the candle / the window), rising fog built from fbm noise,
- * faint god-rays and film grain. The three palette colours (base / glow /
- * accent) are lerped on the CPU from the per-chapter grades and fed in as
- * uniforms, so the whole environment re-lights as the guest scrolls the night.
+ * A single fullscreen fragment shader rendering warm, volumetric light with a
+ * more premium, layered look: domain-warped fog, a near/far two-layer glow,
+ * refined god-rays, a cool rim accent for elegance against the warm gold, and
+ * a scroll-driven vertical parallax so the environment feels 3-D as you move
+ * through the night. Palette (base/glow/accent) is lerped on the CPU per
+ * chapter and fed in as uniforms.
  */
 
 export const atmosphereVert = /* glsl */ `
@@ -24,6 +25,7 @@ export const atmosphereFrag = /* glsl */ `
   uniform float uTime;
   uniform vec2  uResolution;
   uniform vec2  uPointer;    // -1..1, eased
+  uniform float uScroll;     // 0..1 overall scroll progress
   uniform float uReduced;    // 1.0 when reduced-motion
   uniform vec3  uBase;
   uniform vec3  uGlow;
@@ -48,69 +50,81 @@ export const atmosphereFrag = /* glsl */ `
   float fbm(vec2 p) {
     float v = 0.0;
     float amp = 0.5;
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 6; i++) {
       v += amp * noise(p);
-      p *= 2.02;
+      p = p * 2.03 + vec2(11.1, 7.3);
       amp *= 0.5;
     }
     return v;
   }
+  // domain-warped fbm — organic, layered smoke
+  float warp(vec2 p, float t) {
+    vec2 q = vec2(fbm(p + vec2(0.0, t * 0.05)), fbm(p + vec2(5.2, 1.3 - t * 0.04)));
+    vec2 r = vec2(fbm(p + 1.7 * q + vec2(8.3, 2.8)), fbm(p + 1.7 * q + vec2(1.2, 6.9)));
+    return fbm(p + 1.5 * r);
+  }
 
   void main() {
-    // aspect-correct coordinates centred at 0
     vec2 uv = vUv;
     vec2 p = (uv - 0.5);
     p.x *= uResolution.x / uResolution.y;
 
     float t = uTime * (uReduced > 0.5 ? 0.0 : 1.0);
+    // Scroll adds a slow descent through the volume (parallax in depth).
+    float depth = uScroll;
 
-    // Light source position: high, drifting, nudged by the pointer.
-    vec2 lightPos = vec2(0.12 + uPointer.x * 0.10, 0.34 + uPointer.y * 0.06);
+    // Drifting light source (candle / window), nudged by pointer + scroll.
+    vec2 lightPos = vec2(0.12 + uPointer.x * 0.12, 0.36 + uPointer.y * 0.07 - depth * 0.15);
     lightPos.x += sin(t * 0.07) * 0.06;
     lightPos.y += cos(t * 0.05) * 0.03;
-
     float d = distance(p, lightPos);
 
-    // Base wash — a soft vertical warmth from the top.
+    // Base wash + soft top warmth.
     vec3 col = uBase;
-    float topWarm = smoothstep(1.0, -0.2, uv.y);
-    col = mix(col, uBase * 1.5 + uAccent * 0.15, topWarm * 0.5);
+    float topWarm = smoothstep(1.0, -0.25, uv.y);
+    col = mix(col, uBase * 1.55 + uAccent * 0.16, topWarm * 0.5);
 
-    // Rising fog: fbm scrolled upward, denser low, tinted with accent.
-    vec2 fogUv = vec2(p.x * 1.2, uv.y * 1.6 - t * 0.03);
-    float fog = fbm(fogUv * 2.4 + fbm(fogUv * 1.1 + t * 0.02));
-    fog = smoothstep(0.25, 1.0, fog);
-    float fogMask = smoothstep(0.05, 0.75, uv.y); // more toward the floor
-    col = mix(col, col + uAccent * 0.6, fog * (1.0 - fogMask) * 0.5);
+    // Rising, domain-warped fog — parallaxes upward with time + scroll.
+    vec2 fogUv = vec2(p.x * 1.15, uv.y * 1.5 - t * 0.03 - depth * 0.4);
+    float fog = warp(fogUv * 2.1, t);
+    fog = smoothstep(0.28, 1.0, fog);
+    float floorMask = smoothstep(0.05, 0.8, uv.y);
+    col = mix(col, col + uAccent * 0.7, fog * (1.0 - floorMask) * 0.55);
 
-    // The glow — candle / window bloom.
-    float glow = 0.16 / (d * d + 0.05);
-    glow += 0.09 / (d + 0.14);
-    col += uGlow * glow * 0.5;
+    // Two-layer glow: tight near-core + soft far halo.
+    float core = 0.14 / (d * d + 0.045);
+    float halo = 0.10 / (d + 0.16);
+    col += uGlow * (core * 0.5 + halo * 0.5);
 
-    // Faint god-rays radiating from the light.
+    // Refined god-rays radiating from the light.
     vec2 dir = normalize(p - lightPos + 1e-4);
     float ang = atan(dir.y, dir.x);
-    float rays = 0.5 + 0.5 * sin(ang * 12.0 + t * 0.2);
-    rays *= smoothstep(0.9, 0.0, d);
-    col += uGlow * rays * 0.05;
+    float rays = 0.5 + 0.5 * sin(ang * 14.0 + t * 0.25);
+    rays *= 0.6 + 0.4 * sin(ang * 5.0 - t * 0.15);
+    rays *= smoothstep(1.0, 0.0, d);
+    col += uGlow * rays * 0.045;
 
-    // Distant embers / dust sparkle (very subtle).
-    float spark = fbm(p * 18.0 + t * 0.15);
-    spark = pow(smoothstep(0.82, 1.0, spark), 3.0);
-    col += uGlow * spark * 0.5;
+    // Cool rim accent toward the far edges — the "edel" contrast.
+    vec3 coolTint = vec3(0.36, 0.45, 0.62);
+    float rim = smoothstep(0.55, 1.25, length(p));
+    col = mix(col, col + coolTint * 0.10, rim * (0.4 + 0.3 * fog));
 
-    // Vignette — draw the eye inward, deepen the shadows.
-    float vig = smoothstep(1.25, 0.25, length(p));
-    col *= mix(0.55, 1.05, vig);
+    // Distant ember sparkle.
+    float spark = warp(p * 9.0 + t * 0.1, t);
+    spark = pow(smoothstep(0.86, 1.0, spark), 3.0);
+    col += uGlow * spark * 0.6;
 
-    // Film grain.
+    // Vignette — deepen the shadows, draw the eye in.
+    float vig = smoothstep(1.3, 0.25, length(p));
+    col *= mix(0.5, 1.06, vig);
+
+    // Film grain (subtle, animated).
     float grain = hash(uv * uResolution + t) - 0.5;
-    col += grain * 0.025;
+    col += grain * 0.022;
 
-    // Gentle filmic tone curve.
-    col = col / (col + vec3(0.85));
-    col = pow(col, vec3(0.92));
+    // Filmic tone curve + gentle lift.
+    col = col / (col + vec3(0.82));
+    col = pow(col, vec3(0.9));
 
     gl_FragColor = vec4(col, 1.0);
   }

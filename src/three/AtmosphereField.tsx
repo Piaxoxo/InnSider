@@ -24,6 +24,7 @@ export function AtmosphereField({ reduced }: { reduced: boolean }) {
       uTime: { value: 0 },
       uResolution: { value: new THREE.Vector2(size.width, size.height) },
       uPointer: { value: new THREE.Vector2(0, 0) },
+      uScroll: { value: 0 },
       uReduced: { value: reduced ? 1 : 0 },
       uBase: { value: new THREE.Vector3(...grades[0].base) },
       uGlow: { value: new THREE.Vector3(...grades[0].glow) },
@@ -49,6 +50,7 @@ export function AtmosphereField({ reduced }: { reduced: boolean }) {
     } else {
       u.uPointer.value.set(0, 0)
     }
+    u.uScroll.value = THREE.MathUtils.clamp(scrollState.progress, 0, 1)
 
     // Map global progress across the grade stops and lerp between neighbours.
     const n = grades.length

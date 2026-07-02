@@ -105,10 +105,6 @@ export function Dream() {
             <blockquote>“{dream.pullQuote}”</blockquote>
             <figcaption>{dream.attribution}</figcaption>
           </figure>
-
-          <div className="dream__portrait" data-reveal>
-            <Placeholder slot={media.alicePortrait} />
-          </div>
         </div>
       </div>
     </section>

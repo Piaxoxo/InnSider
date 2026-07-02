@@ -47,12 +47,12 @@ const RP = 2 / 3 // portrait
 export const media = {
   heroAmbient: slot('hero-ambient', 'video', 16 / 9, 'Hero film', 'Slow push through the candlelit room at golden hour — steam, glass, light rays.'),
 
-  alicePortrait: slot('alice-portrait', 'image', 3 / 4, 'Alice Kern', 'Editorial portrait, warm window light, quiet and confident — not corporate.'),
   // DELIVERED — the InnSider facade: guests at the window counters, brick and
   // brass, summer light. The dream become a room you can walk into.
-  aliceRoom: live('alice-room', R, 'The room she built', 'InnSider facade — guests at the window, brick, brass, summer light.', '/media/innsider-facade-guests.jpg'),
+  aliceRoom: live('alice-room', R, 'Der Raum, den sie erschuf', 'Die Innsider-Fassade — Gäste am Fenster, Ziegel, Messing, Sommerlicht.', '/media/innsider-facade-guests.jpg'),
 
-  stefanPortrait: slot('stefan-portrait', 'image', 3 / 4, 'Chef Stefan', 'At the pass, mid-motion, steam and fire behind — the heart of the kitchen.'),
+  // DELIVERED — Chef Stefan in der Küche.
+  stefanPortrait: live('stefan-portrait', 4 / 5, 'Chef Stefan', 'In der Küche – „Super-Koch Stefan".', '/media/stefan-portrait.jpg'),
   // DELIVERED — a plated close-up: radicchio, burrata and a rose, the craft.
   stefanHands: live('stefan-hands', R, 'The craft', 'A finished plate, close — radicchio, burrata, chervil, a rose.', '/media/craft-salad-macro.jpg'),
   kitchenFire: slot('kitchen-fire', 'video', 16 / 9, 'Kitchen motion', 'Loop: flame, knife, steam — cinematic, shallow depth of field.'),
@@ -67,6 +67,9 @@ export const media = {
   dishPeach: live('dish-peach', R, 'Sommerlich', 'Leicht und frisch.', '/media/dish-peach-burrata.jpg'),
   // DELIVERED — Teller vom Mittagstisch.
   dishChicken: live('dish-chicken', R, 'Vom Mittagstisch', 'Täglich frisch zubereitet.', '/media/dish-chicken-wrap.jpg'),
+  // DELIVERED — Rote-Bete-Salat mit Ziegenkäse, zwei Perspektiven.
+  dishBeet1: live('dish-beet-1', R, 'Rote Bete & Ziegenkäse', 'Rucola, Balsamico, knusprige Croûtons.', '/media/dish-beet-1.jpg'),
+  dishBeet2: live('dish-beet-2', R, 'Liebevoll angerichtet', 'Geschmack, Textur und Präsentation in Harmonie.', '/media/dish-beet-2.jpg'),
 
   // „A taste of the season" — weitere Teller.
   // DELIVERED — Suppe (echt: Gäste loben die ausgezeichneten Suppen).

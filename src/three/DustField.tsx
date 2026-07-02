@@ -16,9 +16,10 @@ export function DustField({ count = 320, reduced }: { count?: number; reduced: b
     const positions = new Float32Array(count * 3)
     const seeds = new Float32Array(count)
     for (let i = 0; i < count; i++) {
-      positions[i * 3 + 0] = (rand(i, 1) * 2 - 1) * 6
-      positions[i * 3 + 1] = (rand(i, 2) * 2 - 1) * 4
-      positions[i * 3 + 2] = rand(i, 3) * -4 - 0.5
+      positions[i * 3 + 0] = (rand(i, 1) * 2 - 1) * 7
+      positions[i * 3 + 1] = (rand(i, 2) * 2 - 1) * 4.5
+      // Wider depth spread → stronger parallax under the camera rig.
+      positions[i * 3 + 2] = rand(i, 3) * -7.5 - 0.8
       seeds[i] = rand(i, 4)
     }
     return { positions, seeds }

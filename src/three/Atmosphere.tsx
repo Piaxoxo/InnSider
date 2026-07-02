@@ -1,9 +1,34 @@
-import { Canvas } from '@react-three/fiber'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Suspense } from 'react'
+import * as THREE from 'three'
 import { AtmosphereField } from './AtmosphereField'
 import { DustField } from './DustField'
 import { useReducedMotion, isTouch } from '../lib/useReducedMotion'
+import { scrollState } from '../lib/scroll'
+import { pointer } from '../lib/pointer'
 import './atmosphere.css'
+
+/**
+ * Eases the camera through the dust volume: it dollies in and descends as the
+ * guest scrolls the night, and drifts with the pointer — giving the ambient
+ * particles genuine 3-D parallax behind the content. The fullscreen light
+ * shader is camera-independent, so only the depth layers respond.
+ */
+function CameraRig({ reduced }: { reduced: boolean }) {
+  const { camera } = useThree()
+  useFrame(() => {
+    if (reduced) return
+    const s = THREE.MathUtils.clamp(scrollState.progress, 0, 1)
+    const tx = pointer.x * 0.35
+    const ty = pointer.y * 0.22 - s * 0.6
+    const tz = 5 - s * 1.1
+    camera.position.x += (tx - camera.position.x) * 0.04
+    camera.position.y += (ty - camera.position.y) * 0.04
+    camera.position.z += (tz - camera.position.z) * 0.04
+    camera.lookAt(0, 0, -1)
+  })
+  return null
+}
 
 /**
  * The persistent cinematic environment. One fixed WebGL canvas behind the
@@ -29,6 +54,7 @@ export function Atmosphere() {
         frameloop={reduced ? 'demand' : 'always'}
       >
         <Suspense fallback={null}>
+          <CameraRig reduced={reduced} />
           <AtmosphereField reduced={reduced} />
           <DustField count={dust} reduced={reduced} />
         </Suspense>

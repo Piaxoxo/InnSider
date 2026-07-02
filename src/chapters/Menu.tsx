@@ -8,9 +8,11 @@ import './menu.css'
 // Real photos from the kitchen, shown as a "Gaumenfreuden" gallery with
 // neutral captions — NOT paired to specific menu entries or prices.
 const plates = [
+  media.dishBeet1,
   media.dishFish,
   media.seasonSoup,
   media.dishRadicchio,
+  media.dishBeet2,
   media.dishChicken,
   media.dishPeach,
   media.seasonSalad,
