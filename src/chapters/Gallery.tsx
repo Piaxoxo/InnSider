@@ -3,12 +3,15 @@ import { gsap } from '../lib/scroll'
 import { prefersReducedMotion } from '../lib/useReducedMotion'
 import { Heading } from '../components/Heading'
 import { Placeholder } from '../components/Placeholder'
+import { PhotoWall } from '../components/PhotoWall'
 import { useReveal } from '../hooks/useReveal'
 import { gallery } from '../content/site'
 import { media } from '../content/assets'
+import { pools } from '../content/pools'
 import './gallery.css'
 
 const frameSlots = [media.room1, media.room2, media.room3, media.room4, media.room5, media.room6]
+const wallCaptions = gallery.frames.map((f) => ({ title: f.title, story: f.story }))
 
 /**
  * Chapter Seven — The Rooms.
@@ -53,22 +56,28 @@ export function Gallery() {
         </p>
       </div>
 
-      <div className="gallery__exhibit">
-        {gallery.frames.map((f, i) => (
-          <figure
-            key={f.title}
-            className={`gallery__frame gallery__frame--${i + 1}`}
-            data-speed={[1.4, 0.6, 1, 0.4, 1.2, 0.7][i]}
-            data-cursor="hover"
-          >
-            <Placeholder slot={frameSlots[i]} />
-            <figcaption className="gallery__caption">
-              <span className="gallery__caption-title">{f.title}</span>
-              <span className="gallery__caption-story">{f.story}</span>
-            </figcaption>
-          </figure>
-        ))}
-      </div>
+      {/* Auto-scaling wall when interiors are dropped into src/media/rooms/;
+          otherwise the curated placeholder exhibition. */}
+      {pools.rooms.length > 0 ? (
+        <PhotoWall images={pools.rooms} captions={wallCaptions} />
+      ) : (
+        <div className="gallery__exhibit">
+          {gallery.frames.map((f, i) => (
+            <figure
+              key={f.title}
+              className={`gallery__frame gallery__frame--${i + 1}`}
+              data-speed={[1.4, 0.6, 1, 0.4, 1.2, 0.7][i]}
+              data-cursor="hover"
+            >
+              <Placeholder slot={frameSlots[i]} />
+              <figcaption className="gallery__caption">
+                <span className="gallery__caption-title">{f.title}</span>
+                <span className="gallery__caption-story">{f.story}</span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      )}
     </section>
   )
 }

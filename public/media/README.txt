@@ -1,3 +1,12 @@
+TWO WAYS TO ADD PHOTOS
+======================
+1. BULK / AUTO-SCALING (recommended for the big event & interior library):
+   drop any number of files into  src/media/rooms/  or  src/media/moments/.
+   Any filename works; they render automatically. See src/media/README.md.
+
+2. SINGULAR NAMED FRAMES (below): the specific, captioned frames that need an
+   exact file. Drop these into THIS folder (public/media/) with the exact name.
+
 Drop delivered photography & video here.
 Filenames must match the `src` paths set in src/content/assets.ts.
 

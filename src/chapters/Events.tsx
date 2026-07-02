@@ -1,23 +1,36 @@
 import { Heading } from '../components/Heading'
 import { Placeholder } from '../components/Placeholder'
+import { PhotoWall } from '../components/PhotoWall'
 import { useReveal } from '../hooks/useReveal'
 import { scrollToId } from '../lib/scroll'
 import { events } from '../content/site'
 import { media } from '../content/assets'
+import { pools } from '../content/pools'
 import './events.css'
 
 /**
  * Chapter Eight — Occasions.
  * The evenings that deserve the whole room. An editorial header over a wide
- * private-room frame, then the occasions as a warm, hover-lifting list.
+ * private-room frame, the occasions as a warm list, then an auto-scaling wall
+ * of real celebration moments (drop any number into src/media/moments/).
  */
-// Real celebration moments — a collage of evenings that mattered.
-const moments = [
+// Curated fallback collage shown until the moments pool has photos.
+const fallbackMoments = [
   media.eventGathering,
   media.eventChampagne,
   media.eventWelcome,
   media.eventEmbrace,
   media.eventDinner,
+]
+
+// Evocative captions cycled across however many moment photos exist.
+const momentCaptions = [
+  { title: 'The table, full', story: 'The room at its warmest.' },
+  { title: 'To celebrate', story: 'Every occasion deserves a toast.' },
+  { title: 'Arrivals', story: 'Coats still on, first hellos.' },
+  { title: 'Reunions', story: 'The reason people come back.' },
+  { title: 'Deep in the evening', story: 'Conversation leaning in.' },
+  { title: 'The last dance', story: 'Nobody checking the time.' },
 ]
 
 export function Events() {
@@ -54,15 +67,20 @@ export function Events() {
           ))}
         </div>
 
-        {/* Real celebration moments — an asymmetric collage. */}
-        <div className="events__moments" ref={momentsRef}>
-          {moments.map((m, i) => (
-            <figure className={`events__moment events__moment--${i + 1}`} key={m.id} data-cursor="hover">
-              <Placeholder slot={m} />
-              <figcaption>{m.label}</figcaption>
-            </figure>
-          ))}
-        </div>
+        {/* Real celebration moments — auto-scaling wall when photos are dropped
+            into src/media/moments/; otherwise the curated collage. */}
+        {pools.moments.length > 0 ? (
+          <PhotoWall images={pools.moments} captions={momentCaptions} className="events__wall" />
+        ) : (
+          <div className="events__moments" ref={momentsRef}>
+            {fallbackMoments.map((m, i) => (
+              <figure className={`events__moment events__moment--${i + 1}`} key={m.id} data-cursor="hover">
+                <Placeholder slot={m} />
+                <figcaption>{m.label}</figcaption>
+              </figure>
+            ))}
+          </div>
+        )}
 
         <div className="events__cta">
           <p className="events__cta-text">Tell us what you’re celebrating.</p>
