@@ -1,17 +1,20 @@
-import { useRef, type CSSProperties } from 'react'
+import { useRef, useState, type CSSProperties } from 'react'
 import type { MediaSlot } from '../content/assets'
 import './placeholder.css'
 
 /**
  * Premium media slot. Renders the real asset once `slot.src` is delivered;
- * until then it draws a warm, art-directed placeholder that:
+ * until then (or if the file isn't on disk yet) it draws a warm, art-directed
+ * placeholder that:
  *   • reserves the exact aspect ratio (so nothing reflows when the real asset
  *     drops in and no animation timing changes),
  *   • states the shot brief and whether it's photo or film,
  *   • has a living brass shimmer so the layout never looks "empty".
  *
- * Drop a file at `slot.src` (see content/assets.ts) to go live — no code change
- * to any chapter is required.
+ * A slot may declare its `src` ahead of the file actually existing (pre-wiring):
+ * if the image/video fails to load, we fall back to the placeholder instead of
+ * showing a broken frame. So `src` can be set the moment the filename is known,
+ * and the frame lights up automatically once the file lands in /public/media/.
  */
 export function Placeholder({
   slot,
@@ -26,6 +29,9 @@ export function Placeholder({
 }) {
   const style: CSSProperties = { aspectRatio: String(slot.ratio) }
   const ref = useRef<HTMLDivElement>(null)
+  // If a pre-wired asset 404s (not delivered yet), gracefully show the stub.
+  const [failed, setFailed] = useState(false)
+  const showMedia = !!slot.src && !failed
 
   return (
     <div
@@ -34,24 +40,26 @@ export function Placeholder({
       style={style}
       data-media-id={slot.id}
     >
-      {slot.src ? (
+      {showMedia ? (
         slot.kind === 'video' ? (
           <video
             className="ph__media"
-            src={slot.src}
+            src={slot.src!}
             autoPlay
             muted
             loop
             playsInline
             preload={eager ? 'auto' : 'metadata'}
+            onError={() => setFailed(true)}
           />
         ) : (
           <img
             className="ph__media"
-            src={slot.src}
+            src={slot.src!}
             alt={slot.label}
             loading={eager ? 'eager' : 'lazy'}
             decoding="async"
+            onError={() => setFailed(true)}
           />
         )
       ) : (
