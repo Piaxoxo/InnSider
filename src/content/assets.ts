@@ -40,8 +40,9 @@ const live = (
   src: string,
 ): MediaSlot => ({ id, kind: 'image', ratio, label, note, src })
 
-// Aspect ratio of the delivered brand photography (all landscape 3:2).
-const R = 3 / 2
+// Aspect ratios of the delivered brand photography.
+const R = 3 / 2 // landscape
+const RP = 2 / 3 // portrait
 
 export const media = {
   heroAmbient: slot('hero-ambient', 'video', 16 / 9, 'Hero film', 'Slow push through the candlelit room at golden hour — steam, glass, light rays.'),
@@ -61,20 +62,27 @@ export const media = {
 
   cocktail1: slot('cocktail-1', 'image', 3 / 4, 'Signature cocktail', 'Dark background, single light source, ice and reflection.'),
   cocktail2: slot('cocktail-2', 'image', 3 / 4, 'Signature cocktail', 'Golden reflection, smoke or citrus twist.'),
-  barMotion: slot('bar-motion', 'video', 16 / 9, 'Bar motion', 'Loop: pour, ice drop, smoke curl — slow and luxurious.'),
+  // DELIVERED — friends toasting at the brick bar counter, beer and Aperol.
+  // Drives the Bar chapter's full-bleed backdrop.
+  barScene: live('bar-scene', R, 'The bar after dark', 'A toast at the counter — brick, brass and good company.', '/media/bar-cheers.jpg'),
+  // DELIVERED — a server mid-conversation with guests, warm and easy.
+  barServer: live('bar-server', RP, 'Hospitality', 'A server mid-conversation with guests — the room in good hands.', '/media/server-table.jpg'),
 
   // DELIVERED — a guest outside on the street, mid-laugh at golden hour.
   room1: live('room-1', R, 'The welcome', 'A guest on the street outside, mid-laugh — the evening beginning.', '/media/guest-portrait.jpg'),
   // DELIVERED — wine poured at the table over dinner, glasses catching the light.
   room2: live('room-2', R, 'The long table', 'Wine poured over dinner — the evening finding its center.', '/media/wine-pour-table.jpg'),
-  // DELIVERED — friends toasting at the brick bar counter, beer and Aperol.
-  room3: live('room-3', R, 'The bar', 'A toast at the counter — brick, brass and good company.', '/media/bar-cheers.jpg'),
-  room4: slot('room-4', 'image', 4 / 5, 'The corner', 'The requested table.'),
-  room5: slot('room-5', 'image', 1, 'The pass', 'Kitchen detail.'),
+  // DELIVERED — the bar counter: taps, shelved glassware, reclaimed wood.
+  room3: live('room-3', RP, 'The bar', 'The counter — taps, glassware and reclaimed wood.', '/media/bar-counter-detail.jpg'),
+  // DELIVERED — the teal reading nook with the vintage-camera wall.
+  room4: live('room-4', R, 'The corner', 'The teal nook and its wall of vintage cameras.', '/media/interior-nook-teal.jpg'),
+  // DELIVERED — the golser beer taps, close and gleaming.
+  room5: live('room-5', R, 'On tap', 'Golser on draught — chrome, warm light, ready to pour.', '/media/beer-taps.jpg'),
   // DELIVERED — the wine cabinet, a hand drawing a Blaufränkisch from the rack.
   room6: live('room-6', R, 'The cellar', 'The wine cabinet — a Blaufränkisch drawn from the rack.', '/media/wine-fridge-brueckner.jpg'),
 
-  eventsRoom: slot('events-room', 'image', 16 / 9, 'Private room', 'The whole room dressed for a celebration.'),
+  // DELIVERED — the full room: bar, industrial lights, tables ready.
+  eventsRoom: live('events-room', 16 / 9, 'The whole room', 'The dining room and bar, dressed and ready for the evening.', '/media/interior-bar-wide.jpg'),
 } as const
 
 export type MediaKey = keyof typeof media

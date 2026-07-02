@@ -9,7 +9,7 @@ import './bar.css'
  * Chapter Five — The Bar.
  * The room changes key: darker, slower, gold on black. Signature drinks are
  * treated as artworks — cards that catch the light and lift on hover, over a
- * loop of the bar in motion.
+ * real scene of the bar after dark, with a portrait of the room in good hands.
  */
 export function Bar() {
   const headRef = useReveal<HTMLDivElement>({ selector: '[data-reveal]', y: 28 })
@@ -18,20 +18,27 @@ export function Bar() {
   return (
     <section id="bar" className="chapter bar" aria-label="The bar">
       <div className="bar__motion">
-        <Placeholder slot={media.barMotion} rounded={false} />
+        <Placeholder slot={media.barScene} rounded={false} />
         <span className="bar__motion-veil" aria-hidden="true" />
       </div>
 
       <div className="bar__wrap">
-        <div className="bar__head" ref={headRef}>
-          <div className="bar__head-top" data-reveal>
-            <span className="overline">{bar.overline}</span>
-            <span className="chapter-index">{bar.chapter}</span>
+        <div className="bar__top">
+          <div className="bar__head" ref={headRef}>
+            <div className="bar__head-top" data-reveal>
+              <span className="overline">{bar.overline}</span>
+              <span className="chapter-index">{bar.chapter}</span>
+            </div>
+            <Heading text={bar.headline} className="bar__headline" />
+            <p className="lead bar__intro" data-reveal>
+              {bar.intro}
+            </p>
           </div>
-          <Heading text={bar.headline} className="bar__headline" />
-          <p className="lead bar__intro" data-reveal>
-            {bar.intro}
-          </p>
+
+          <figure className="bar__portrait">
+            <Placeholder slot={media.barServer} />
+            <figcaption>The room in good hands.</figcaption>
+          </figure>
         </div>
 
         <div className="bar__cards" ref={cardsRef}>
