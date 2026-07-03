@@ -1,8 +1,10 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing'
 import { Suspense } from 'react'
 import * as THREE from 'three'
 import { AtmosphereField } from './AtmosphereField'
 import { DustField } from './DustField'
+import { HeroOrb } from './HeroOrb'
 import { useReducedMotion, isTouch } from '../lib/useReducedMotion'
 import { scrollState } from '../lib/scroll'
 import { pointer } from '../lib/pointer'
@@ -42,21 +44,29 @@ function CameraRig({ reduced }: { reduced: boolean }) {
 export function Atmosphere() {
   const reduced = useReducedMotion()
   const touch = isTouch()
-  // Fewer motes on touch/low-power; none of it is load-bearing for content.
-  const dust = touch ? 160 : 320
+  // Scale the world down on touch/low-power; none of it is load-bearing.
+  const dust = touch ? 150 : 340
+  const orb = touch ? 3500 : 9000
 
   return (
     <div className="atmosphere" aria-hidden="true">
       <Canvas
         gl={{ antialias: false, alpha: false, powerPreference: 'high-performance' }}
-        dpr={[1, 2]}
+        dpr={touch ? [1, 1.5] : [1, 1.75]}
         camera={{ position: [0, 0, 5], fov: 50 }}
         frameloop={reduced ? 'demand' : 'always'}
       >
         <Suspense fallback={null}>
           <CameraRig reduced={reduced} />
           <AtmosphereField reduced={reduced} />
+          <HeroOrb count={orb} reduced={reduced} />
           <DustField count={dust} reduced={reduced} />
+          {/* Bloom turns the light, dust and orb into glowing embers — the
+              single biggest lift toward a "webgl world" look. */}
+          <EffectComposer multisampling={0}>
+            <Bloom mipmapBlur intensity={touch ? 0.5 : 0.85} luminanceThreshold={0.5} luminanceSmoothing={0.25} radius={0.75} />
+            <Vignette offset={0.22} darkness={0.72} eskil={false} />
+          </EffectComposer>
         </Suspense>
       </Canvas>
     </div>
