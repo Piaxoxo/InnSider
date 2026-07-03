@@ -217,6 +217,11 @@ select {
 .btn:hover .btn__arrow {
   transform: translateX(4px);
 }
+.btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+  pointer-events: none;
+}
 
 /* ── Reveal primitives (driven by GSAP; safe defaults if JS/animation off) ─ */
 .reveal-line {

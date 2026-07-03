@@ -91,6 +91,16 @@
   font-size: 0.92rem;
   color: var(--ink-faint);
 }
+.reservation__error {
+  grid-column: 1 / -1;
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+  color: #d98a6a;
+}
+.reservation__error a {
+  color: var(--gold-bright);
+  border-bottom: 1px solid var(--line-strong);
+}
 
 /* ── Confirmation ──────────────────────────────────────────────────────── */
 .reservation__confirm {

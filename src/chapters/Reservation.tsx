@@ -4,36 +4,50 @@ import { useReveal } from '../hooks/useReveal'
 import { reservation, contact, footer, site, testimonials } from '../content/site'
 import './reservation.css'
 
+// FormSubmit: no backend needed on a static host. Posts the form and emails it
+// straight to the house — nothing opens the visitor's mail app. The endpoint is
+// activated once via a confirmation link sent to this address on first use.
+const FORM_ENDPOINT = 'https://formsubmit.co/ajax/office@innsider.at'
+
 /**
- * Chapter Nine — Reservation.
- * The emotional finale. One confident sentence, a minimal form, and the room's
- * essentials. With no booking backend yet, the form composes a personal email
- * to the house (mailto) — trivially swapped for a real endpoint later — and
- * shows a warm confirmation in place.
+ * Kapitel Neun — Reservieren.
+ * Das emotionale Finale. Ein Formular, das die Anfrage direkt per FormSubmit an
+ * das Haus schickt (kein Mailprogramm öffnet sich), mit Sende-Status und
+ * warmer Inline-Bestätigung.
  */
 export function Reservation() {
   const headRef = useReveal<HTMLDivElement>({ selector: '[data-reveal]', y: 30 })
   const formRef = useReveal<HTMLDivElement>({ selector: '[data-reveal-f]', y: 26, stagger: 0.08 })
   const voicesRef = useReveal<HTMLDivElement>({ selector: '[data-reveal-v]', y: 30, stagger: 0.1 })
-  const [sent, setSent] = useState(false)
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const nameRef = useRef<HTMLInputElement>(null)
+  const sent = status === 'sent'
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if (status === 'sending') return
     const data = new FormData(e.currentTarget)
-    const name = String(data.get('name') || '')
-    const body = [
-      `Name: ${name}`,
-      `Email: ${data.get('email') || ''}`,
-      `Date: ${data.get('date') || ''}`,
-      `Guests: ${data.get('guests') || ''}`,
-      `Occasion: ${data.get('occasion') || '—'}`,
-    ].join('\n')
-    // Compose a personal request to the house.
-    window.location.href = `${contact.emailHref}?subject=${encodeURIComponent(
-      `Reservation request — ${name}`,
-    )}&body=${encodeURIComponent(body)}`
-    setSent(true)
+    setStatus('sending')
+    try {
+      const res = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          Name: data.get('name'),
+          'E-Mail': data.get('email'),
+          Wunschdatum: data.get('date'),
+          Personen: data.get('guests'),
+          Anlass: data.get('occasion') || '—',
+          _subject: `Reservierungsanfrage — ${data.get('name') || ''}`,
+          _template: 'table',
+          _captcha: 'false',
+        }),
+      })
+      if (!res.ok) throw new Error(String(res.status))
+      setStatus('sent')
+    } catch {
+      setStatus('error')
+    }
   }
 
   return (
@@ -69,10 +83,10 @@ export function Reservation() {
                 <select id="r-guests" name="guests" defaultValue="2">
                   {Array.from({ length: 12 }, (_, i) => i + 1).map((n) => (
                     <option key={n} value={n}>
-                      {n} {n === 1 ? 'guest' : 'guests'}
+                      {n} {n === 1 ? 'Person' : 'Personen'}
                     </option>
                   ))}
-                  <option value="12+">12+ (private)</option>
+                  <option value="12+">12+ (privat)</option>
                 </select>
               </div>
               <div className="reservation__field reservation__field--wide" data-reveal-f>
@@ -80,20 +94,26 @@ export function Reservation() {
                 <input id="r-occasion" name="occasion" autoComplete="off" />
               </div>
               <div className="reservation__submit" data-reveal-f>
-                <button className="btn btn--gold" type="submit">
-                  {reservation.cta}
-                  <span className="btn__arrow">→</span>
+                <button className="btn btn--gold" type="submit" disabled={status === 'sending'}>
+                  {status === 'sending' ? 'Wird gesendet …' : reservation.cta}
+                  {status !== 'sending' && <span className="btn__arrow">→</span>}
                 </button>
                 <span className="reservation__reassure">{reservation.reassurance}</span>
               </div>
+              {status === 'error' && (
+                <p className="reservation__error" role="alert">
+                  Die Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder
+                  schreiben Sie an <a href={contact.emailHref}>{contact.email}</a>.
+                </p>
+              )}
             </form>
           ) : (
             <div className="reservation__confirm" role="status">
               <span className="reservation__confirm-mark">✦</span>
-              <h3>Ihre Anfrage ist unterwegs.</h3>
+              <h3>Vielen Dank — Ihre Anfrage ist da.</h3>
               <p>
-                Wir antworten persönlich auf jede Anfrage, meist noch am selben Tag. Falls sich Ihr
-                E-Mail-Programm nicht geöffnet hat, schreiben Sie uns direkt an{' '}
+                Wir haben Ihre Reservierungsanfrage erhalten und melden uns persönlich, meist noch
+                am selben Tag. Für Rückfragen erreichen Sie uns unter{' '}
                 <a href={contact.emailHref}>{contact.email}</a>.
               </p>
             </div>
