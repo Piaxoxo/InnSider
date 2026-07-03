@@ -23,11 +23,13 @@ const wallCaptions = gallery.frames.map((f) => ({ title: f.title, story: f.story
  */
 export function Gallery() {
   const root = useRef<HTMLElement>(null)
+  const overlay = useRef<HTMLDivElement>(null)
   const headRef = useReveal<HTMLDivElement>({ selector: '[data-reveal]', y: 28 })
   const progress = useRef({ v: 0 })
   const immersive = !isTouch() && !prefersReducedMotion()
 
-  // Drive the flythrough from the section's scroll progress (Lenis-synced).
+  // Drive the flythrough from the section's scroll progress (Lenis-synced),
+  // and fade the editorial overlay out so the finale stands clean full-screen.
   useEffect(() => {
     if (!immersive) return
     const el = root.current
@@ -39,6 +41,10 @@ export function Gallery() {
       scrub: true,
       onUpdate: (self) => {
         progress.current.v = self.progress
+        if (overlay.current) {
+          const fade = 1 - gsap.utils.clamp(0, 1, (self.progress - 0.72) / 0.2)
+          overlay.current.style.opacity = String(fade)
+        }
       },
     })
     return () => st.kill()
@@ -51,7 +57,7 @@ export function Gallery() {
           <div className="worldg__canvas">
             <WorldGallery progressRef={progress.current} />
           </div>
-          <div className="worldg__overlay">
+          <div className="worldg__overlay" ref={overlay}>
             <span className="overline">{gallery.overline}</span>
             <Heading text={gallery.headline} className="worldg__headline" />
             <p className="lead worldg__intro">{gallery.intro}</p>
