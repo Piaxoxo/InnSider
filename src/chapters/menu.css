@@ -14,82 +14,13 @@
 }
 .menu__intro {
   margin-top: 1.6rem;
-  max-width: 50ch;
-}
-
-.menu__body {
-  margin-top: clamp(3rem, 8vh, 6rem);
-  display: grid;
-  grid-template-columns: 0.95fr 1.05fr;
-  gap: clamp(2rem, 6vw, 5rem);
-  align-items: start;
-}
-
-/* ── Verified dish list ────────────────────────────────────────────────── */
-.menu__card {
-  position: sticky;
-  top: 12vh;
-}
-.menu__list {
-  list-style: none;
-}
-.menu__row {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1.5rem;
-  padding: clamp(1.2rem, 3vh, 1.9rem) 0;
-  border-top: 1px solid var(--line);
-}
-.menu__list li:last-child .menu__row {
-  border-bottom: 1px solid var(--line);
-}
-.menu__row-tag {
-  font-family: var(--sans);
-  font-size: 0.6rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--gold);
-  opacity: 0.8;
-}
-.menu__row-name {
-  font-family: var(--display);
-  font-weight: 400;
-  font-size: clamp(1.35rem, 2.4vw, 2rem);
-  line-height: 1.12;
-  margin: 0.5rem 0 0.2rem;
-  color: var(--warm-white);
-}
-.menu__row-en {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 0.95rem;
-  color: var(--ink-faint);
-}
-.menu__row-note {
-  margin-top: 0.6rem;
-  max-width: 44ch;
-  font-size: 0.92rem;
-  color: var(--ink-soft);
-}
-.menu__row-price {
-  font-family: var(--serif);
-  font-size: 1.2rem;
-  color: var(--gold-bright);
-  white-space: nowrap;
-  padding-top: 1.5rem;
-}
-.menu__lunch {
-  margin-top: clamp(1.4rem, 3vh, 2rem);
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 1.02rem;
-  color: var(--stone);
-  max-width: 40ch;
+  max-width: 52ch;
 }
 
 /* ── Gaumenfreuden gallery (real photos, neutral captions) ─────────────── */
+.menu__plates {
+  margin-top: clamp(2.6rem, 7vh, 5rem);
+}
 .menu__plates-label {
   display: block;
   font-family: var(--sans);
@@ -100,7 +31,7 @@
   margin-bottom: 1.2rem;
 }
 .menu__plates-grid {
-  column-count: 2;
+  column-count: 3;
   column-gap: clamp(0.8rem, 2vw, 1.4rem);
 }
 .menu__plate {
@@ -112,9 +43,6 @@
 }
 .menu__plate .ph {
   transition: transform 1s var(--ease-lux);
-}
-.menu__plate:hover .ph {
-  transform: scale(1.05);
 }
 .menu__plate figcaption {
   position: absolute;
@@ -136,21 +64,121 @@
   opacity: 1;
 }
 
-.menu__foot {
-  margin-top: clamp(2.5rem, 6vh, 4rem);
+/* ── Speisekarte (echte Karte, kategorisiert) ──────────────────────────── */
+.menu__card {
+  margin-top: clamp(3rem, 8vh, 6rem);
+  column-count: 2;
+  column-gap: clamp(2.5rem, 6vw, 6rem);
+}
+.menu__section {
+  break-inside: avoid;
+  margin-bottom: clamp(2rem, 5vh, 3.4rem);
+}
+.menu__section-title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+  color: var(--gold-bright);
+  padding-bottom: 0.8rem;
+  margin-bottom: 1.2rem;
+  border-bottom: 1px solid var(--line-strong);
+}
+.menu__list {
+  list-style: none;
+}
+.menu__row {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.menu__row:last-child {
+  border-bottom: none;
+}
+.menu__row-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+.menu__row-name {
+  font-family: var(--serif);
+  font-size: 1.12rem;
+  color: var(--warm-white);
+}
+.menu__row-dots {
+  flex: 1;
+  border-bottom: 1px dotted var(--line);
+  transform: translateY(-0.25em);
+  min-width: 1.5rem;
+}
+.menu__row-price {
+  font-family: var(--serif);
+  font-size: 1.08rem;
+  color: var(--gold-bright);
+  white-space: nowrap;
+}
+.menu__row-note {
+  margin-top: 0.35rem;
+  font-family: var(--sans);
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+  max-width: 46ch;
+}
+.menu__row-allergens {
+  color: var(--stone-dim);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+}
+.menu__row-plus {
+  margin-top: 0.3rem;
   font-family: var(--serif);
   font-style: italic;
-  color: var(--ink-faint);
+  font-size: 0.86rem;
+  color: var(--gold);
+}
+
+/* ── Foot: notes + PDF ─────────────────────────────────────────────────── */
+.menu__foot {
+  margin-top: clamp(2.5rem, 6vh, 4rem);
+  padding-top: clamp(1.6rem, 4vh, 2.4rem);
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
   text-align: center;
+}
+.menu__note {
+  font-family: var(--sans);
+  font-size: 0.76rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+}
+.menu__pdf {
+  margin-top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+  padding: 0.9em 1.6em;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-size: 0.74rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--warm-white);
+  transition: background 0.4s var(--ease-lux), color 0.4s var(--ease-lux);
+}
+.menu__pdf:hover {
+  background: var(--gold);
+  color: var(--black);
+  border-color: var(--gold);
 }
 
 @media (max-width: 900px) {
-  .menu__body {
-    grid-template-columns: 1fr;
+  .menu__plates-grid {
+    column-count: 2;
   }
   .menu__card {
-    position: relative;
-    top: 0;
+    column-count: 1;
   }
 }
 @media (max-width: 520px) {

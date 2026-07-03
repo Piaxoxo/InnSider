@@ -12,7 +12,6 @@ const plates = [
   media.dishFish,
   media.seasonSoup,
   media.dishRadicchio,
-  media.dishBeet2,
   media.dishChicken,
   media.dishPeach,
   media.seasonSalad,
@@ -21,16 +20,17 @@ const plates = [
 
 /**
  * Kapitel Vier — Gaumenfreuden.
- * Links die verifizierte Karte (echte Gerichte & Preise), rechts eine Galerie
- * echter Küchenfotos. Bild und Gericht werden bewusst nicht verknüpft, damit
- * keine falschen Namen/Preise entstehen.
+ * Oben eine Galerie echter Küchenfotos, darunter die echte Speisekarte 1:1
+ * (Kategorien, Preise, Allergene) plus PDF-Download. Bild und Gericht werden
+ * bewusst nicht verknüpft, damit keine falschen Zuordnungen entstehen.
  */
 export function Menu() {
   const headRef = useReveal<HTMLDivElement>({ selector: '[data-reveal]', y: 28 })
-  const bodyRef = useReveal<HTMLDivElement>({ selector: '[data-reveal-b]', y: 32, stagger: 0.08 })
+  const galleryRef = useReveal<HTMLDivElement>({ selector: '.menu__plate', y: 32, stagger: 0.07 })
+  const cardRef = useReveal<HTMLDivElement>({ selector: '.menu__section', y: 30, stagger: 0.1 })
 
   return (
-    <section id="menu" className="chapter menu" aria-label="Gaumenfreuden — Menü">
+    <section id="menu" className="chapter menu" aria-label="Gaumenfreuden — Speisekarte">
       <div className="menu__wrap">
         <div className="menu__head" ref={headRef}>
           <div className="menu__head-top" data-reveal>
@@ -43,42 +43,52 @@ export function Menu() {
           </p>
         </div>
 
-        <div className="menu__body" ref={bodyRef}>
-          {/* Verified dish list */}
-          <div className="menu__card" data-reveal-b>
-            <ul className="menu__list">
-              {menu.dishes.map((d) => (
-                <li className="menu__row" key={d.name}>
-                  <div className="menu__row-main">
-                    <span className="menu__row-tag">{d.tag}</span>
-                    <h3 className="menu__row-name">{d.name}</h3>
-                    <span className="menu__row-en">{d.en}</span>
-                    <p className="menu__row-note">{d.note}</p>
-                  </div>
-                  {d.price && <span className="menu__row-price">€ {d.price}</span>}
-                </li>
-              ))}
-            </ul>
-            <p className="menu__lunch">{menu.lunchNote}</p>
-          </div>
-
-          {/* Gaumenfreuden gallery — neutral captions, real photos */}
-          <div className="menu__plates">
-            <span className="menu__plates-label" data-reveal-b>
-              {menu.galleryNote}
-            </span>
-            <div className="menu__plates-grid">
-              {plates.map((p) => (
-                <figure className="menu__plate" key={p.id} data-cursor="hover" data-reveal-b>
-                  <Placeholder slot={p} />
-                  <figcaption>{p.label}</figcaption>
-                </figure>
-              ))}
-            </div>
+        {/* Gaumenfreuden gallery — real photos, neutral captions */}
+        <div className="menu__plates" ref={galleryRef}>
+          <span className="menu__plates-label">{menu.galleryNote}</span>
+          <div className="menu__plates-grid">
+            {plates.map((p) => (
+              <figure className="menu__plate" key={p.id} data-cursor="hover">
+                <Placeholder slot={p} />
+                <figcaption>{p.label}</figcaption>
+              </figure>
+            ))}
           </div>
         </div>
 
-        <p className="menu__foot">{menu.foot}</p>
+        {/* Real menu — categories, prices, allergens */}
+        <div className="menu__card" ref={cardRef}>
+          {menu.sections.map((section) => (
+            <div className="menu__section" key={section.title}>
+              <h3 className="menu__section-title">{section.title}</h3>
+              <ul className="menu__list">
+                {section.items.map((d) => (
+                  <li className="menu__row" key={d.name}>
+                    <div className="menu__row-head">
+                      <span className="menu__row-name">{d.name}</span>
+                      <span className="menu__row-dots" aria-hidden="true" />
+                      <span className="menu__row-price">€ {d.price}</span>
+                    </div>
+                    <p className="menu__row-note">
+                      {d.note}
+                      {d.allergens && <span className="menu__row-allergens"> · {d.allergens}</span>}
+                    </p>
+                    {d.plus && <p className="menu__row-plus">{d.plus}</p>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        <div className="menu__foot">
+          <p className="menu__note">{menu.priceNote}</p>
+          <p className="menu__note">{menu.allergenNote}</p>
+          <a className="menu__pdf" href={menu.pdfHref} target="_blank" rel="noreferrer">
+            <span>{menu.pdfLabel}</span>
+            <span aria-hidden="true">↓</span>
+          </a>
+        </div>
       </div>
     </section>
   )

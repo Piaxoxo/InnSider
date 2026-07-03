@@ -89,7 +89,7 @@ export function Kitchen() {
 
       <div className="kitchen__media">
         <div className="kitchen__motion">
-          <Placeholder slot={media.kitchenFire} />
+          <Placeholder slot={media.dishBeet2} />
         </div>
         <div className="kitchen__hands">
           <div className="kitchen__hands-media">

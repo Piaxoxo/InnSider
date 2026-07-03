@@ -97,39 +97,43 @@ export const menu = {
   overline: 'Gaumenfreuden',
   headline: 'Eine Reise\nfür alle Sinne.',
   intro: 'Jedes Gericht wird mit höchster Präzision zubereitet und vereint Geschmack, Textur und Präsentation zu vollkommener Harmonie. Von den Vorspeisen bis zu den Desserts erzählt jeder Teller eine Geschichte.',
-  // Nur echte, verifizierte Gerichte & Preise von der Website.
-  dishes: [
+  galleryNote: 'Gaumenfreuden',
+  // Echte Speisekarte 1:1 aus der PDF (Speisekarte1.pdf).
+  sections: [
     {
-      name: 'Geschmorte Rindsbackerl',
-      en: 'Zart geschmort',
-      note: 'Ein Klassiker der Küche.',
-      price: '18,80',
-      tag: 'Klassiker',
+      title: 'Vorspeisen & Suppen',
+      items: [
+        { name: 'Tagessuppe', note: 'wechselt wöchentlich', price: '5,80', allergens: '', plus: '' },
+        { name: 'Beef Tatar', note: 'Focaccia, Eiercreme, Kapernbeeren, Babyspinat und Grana', price: '19,20', allergens: 'A C G H L', plus: '' },
+        { name: 'Kaspressknödelsalat', note: 'Apfelmus, Kräutercreme, Radieschen und Walnuss', price: '10,80', allergens: 'A C G', plus: 'Als Hauptspeise € 14,90' },
+      ],
     },
     {
-      name: 'Erdäpfelgratin & gelbes Gemüsecurry',
-      en: 'Vegetarisch',
-      note: 'Regionale Erdäpfel, sanfte Würze.',
-      price: '11,80',
-      tag: 'Vegetarisch',
+      title: 'Hauptspeisen',
+      items: [
+        { name: 'Original indisches Butternut Chicken', note: 'Paratha-Brot und Salat', price: '17,20', allergens: 'A O', plus: '' },
+        { name: 'Feuriges Chili con Carne', note: 'Sauerrahm und Fladenbrot', price: '12,50', allergens: 'A E G', plus: '' },
+        { name: 'Deftiges Blunzngröstl', note: 'Erdäpfel, Junglauch, Spiegelei, Kren und Krautsalat', price: '14,50', allergens: 'A C G O', plus: '' },
+        { name: 'Innsider Burger', note: '200g österreichisches Rindfleisch im hausgemachten Bun, Hamburgersauce, Cheddar, Bacon, karamellisierte Zwiebel und Wedges', price: '18,40', allergens: 'A C G O', plus: '' },
+        { name: 'Veggie Burger', note: 'Erbsenprotein-Patty, Gazi Käse, Granatapfel, Kräutercreme, Babyspinat und Süßkartoffel-Pommes', price: '15,80', allergens: 'A C F G H', plus: '' },
+        { name: 'Gelbes Gemüsecurry', note: 'Basmatireis und Kokosmilch — vegan', price: '12,80', allergens: 'A F L O', plus: 'mit Hühnerbrust + 6,00 · mit Garnelen + 7,00' },
+        { name: 'Spinatknödel mit Bierkäse', note: 'Tomatenbutter mit Pinienkernen und Salat', price: '13,80', allergens: 'A C G H', plus: '' },
+        { name: 'Caesar Salad', note: 'Römersalat, Kirschtomaten, original Caesar Dressing und Weißbrotcroutons', price: '9,80', allergens: 'A C D G O', plus: 'mit Hühnerbrust + 6,00 · mit Garnelen + 7,00' },
+      ],
     },
     {
-      name: 'InnSider Burger',
-      en: '200g österreichisches Rind',
-      note: 'Hausgemachtes Bun, Coleslaw, Cheddar, Potato Wedges.',
-      price: '15,80',
-      tag: 'Klassiker',
-    },
-    {
-      name: 'Feuriges Chili con Carne',
-      en: 'Herzhaft & würzig',
-      note: 'Frisch aus der Küche.',
-      price: '',
-      tag: 'Aus der Küche',
+      title: 'Desserts',
+      items: [
+        { name: 'Marmeladepalatschinken', note: 'Marillen- oder Erdbeermarmelade mit Schlag', price: '7,80', allergens: 'A C G', plus: '' },
+        { name: 'Eispalatschinken', note: 'Vanilleeis, Schokosauce, Schlagobers und karamellisierte Walnüsse', price: '9,80', allergens: 'A C G H', plus: '' },
+        { name: 'Hausgemachter Kuchen', note: 'aus unserer Vitrine', price: '4,90', allergens: '', plus: '' },
+      ],
     },
   ],
-  lunchNote: 'Täglich drei Mittagsmenüs — Fleisch, Fisch, Vegetarisch, inklusive Suppe.',
-  galleryNote: 'Gaumenfreuden',
+  priceNote: 'Preise beinhalten die gesetzlichen Abgaben.',
+  allergenNote: 'Allergene: A, C, D, E, F, G, H, L, O — Details gerne auf Anfrage.',
+  pdfLabel: 'Speisekarte als PDF',
+  pdfHref: 'speisekarte.pdf',
   foot: 'Die vollständige, wechselnde Karte liegt an Ihrem Tisch bereit.',
 } as const
 
