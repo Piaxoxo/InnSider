@@ -26,7 +26,9 @@ export function Gallery() {
   const overlay = useRef<HTMLDivElement>(null)
   const headRef = useReveal<HTMLDivElement>({ selector: '[data-reveal]', y: 28 })
   const progress = useRef({ v: 0 })
-  const immersive = !isTouch() && !prefersReducedMotion()
+  // The 3-D flythrough now runs on phones too; only reduced-motion falls back.
+  const immersive = !prefersReducedMotion()
+  const lowPerf = isTouch()
 
   // Drive the flythrough from the section's scroll progress (Lenis-synced),
   // and fade the editorial overlay out so the finale stands clean full-screen.
@@ -55,7 +57,7 @@ export function Gallery() {
       <section id="gallery" ref={root} className="chapter gallery gallery--world" aria-label="Location">
         <div className="worldg__sticky">
           <div className="worldg__canvas">
-            <WorldGallery progressRef={progress.current} />
+            <WorldGallery progressRef={progress.current} lowPerf={lowPerf} />
           </div>
           <div className="worldg__overlay" ref={overlay}>
             <span className="overline">{gallery.overline}</span>

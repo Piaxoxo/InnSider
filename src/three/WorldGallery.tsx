@@ -1,16 +1,17 @@
-import { Suspense, useMemo, useRef } from 'react'
+import { Suspense, useEffect, useMemo, useRef } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useTexture } from '@react-three/drei'
 import * as THREE from 'three'
 import { pointer } from '../lib/pointer'
 
 /**
- * 3-D scroll-world — the Location flythrough.
+ * 3-D scroll-world — the Location flythrough (desktop AND mobile).
  *
- * The real photographs are convex shader slabs floating in depth; the camera
- * flies through them (scroll-driven, frame-independently damped) as each turns,
- * swells and ripples. It comes to rest on a full-bleed finale image that fills
- * the screen — a clean, deliberate ending rather than flying into the void.
+ * Real photos as convex shader slabs floating in depth; the camera flies
+ * through them (scroll-driven, frame-independently damped) and rests on a
+ * full-bleed finale. Responsive: on portrait/narrow screens the photos pull
+ * toward the centre and the field of view widens so the flythrough reads on a
+ * phone. Lower DPR + fewer mesh segments on touch keep it smooth.
  */
 
 const BASE = import.meta.env.BASE_URL
@@ -35,7 +36,6 @@ const GAP = 5.4
 const total = SHOTS.length
 const damp = THREE.MathUtils.damp
 
-// Full-screen finale.
 const FINALE_URL = 'media/interior-bar-wide.jpg'
 const FINALE_H = 7
 const FINALE_W = 12.6
@@ -71,7 +71,7 @@ const photoFrag = /* glsl */ `
   }
 `
 
-function Photo({ shot, index }: { shot: Shot; index: number }) {
+function Photo({ shot, index, xFactor, segments }: { shot: Shot; index: number; xFactor: number; segments: number }) {
   const mesh = useRef<THREE.Mesh>(null)
   const tex = useTexture(`${BASE}${shot.url}`)
   tex.colorSpace = THREE.SRGBColorSpace
@@ -81,6 +81,7 @@ function Photo({ shot, index }: { shot: Shot; index: number }) {
   const w = shot.portrait ? 2.2 : 3.5
   const h = shot.portrait ? 3.1 : 2.25
   const side = shot.x >= 0 ? -1 : 1
+  const px = shot.x * xFactor
 
   const uniforms = useMemo(
     () => ({ uTex: { value: tex }, uTime: { value: 0 }, uNear: { value: 0 }, uOpacity: { value: 0 } }),
@@ -111,20 +112,23 @@ function Photo({ shot, index }: { shot: Shot; index: number }) {
   })
 
   return (
-    <mesh ref={mesh} position={[shot.x, shot.y, z]}>
-      <planeGeometry args={[w, h, 40, 28]} />
+    <mesh ref={mesh} position={[px, shot.y, z]}>
+      <planeGeometry args={[w, h, segments, Math.round(segments * 0.7)]} />
       <shaderMaterial vertexShader={photoVert} fragmentShader={photoFrag} uniforms={uniforms} transparent side={THREE.DoubleSide} depthWrite={false} />
     </mesh>
   )
 }
 
+const finaleVert = /* glsl */ `
+  varying vec2 vUv;
+  void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }
+`
 const finaleFrag = /* glsl */ `
   precision highp float;
   uniform sampler2D uTex;
   uniform float uOpacity;
   varying vec2 vUv;
   void main() {
-    // cover-fit (plane 16:9, image 3:2 → crop top/bottom)
     vec2 uv = vUv;
     uv.y = (uv.y - 0.5) * (1.5 / 1.8) + 0.5;
     vec3 c = texture2D(uTex, uv).rgb;
@@ -135,7 +139,6 @@ const finaleFrag = /* glsl */ `
 `
 
 function Finale() {
-  const mesh = useRef<THREE.Mesh>(null)
   const tex = useTexture(`${BASE}${FINALE_URL}`)
   tex.colorSpace = THREE.SRGBColorSpace
   const uniforms = useMemo(() => ({ uTex: { value: tex }, uOpacity: { value: 0 } }), [tex])
@@ -146,16 +149,12 @@ function Finale() {
     uniforms.uOpacity.value = damp(uniforms.uOpacity.value, target, 6, dt)
   })
   return (
-    <mesh ref={mesh} position={[0, 0, FINALE_Z]}>
+    <mesh position={[0, 0, FINALE_Z]}>
       <planeGeometry args={[FINALE_W, FINALE_H]} />
-      <shaderMaterial fragmentShader={finaleFrag} uniforms={uniforms} vertexShader={finaleVert} transparent depthWrite={false} />
+      <shaderMaterial fragmentShader={finaleFrag} vertexShader={finaleVert} uniforms={uniforms} transparent depthWrite={false} />
     </mesh>
   )
 }
-const finaleVert = /* glsl */ `
-  varying vec2 vUv;
-  void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }
-`
 
 function Rig({ progressRef }: { progressRef: { v: number } }) {
   const { camera } = useThree()
@@ -163,7 +162,6 @@ function Rig({ progressRef }: { progressRef: { v: number } }) {
   useFrame((_, delta) => {
     const dt = Math.min(delta, 0.05)
     smooth.current = damp(smooth.current, progressRef.v, 6, dt)
-    // End resting in front of the finale so it fills the screen.
     const fov = ((camera as THREE.PerspectiveCamera).fov * Math.PI) / 180
     const stopD = (FINALE_H / 2) / Math.tan(fov / 2) * 0.94
     const endZ = FINALE_Z + stopD
@@ -176,20 +174,39 @@ function Rig({ progressRef }: { progressRef: { v: number } }) {
   return null
 }
 
-export function WorldGallery({ progressRef }: { progressRef: { v: number } }) {
-  const shots = useMemo(() => SHOTS, [])
+function Scene({ progressRef, segments }: { progressRef: { v: number }; segments: number }) {
+  const { size, camera } = useThree()
+  const aspect = size.width / Math.max(1, size.height)
+  const portrait = aspect < 1
+  // Pull photos toward centre + widen fov on narrow screens so it reads on a phone.
+  const xFactor = THREE.MathUtils.clamp(aspect / 1.5, 0.32, 1)
+
+  useEffect(() => {
+    const cam = camera as THREE.PerspectiveCamera
+    cam.fov = portrait ? 66 : 46
+    cam.updateProjectionMatrix()
+  }, [portrait, camera])
+
+  return (
+    <>
+      <Rig progressRef={progressRef} />
+      {SHOTS.map((s, i) => (
+        <Photo key={s.url} shot={s} index={i} xFactor={xFactor} segments={segments} />
+      ))}
+      <Finale />
+    </>
+  )
+}
+
+export function WorldGallery({ progressRef, lowPerf = false }: { progressRef: { v: number }; lowPerf?: boolean }) {
   return (
     <Canvas
-      gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
-      dpr={[1, 2]}
+      gl={{ antialias: !lowPerf, alpha: true, powerPreference: 'high-performance' }}
+      dpr={lowPerf ? [1, 1.5] : [1, 2]}
       camera={{ position: [0, 0, 6], fov: 46 }}
     >
       <Suspense fallback={null}>
-        <Rig progressRef={progressRef} />
-        {shots.map((s, i) => (
-          <Photo key={s.url} shot={s} index={i} />
-        ))}
-        <Finale />
+        <Scene progressRef={progressRef} segments={lowPerf ? 20 : 40} />
       </Suspense>
     </Canvas>
   )
