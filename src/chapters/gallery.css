@@ -1,3 +1,61 @@
+/* ── Stage 1: 3-D flythrough world ─────────────────────────────────────── */
+.gallery--world {
+  position: relative;
+  height: 460vh; /* scroll length of the flythrough */
+  padding: 0;
+}
+.worldg__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+.worldg__canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.worldg__canvas canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+.worldg__overlay {
+  position: absolute;
+  left: var(--pad-x);
+  top: clamp(14vh, 18vh, 22vh);
+  max-width: min(90vw, 40ch);
+  z-index: 2;
+  pointer-events: none;
+}
+.worldg__overlay .overline {
+  margin-bottom: 1.2rem;
+}
+.worldg__headline {
+  margin: 0.4rem 0 1.4rem;
+  text-shadow: 0 2px 30px rgba(10, 9, 8, 0.6);
+}
+.worldg__intro {
+  color: var(--ink-soft);
+  text-shadow: 0 1px 20px rgba(10, 9, 8, 0.7);
+}
+.worldg__hint {
+  display: inline-block;
+  margin-top: 2rem;
+  font-family: var(--sans);
+  font-size: 0.66rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  animation: worldg-pulse 2.6s var(--ease-in-out) infinite;
+}
+@keyframes worldg-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .worldg__hint { animation: none; }
+}
+
 .gallery__head {
   max-width: var(--maxw);
   margin: 0 auto clamp(3rem, 8vh, 6rem);
