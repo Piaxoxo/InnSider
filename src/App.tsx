@@ -7,6 +7,7 @@ import { SoundToggle } from './components/SoundToggle'
 import { PageTransition } from './components/PageTransition'
 import { Hero } from './chapters/Hero'
 import { Dream } from './chapters/Dream'
+import { Bridge } from './chapters/Bridge'
 import { Kitchen } from './chapters/Kitchen'
 import { Menu } from './chapters/Menu'
 import { Bar } from './chapters/Bar'
@@ -102,6 +103,7 @@ function HomeShell() {
       <main id="main">
         <Hero ready={ready} />
         <Dream />
+        <Bridge />
         <Kitchen />
         <Menu />
         <Bar />

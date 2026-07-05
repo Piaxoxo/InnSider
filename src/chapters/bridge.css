@@ -1,0 +1,266 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   The bridge — Alice & Stefan, two worlds merging.
+   A pinned stage; one scroll-driven custom property `--p` (0 apart → 1 merged)
+   drives the whole choreography. Direction flips desktop↔mobile in CSS alone.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.bridge {
+  position: relative;
+  z-index: var(--z-content);
+  height: 240vh; /* scroll runway for the pinned merge */
+}
+
+.bridge__stage {
+  --p: 0;
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--black);
+}
+
+.bridge__overline {
+  position: absolute;
+  top: clamp(1.6rem, 5vh, 3.2rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 6;
+  color: var(--gold);
+  opacity: clamp(0, calc((var(--p) - 0.02) / 0.1), 1);
+}
+
+/* ── the two halves ────────────────────────────────────────────────────── */
+.bridge__half {
+  position: relative;
+  overflow: hidden;
+  will-change: transform;
+}
+.bridge__half--alice {
+  transform: translateX(calc((1 - var(--p)) * -7vw));
+}
+.bridge__half--stefan {
+  transform: translateX(calc((1 - var(--p)) * 7vw));
+}
+
+.bridge__media,
+.bridge__media .ph {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.bridge__media .ph {
+  border-radius: 0;
+}
+.bridge__media .ph__media,
+.bridge__media .ph__stub {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* darkening tints — deepen as the worlds merge so centred text reads */
+.bridge__tint {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: calc(0.32 + var(--p) * 0.4);
+}
+.bridge__tint--alice {
+  background: linear-gradient(210deg, rgba(10, 9, 8, 0.1), rgba(40, 26, 12, 0.55) 70%);
+}
+.bridge__tint--stefan {
+  background: linear-gradient(150deg, rgba(10, 9, 8, 0.12), rgba(12, 20, 26, 0.5) 72%);
+}
+
+/* Stefan's world breathes steam */
+.bridge__steam {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: -20%;
+  height: 90%;
+  pointer-events: none;
+  background: radial-gradient(60% 70% at 50% 100%, rgba(242, 236, 225, 0.16), transparent 70%);
+  filter: blur(14px);
+  opacity: 0.5;
+  animation: bridge-steam 9s var(--ease-in-out) infinite;
+}
+@keyframes bridge-steam {
+  0%,
+  100% {
+    transform: translateY(6%) scale(1);
+    opacity: 0.32;
+  }
+  50% {
+    transform: translateY(-8%) scale(1.08);
+    opacity: 0.55;
+  }
+}
+
+/* ── labels ────────────────────────────────────────────────────────────── */
+.bridge__label {
+  position: absolute;
+  z-index: 5;
+  display: grid;
+  gap: 0.5rem;
+  max-width: min(30ch, 40vw);
+  padding: clamp(1.4rem, 4vw, 3rem);
+  opacity: clamp(0, calc((var(--p) - 0.06) / 0.16), 1);
+}
+.bridge__label--alice {
+  left: 0;
+  bottom: 8vh;
+  text-align: left;
+}
+.bridge__label--stefan {
+  right: 0;
+  top: 12vh;
+  text-align: right;
+}
+.bridge__tag {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.4rem, 1rem + 1.6vw, 2.4rem);
+  color: var(--gold-bright);
+  line-height: 1;
+}
+.bridge__name {
+  font-family: var(--sans);
+  font-size: var(--fs-overline);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.bridge__note {
+  font-family: var(--serif);
+  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
+  color: var(--ink-soft);
+  line-height: 1.4;
+  margin-top: 0.4rem;
+}
+
+/* ── the seam — a line of candlelight igniting at the join ─────────────── */
+.bridge__seam {
+  position: absolute;
+  left: 50%;
+  top: 8vh;
+  bottom: 8vh;
+  width: 2px;
+  transform: translateX(-50%);
+  z-index: 4;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(217, 189, 134, 0.9) 22%,
+    rgba(224, 164, 88, 1) 50%,
+    rgba(217, 189, 134, 0.9) 78%,
+    transparent
+  );
+  opacity: var(--p);
+}
+.bridge__seam::after {
+  content: '';
+  position: absolute;
+  inset: -2px -9px;
+  background: linear-gradient(to bottom, transparent, rgba(224, 164, 88, 0.5) 50%, transparent);
+  filter: blur(9px);
+  opacity: calc(var(--p) * 0.9);
+}
+
+/* ── the payoff lines — rise over the seam once merged ─────────────────── */
+.bridge__final {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.3rem, 1.4vh, 0.9rem);
+  text-align: center;
+  padding: 0 var(--pad-x);
+  pointer-events: none;
+}
+.bridge__line {
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(1.5rem, 1rem + 2.6vw, 3.4rem);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  color: var(--warm-white);
+  transform: translateY(calc((1 - var(--p)) * 24px));
+  text-shadow: 0 2px 40px rgba(0, 0, 0, 0.6);
+}
+.bridge__line span {
+  display: block;
+}
+.bridge__line--1 {
+  opacity: clamp(0, calc((var(--p) - 0.5) / 0.16), 1);
+}
+.bridge__line--2 {
+  opacity: clamp(0, calc((var(--p) - 0.62) / 0.16), 1);
+}
+.bridge__line--3 {
+  opacity: clamp(0, calc((var(--p) - 0.74) / 0.18), 1);
+  color: var(--gold-bright);
+  font-family: var(--serif);
+  font-style: italic;
+  margin-top: clamp(0.6rem, 2vh, 1.4rem);
+}
+
+/* ── mobile: stack, merge vertically, horizontal seam ──────────────────── */
+@media (max-width: 760px) {
+  .bridge {
+    height: 220vh;
+  }
+  .bridge__stage {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+  .bridge__half--alice {
+    transform: translateY(calc((1 - var(--p)) * -6vh));
+  }
+  .bridge__half--stefan {
+    transform: translateY(calc((1 - var(--p)) * 6vh));
+  }
+  .bridge__label {
+    max-width: 78vw;
+  }
+  .bridge__label--alice {
+    bottom: 3vh;
+  }
+  .bridge__label--stefan {
+    top: 4vh;
+    text-align: left;
+    right: auto;
+    left: 0;
+  }
+  .bridge__seam {
+    left: 8vw;
+    right: 8vw;
+    top: 50%;
+    bottom: auto;
+    width: auto;
+    height: 2px;
+    transform: translateY(-50%);
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(224, 164, 88, 1) 50%,
+      transparent
+    );
+  }
+  .bridge__seam::after {
+    inset: -9px -2px;
+    background: linear-gradient(to right, transparent, rgba(224, 164, 88, 0.5) 50%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bridge__steam {
+    animation: none;
+  }
+}

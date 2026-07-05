@@ -56,6 +56,31 @@ export const hero = {
   scrollHint: 'Der Abend beginnt',
 } as const
 
+/**
+ * The bridge between Alice's chapter (Dream) and Stefan's chapter (Kitchen):
+ * two worlds — the soul and the heart — that merge as the guest scrolls. The
+ * closing lines were supplied verbatim; the notes stay true to the existing
+ * content (vision/hospitality for Alice, craft/ingredients for Stefan).
+ */
+export const bridge = {
+  overline: 'Zwei Welten',
+  alice: {
+    tag: 'Die Seele',
+    name: 'Alice Kern',
+    note: 'Ihre Vision, ihre Gastfreundschaft, das Ambiente – der Raum, in dem ein Abend zum Erlebnis wird.',
+  },
+  stefan: {
+    tag: 'Das Herz',
+    name: 'Chef Stefan',
+    note: 'Seine Kreativität, sein Handwerk, die Zutaten – der Geschmack, der in Erinnerung bleibt.',
+  },
+  lines: [
+    'Alice hat den Ort erträumt.',
+    'Stefan gibt ihm Geschmack.',
+    'Gemeinsam schaffen sie das Erlebnis,\nan das sich Gäste erinnern.',
+  ],
+} as const
+
 // ── Kapitel 2 — Die Vision (Alice Kern) — Originaltext ───────────────────────
 export const dream = {
   chapter: 'Kapitel Zwei',
