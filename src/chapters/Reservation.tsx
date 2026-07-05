@@ -2,6 +2,7 @@ import { useRef, useState, type FormEvent } from 'react'
 import { Heading } from '../components/Heading'
 import { useReveal } from '../hooks/useReveal'
 import { reservation, contact, footer, site, testimonials } from '../content/site'
+import { navigate } from '../lib/useRoute'
 import './reservation.css'
 
 // FormSubmit: no backend needed on a static host. Posts the form and emails it
@@ -165,6 +166,12 @@ export function Reservation() {
           <span className="reservation__footer-mark">{site.wordmark}</span>
           <p className="reservation__footer-line">{footer.line}</p>
           <div className="reservation__footer-meta">
+            <button type="button" onClick={() => navigate('impressum')} data-cursor="hover">
+              Impressum
+            </button>
+            <button type="button" onClick={() => navigate('agb')} data-cursor="hover">
+              AGB
+            </button>
             <a href={contact.instagramHref} target="_blank" rel="noreferrer">
               {contact.instagram}
             </a>

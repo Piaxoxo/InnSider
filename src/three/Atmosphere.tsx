@@ -41,7 +41,7 @@ function CameraRig({ reduced }: { reduced: boolean }) {
  * Kept deliberately to a single WebGL context for a stable 60fps; heavier 3D is
  * reserved for the hero accent layer.
  */
-export function Atmosphere() {
+export function Atmosphere({ showOrb = true }: { showOrb?: boolean }) {
   const reduced = useReducedMotion()
   const touch = isTouch()
   // Scale the world down on touch/low-power; none of it is load-bearing.
@@ -59,7 +59,7 @@ export function Atmosphere() {
         <Suspense fallback={null}>
           <CameraRig reduced={reduced} />
           <AtmosphereField reduced={reduced} />
-          <HeroOrb count={orb} reduced={reduced} />
+          {showOrb && <HeroOrb count={orb} reduced={reduced} />}
           <DustField count={dust} reduced={reduced} />
           {/* Bloom turns the light, dust and orb into glowing embers — the
               single biggest lift toward a "webgl world" look. */}

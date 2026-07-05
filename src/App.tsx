@@ -13,6 +13,8 @@ import { Evening } from './chapters/Evening'
 import { Gallery } from './chapters/Gallery'
 import { Events } from './chapters/Events'
 import { Reservation } from './chapters/Reservation'
+import { Legal } from './legal/Legal'
+import { useRoute } from './lib/useRoute'
 import { initSmoothScroll, startScroll, stopScroll, ScrollTrigger } from './lib/scroll'
 import { usePointerTracking } from './lib/pointer'
 
@@ -20,10 +22,21 @@ import { usePointerTracking } from './lib/pointer'
  * The evening, assembled. The atmosphere canvas lives behind everything and
  * re-grades per chapter; the loader lifts to reveal the hero; then the guest
  * walks the nine chapters as one uninterrupted cinematic scroll.
+ *
+ * The legal pages (Impressum / AGB) live behind a hash route and reuse the same
+ * atmosphere — minus the hero orb and the overture loader — so they feel like a
+ * quiet back room of the same house rather than a different site.
  */
 export default function App() {
-  const [ready, setReady] = useState(false)
+  const route = useRoute()
   usePointerTracking()
+
+  return route ? <LegalShell route={route} /> : <HomeShell />
+}
+
+/** The full nine-chapter cinematic scroll. */
+function HomeShell() {
+  const [ready, setReady] = useState(false)
 
   // Boot smooth scroll once; hold it still until the overture lifts.
   useEffect(() => {
@@ -75,6 +88,30 @@ export default function App() {
         <Gallery />
         <Events />
         <Reservation />
+      </main>
+    </>
+  )
+}
+
+/** Impressum / AGB — same atmosphere, no orb, no overture, scroll live at once. */
+function LegalShell({ route }: { route: 'impressum' | 'agb' }) {
+  useEffect(() => {
+    const teardown = initSmoothScroll()
+    startScroll()
+    requestAnimationFrame(() => ScrollTrigger.refresh())
+    const t = window.setTimeout(() => ScrollTrigger.refresh(), 400)
+    return () => {
+      window.clearTimeout(t)
+      teardown()
+    }
+  }, [route])
+
+  return (
+    <>
+      <Atmosphere showOrb={false} />
+      <Cursor />
+      <main id="main">
+        <Legal route={route} />
       </main>
     </>
   )
