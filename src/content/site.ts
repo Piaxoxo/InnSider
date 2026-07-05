@@ -228,4 +228,10 @@ export const testimonials = {
 export const footer = {
   line: 'Mehr als ein Restaurant – ein Ort zum Erleben und Erinnern.',
   credit: 'Innsider · Wurmbstraße 36, 1120 Wien · Von Alice Kern.',
+  by: {
+    prefix: 'Made by',
+    name: 'BANDITA',
+    suffix: 'Creative Agency',
+    href: 'https://bandita-pink.vercel.app/de',
+  },
 } as const

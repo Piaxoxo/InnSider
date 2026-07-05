@@ -362,6 +362,28 @@
   color: var(--gold);
 }
 
+.legal__footer-by {
+  max-width: 1180px;
+  margin: clamp(2rem, 5vh, 3rem) auto 0;
+  padding-top: clamp(1.4rem, 3vh, 2rem);
+  border-top: 1px solid var(--line);
+  text-align: center;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 300;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.legal__footer-by a {
+  color: var(--gold);
+  letter-spacing: 0.3em;
+  transition: color 0.4s var(--ease-lux);
+}
+.legal__footer-by a:hover {
+  color: var(--gold-bright);
+}
+
 /* ── Responsive ────────────────────────────────────────────────────────── */
 @media (max-width: 820px) {
   .legal__layout {

@@ -258,9 +258,15 @@ function LegalFooter() {
           <a href={contact.instagramHref} target="_blank" rel="noreferrer" data-cursor="hover">
             {contact.instagram}
           </a>
-          <span>{footer.credit}</span>
         </div>
       </div>
+      <p className="legal__footer-by">
+        {footer.by.prefix}{' '}
+        <a href={footer.by.href} target="_blank" rel="noreferrer" data-cursor="hover">
+          {footer.by.name}
+        </a>{' '}
+        {footer.by.suffix}
+      </p>
     </footer>
   )
 }

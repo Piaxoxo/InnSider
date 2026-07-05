@@ -178,6 +178,13 @@ export function Reservation() {
             <span>{footer.credit}</span>
           </div>
         </div>
+        <p className="reservation__footer-by">
+          {footer.by.prefix}{' '}
+          <a href={footer.by.href} target="_blank" rel="noreferrer" data-cursor="hover">
+            {footer.by.name}
+          </a>{' '}
+          {footer.by.suffix}
+        </p>
       </footer>
     </section>
   )
