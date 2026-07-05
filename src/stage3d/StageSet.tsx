@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { EffectComposer, Bloom, Vignette, SMAA } from '@react-three/postprocessing'
+import { EffectComposer, Bloom, Vignette, DepthOfField } from '@react-three/postprocessing'
 import { Suspense } from 'react'
 import * as THREE from 'three'
-import { Restaurant } from './Restaurant'
-import { CAM_WAYPOINTS } from './stageData'
+import { Film } from './Film'
+import { MOMENTS } from './film'
 import { navigate } from '../lib/useRoute'
 import { initSmoothScroll, startScroll, ScrollTrigger } from '../lib/scroll'
 import { useReducedMotion, isTouch } from '../lib/useReducedMotion'
@@ -41,15 +41,21 @@ export function StageSet() {
             toneMappingExposure: 1.05,
           }}
           dpr={touch ? [1, 1.5] : [1, 1.9]}
-          camera={{ position: CAM_WAYPOINTS[0], fov: 40, near: 0.1, far: 400 }}
+          camera={{ position: MOMENTS[0].cam, fov: 38, near: 0.05, far: 200 }}
           frameloop={reduced ? 'demand' : 'always'}
         >
           <Suspense fallback={null}>
-            <Restaurant reduced={reduced} lowPerf={touch} />
-            <EffectComposer multisampling={0}>
-              <Bloom mipmapBlur intensity={touch ? 0.7 : 1.05} luminanceThreshold={0.18} luminanceSmoothing={0.3} radius={0.8} />
-              <Vignette offset={0.28} darkness={0.82} eskil={false} />
-              {touch ? <></> : <SMAA />}
+            <Film reduced={reduced} lowPerf={touch} />
+            <EffectComposer multisampling={touch ? 0 : 2}>
+              <Bloom mipmapBlur intensity={touch ? 0.7 : 1.0} luminanceThreshold={0.2} luminanceSmoothing={0.3} radius={0.82} />
+              {/* Cinematic shallow focus — the hero object the camera trails stays
+                  sharp; everything beyond falls into soft bokeh. */}
+              {touch ? (
+                <></>
+              ) : (
+                <DepthOfField focusDistance={0.006} focalLength={0.028} bokehScale={2.6} height={480} />
+              )}
+              <Vignette offset={0.28} darkness={0.84} eskil={false} />
             </EffectComposer>
           </Suspense>
         </Canvas>
