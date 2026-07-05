@@ -80,6 +80,12 @@ export function Hero({ ready }: { ready: boolean }) {
 
   return (
     <section id="hero" ref={root} className="chapter hero" aria-label="The evening begins">
+      {/* Candlelight on the table — a warm halo that drifts with the pointer and
+          flickers like a real flame, anchoring the room's warmth to the hero. */}
+      <div className="hero__glow" data-depth="22" aria-hidden="true">
+        <span className="hero__glow-core" />
+      </div>
+
       <div className="hero__rail" data-hero-rail aria-hidden="true">
         <span>{contact.address.city} — {contact.address.district}</span>
         <span className="hero__rail-line" />

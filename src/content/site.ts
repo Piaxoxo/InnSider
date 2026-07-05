@@ -49,8 +49,8 @@ export const nav = [
 export const hero = {
   chapter: 'Kapitel Eins',
   overline: 'Innsider — Wien',
-  headline: ['Herzlich willkommen.', 'Eine Vision', 'wird Wirklichkeit.'],
-  sub: 'Mehr als ein Restaurant — ein sorgfältig gestaltetes Ambiente, in dem Gäste nicht nur außergewöhnlich speisen, sondern ein sinnliches Gesamterlebnis genießen.',
+  headline: ['Jeder unvergessliche', 'Abend', 'beginnt irgendwo.'],
+  sub: 'Willkommen im InnSider — wo Atmosphäre, Gastfreundschaft und außergewöhnliche Küche zu bleibenden Erinnerungen werden.',
   primaryCta: 'Tisch reservieren',
   secondaryCta: 'Entdecken',
   scrollHint: 'Der Abend beginnt',

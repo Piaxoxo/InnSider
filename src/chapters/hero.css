@@ -37,6 +37,53 @@
   will-change: transform, opacity;
 }
 
+/* Candlelight halo — warm, low in the frame, behind the title. Centred with
+   left+margin (not transform) so the pointer-parallax transform is free. */
+.hero__glow {
+  position: absolute;
+  left: 50%;
+  bottom: 12vh;
+  width: min(58vw, 720px);
+  height: min(58vw, 720px);
+  margin-left: calc(min(58vw, 720px) / -2);
+  z-index: -1;
+  pointer-events: none;
+  will-change: transform;
+}
+.hero__glow-core {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgba(224, 164, 88, 0.5),
+    rgba(201, 169, 106, 0.2) 42%,
+    transparent 70%
+  );
+  filter: blur(10px);
+  transform-origin: center;
+  animation: candle-flicker 5.5s var(--ease-in-out) infinite;
+}
+@keyframes candle-flicker {
+  0%,
+  100% {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+  25% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+  50% {
+    opacity: 0.78;
+    transform: scale(0.99);
+  }
+  75% {
+    opacity: 0.93;
+    transform: scale(1.02);
+  }
+}
+
 .hero__title {
   font-family: var(--display);
   font-weight: 300;
@@ -124,7 +171,11 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero__hint-dot {
+  .hero__hint-dot,
+  .hero__glow-core {
     animation: none;
+  }
+  .hero__glow-core {
+    opacity: 0.85;
   }
 }
