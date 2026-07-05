@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react'
 
 /**
  * Tiny hash router — no dependency, and it survives GitHub Pages refreshes
- * (the hash never hits the server). Routes: '' (home), 'impressum', 'agb'.
+ * (the hash never hits the server). Routes: '' (home), 'impressum', 'agb',
+ * 'stage' (the 3-D film set).
  */
-export type Route = '' | 'impressum' | 'agb'
+export type Route = '' | 'impressum' | 'agb' | 'stage'
 
 function parse(): Route {
   const h = window.location.hash.replace(/^#\/?/, '').toLowerCase()
-  return h === 'impressum' || h === 'agb' ? h : ''
+  return h === 'impressum' || h === 'agb' || h === 'stage' ? h : ''
 }
 
 export function useRoute(): Route {

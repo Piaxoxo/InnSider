@@ -16,6 +16,7 @@ import { Gallery } from './chapters/Gallery'
 import { Events } from './chapters/Events'
 import { Reservation } from './chapters/Reservation'
 import { Legal } from './legal/Legal'
+import { StageSet } from './stage3d/StageSet'
 import { useRoute } from './lib/useRoute'
 import { useRouteTransition } from './lib/useRouteTransition'
 import { initSmoothScroll, startScroll, stopScroll, ScrollTrigger } from './lib/scroll'
@@ -40,7 +41,13 @@ export default function App() {
 
   return (
     <>
-      {shown ? <LegalShell route={shown} /> : <HomeShell />}
+      {shown === 'stage' ? (
+        <StageSet />
+      ) : shown ? (
+        <LegalShell route={shown as 'impressum' | 'agb'} />
+      ) : (
+        <HomeShell />
+      )}
       <PageTransition phase={phase} />
     </>
   )
