@@ -59,7 +59,10 @@ export function Atmosphere({ showOrb = true }: { showOrb?: boolean }) {
         <Suspense fallback={null}>
           <CameraRig reduced={reduced} />
           <AtmosphereField reduced={reduced} />
-          {showOrb && <HeroOrb count={orb} reduced={reduced} />}
+          {/* The orb is a scroll-driven motion accent; under reduced motion the
+              demand frameloop never runs its fade, so it would freeze on screen.
+              Skip it there — the atmosphere + candle glow carry the hero. */}
+          {showOrb && !reduced && <HeroOrb count={orb} reduced={reduced} />}
           <DustField count={dust} reduced={reduced} />
           {/* Bloom turns the light, dust and orb into glowing embers — the
               single biggest lift toward a "webgl world" look. */}

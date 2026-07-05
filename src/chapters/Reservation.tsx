@@ -55,6 +55,9 @@ export function Reservation() {
     <section id="reservation" className="chapter reservation" aria-label="Reservieren">
       <div className="reservation__wrap">
         <div className="reservation__head" ref={headRef}>
+          {/* The candle-close — warmth returns after the cool bar, the evening
+              comes back to the table where it began. */}
+          <span className="reservation__candle" aria-hidden="true" />
           <span className="overline" data-reveal>
             {reservation.overline} — {reservation.chapter}
           </span>

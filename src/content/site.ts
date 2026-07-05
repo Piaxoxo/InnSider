@@ -224,8 +224,8 @@ export const events = {
 export const reservation = {
   chapter: 'Kapitel Neun',
   overline: 'Reservieren',
-  headline: 'Wir freuen uns\nauf Sie.',
-  sub: 'Reservieren Sie Ihren Abend – wir kümmern uns um den Rest.',
+  headline: 'Ihr Tisch\nwartet.',
+  sub: 'Wir freuen uns auf Sie — reservieren Sie Ihren Abend, den Rest übernehmen wir.',
   cta: 'Jetzt reservieren',
   fields: {
     name: 'Ihr Name',
