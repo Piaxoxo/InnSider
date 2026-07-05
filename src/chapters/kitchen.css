@@ -27,6 +27,31 @@
   overflow: hidden;
   height: clamp(420px, 62vh, 720px);
 }
+/* Heat off the pass — warm ember glow, breathing */
+.kitchen__heat {
+  position: absolute;
+  left: -10%;
+  right: 40%;
+  bottom: -12%;
+  height: 60%;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(60% 60% at 30% 100%, rgba(233, 124, 52, 0.42), transparent 70%);
+  mix-blend-mode: screen;
+  filter: blur(12px);
+  animation: kitchen-heat 6s var(--ease-in-out) infinite;
+}
+@keyframes kitchen-heat {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: translateY(4%) scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: translateY(-4%) scale(1.06);
+  }
+}
 .kitchen__portrait-media {
   position: absolute;
   inset: -8% 0;
@@ -116,11 +141,46 @@
   border-radius: 10px;
   overflow: hidden;
 }
+.kitchen__motion {
+  position: relative;
+}
+/* Steam rising off the plate */
+.kitchen__steam {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: -25%;
+  height: 95%;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(55% 65% at 50% 100%, rgba(242, 236, 225, 0.2), transparent 72%);
+  filter: blur(16px);
+  opacity: 0.5;
+  animation: kitchen-steam 10s var(--ease-in-out) infinite;
+}
+@keyframes kitchen-steam {
+  0%,
+  100% {
+    transform: translateY(8%) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-10%) scale(1.1);
+    opacity: 0.6;
+  }
+}
 .kitchen__hands {
   position: relative;
 }
 .kitchen__hands-media {
   will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kitchen__heat,
+  .kitchen__steam {
+    animation: none;
+  }
 }
 
 @media (max-width: 900px) {

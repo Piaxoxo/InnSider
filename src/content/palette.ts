@@ -28,12 +28,12 @@ export const grades: Grade[] = [
   { base: rgb(14, 11, 9), glow: rgb(201, 169, 106), accent: rgb(120, 78, 40) },
   // 02 Dream — warm stone, daylight memory of the sketch
   { base: rgb(20, 17, 13), glow: rgb(214, 184, 122), accent: rgb(150, 110, 70) },
-  // 03 Kitchen — fire & heat
-  { base: rgb(18, 12, 9), glow: rgb(224, 128, 60), accent: rgb(150, 60, 30) },
+  // 03 Kitchen — fire & heat (hotter: the kitchen glows)
+  { base: rgb(22, 13, 8), glow: rgb(233, 124, 52), accent: rgb(170, 62, 26) },
   // 04 Menu — deep dinner amber
   { base: rgb(16, 12, 9), glow: rgb(206, 160, 96), accent: rgb(110, 74, 42) },
-  // 05 Bar — dark, brass on black
-  { base: rgb(9, 8, 8), glow: rgb(196, 156, 92), accent: rgb(70, 52, 30) },
+  // 05 Bar — blue hour: the room cools, steel light, gold drinks against blue
+  { base: rgb(8, 11, 17), glow: rgb(150, 164, 190), accent: rgb(44, 60, 92) },
   // 06 Evening — night deepening, blue creeping in
   { base: rgb(9, 10, 14), glow: rgb(170, 140, 96), accent: rgb(46, 52, 74) },
   // 07 Gallery — cool museum light

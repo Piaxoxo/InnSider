@@ -61,6 +61,8 @@ export function Kitchen() {
             <div className="kitchen__portrait-media">
               <Placeholder slot={media.stefanPortrait} />
             </div>
+            {/* Heat off the pass — a warm ember glow that breathes */}
+            <span className="kitchen__heat" aria-hidden="true" />
           </div>
           <div className="kitchen__story">
             {kitchen.paragraphs.map((p, i) => (
@@ -90,6 +92,8 @@ export function Kitchen() {
       <div className="kitchen__media">
         <div className="kitchen__motion">
           <Placeholder slot={media.dishBeet2} />
+          {/* Steam rising off the plate */}
+          <span className="kitchen__steam" aria-hidden="true" />
         </div>
         <div className="kitchen__hands">
           <div className="kitchen__hands-media">

@@ -22,6 +22,9 @@ export function Bar() {
         <Placeholder slot={media.barScene} rounded={false} />
         <span className="bar__motion-veil" aria-hidden="true" />
       </div>
+      {/* Blue-hour grade: the room changes key — cool light, gold drinks against it */}
+      <span className="bar__grade" aria-hidden="true" />
+      <span className="bar__reflect" aria-hidden="true" />
 
       <div className="bar__wrap">
         <div className="bar__top">
