@@ -1,0 +1,164 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   The film — full-bleed cinematic video layers with a scroll-driven playhead.
+   ───────────────────────────────────────────────────────────────────────── */
+.filmv {
+  position: relative;
+  background: #000;
+}
+.filmv__stage {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: #000;
+}
+
+.filmv__shot {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  will-change: opacity, transform;
+  transform: scale(1.08);
+}
+.filmv__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* a gentle cinema grade — warmer, a touch more contrast, held back highlights */
+  filter: contrast(1.06) saturate(1.05) brightness(0.95);
+}
+
+/* Cinema grade: top/bottom fall-off + a warm wash. */
+.filmv__grade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(8, 6, 4, 0.55) 0%, rgba(8, 6, 4, 0) 22%, rgba(8, 6, 4, 0) 68%, rgba(8, 6, 4, 0.72) 100%),
+    radial-gradient(120% 90% at 50% 40%, rgba(224, 164, 88, 0.06), rgba(20, 12, 6, 0.12) 70%);
+}
+
+/* Warm light-leak — blooms during a dissolve; opacity driven by JS. */
+.filmv__leak {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(60% 55% at 62% 38%, rgba(224, 164, 88, 0.55), rgba(201, 169, 106, 0.12) 45%, transparent 65%);
+  mix-blend-mode: screen;
+}
+
+/* Film grain. */
+.filmv__grain {
+  position: absolute;
+  inset: -50%;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  animation: filmv-grain 0.5s steps(2) infinite;
+}
+@keyframes filmv-grain {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(-3%, 2%); }
+  100% { transform: translate(2%, -2%); }
+}
+
+/* Vignette — draw the eye in. */
+.filmv__vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(120% 100% at 50% 46%, transparent 42%, rgba(5, 3, 2, 0.62) 100%);
+}
+
+/* ── minimal chrome ──────────────────────────────────────────────────────── */
+.filmv__back {
+  position: fixed;
+  top: clamp(1.2rem, 3vw, 2.2rem);
+  left: clamp(1.2rem, 3vw, 2.2rem);
+  z-index: 5;
+  width: 2.8rem;
+  height: 2.8rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(201, 169, 106, 0.4);
+  border-radius: 50%;
+  background: rgba(10, 8, 6, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #f2ece1;
+  font-size: 1rem;
+  transition: border-color 0.4s ease, color 0.4s ease, background 0.4s ease;
+}
+.filmv__back:hover {
+  border-color: #c9a96a;
+  color: #c9a96a;
+  background: rgba(20, 17, 13, 0.6);
+}
+.filmv__cue {
+  position: fixed;
+  left: 50%;
+  bottom: clamp(1.6rem, 4vh, 3rem);
+  transform: translateX(-50%);
+  z-index: 5;
+  width: 1px;
+  height: 46px;
+  overflow: hidden;
+  background: rgba(201, 169, 106, 0.2);
+}
+.filmv__cue-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background: linear-gradient(#d9bd86, transparent);
+  animation: filmv-cue 2.4s cubic-bezier(0.65, 0.05, 0.36, 1) infinite;
+}
+@keyframes filmv-cue {
+  0% { transform: translateY(-100%); }
+  60%, 100% { transform: translateY(260%); }
+}
+.filmv__ambience {
+  position: fixed;
+  right: clamp(1.2rem, 3vw, 2.2rem);
+  bottom: clamp(1.2rem, 3vw, 2.2rem);
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 1rem;
+  border: 1px solid rgba(242, 236, 225, 0.14);
+  border-radius: 100px;
+  background: rgba(10, 8, 6, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-family: 'Jost', system-ui, sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(242, 236, 225, 0.5);
+}
+.filmv__dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #c9a96a;
+  opacity: 0.6;
+  animation: filmv-pulse 3s ease-in-out infinite;
+}
+@keyframes filmv-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .filmv__grain,
+  .filmv__cue-line,
+  .filmv__dot {
+    animation: none;
+  }
+}

@@ -16,7 +16,7 @@ import { Gallery } from './chapters/Gallery'
 import { Events } from './chapters/Events'
 import { Reservation } from './chapters/Reservation'
 import { Legal } from './legal/Legal'
-import { StageSet } from './stage3d/StageSet'
+import { StageFilm } from './filmv/StageFilm'
 import { useRoute } from './lib/useRoute'
 import { useRouteTransition } from './lib/useRouteTransition'
 import { initSmoothScroll, startScroll, stopScroll, ScrollTrigger } from './lib/scroll'
@@ -42,7 +42,7 @@ export default function App() {
   return (
     <>
       {shown === 'stage' ? (
-        <StageSet />
+        <StageFilm />
       ) : shown ? (
         <LegalShell route={shown as 'impressum' | 'agb'} />
       ) : (
