@@ -1,0 +1,85 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Page transition — the curtain between routes.
+   Rises to cover (cover), swap happens hidden, then lifts away (reveal).
+   ───────────────────────────────────────────────────────────────────────── */
+
+.ptrans {
+  position: fixed;
+  inset: 0;
+  z-index: 85; /* above nav (40) + cursor (60), below the first-load loader (90) */
+  pointer-events: none;
+  overflow: hidden;
+}
+.ptrans--cover,
+.ptrans--reveal {
+  pointer-events: auto; /* swallow clicks mid-transition */
+}
+
+.ptrans__sheet {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  transform: translateY(100%);
+  will-change: transform;
+  /* Warm candlelight sheet over near-black, with a soft brass glow. */
+  background:
+    radial-gradient(120% 90% at 50% 42%, rgba(201, 169, 106, 0.16), transparent 62%),
+    linear-gradient(180deg, #14100b 0%, #0a0908 60%, #0a0908 100%);
+}
+.ptrans__sheet::after {
+  /* faint film grain so the flat fill never looks digital */
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  background-image: radial-gradient(rgba(242, 236, 225, 0.6) 0.5px, transparent 0.5px);
+  background-size: 3px 3px;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.ptrans__mark {
+  position: relative;
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(1.8rem, 1rem + 3vw, 3.4rem);
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.45s var(--ease-lux), transform 0.45s var(--ease-lux);
+}
+
+/* ── cover: sheet rises from below to fill the screen ─────────────────── */
+.ptrans--cover .ptrans__sheet {
+  transform: translateY(0);
+  transition: transform 0.62s cubic-bezier(0.7, 0, 0.3, 1);
+}
+.ptrans--cover .ptrans__mark {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.18s;
+}
+
+/* ── reveal: sheet continues up and off, unveiling the new route ───────── */
+.ptrans--reveal .ptrans__sheet {
+  transform: translateY(-100%);
+  transition: transform 0.62s cubic-bezier(0.7, 0, 0.3, 1);
+}
+.ptrans--reveal .ptrans__mark {
+  opacity: 0;
+  transition-duration: 0.3s;
+}
+
+/* ── idle: parked off-screen below, no transition (invisible reset) ────── */
+.ptrans--idle .ptrans__sheet {
+  transform: translateY(100%);
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ptrans {
+    display: none;
+  }
+}
