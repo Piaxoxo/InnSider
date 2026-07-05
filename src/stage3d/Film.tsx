@@ -110,9 +110,9 @@ export function Film({ reduced, lowPerf }: { reduced: boolean; lowPerf: boolean 
   const tex = useMemo(softTexture, [])
   return (
     <>
-      <fogExp2 attach="fog" args={[PAL.warmBlack, 0.02]} />
-      <ambientLight intensity={0.16} color={PAL.amber} />
-      <hemisphereLight intensity={0.16} color={PAL.amber} groundColor={PAL.warmBlack} />
+      <fogExp2 attach="fog" args={[PAL.warmBlack, 0.011]} />
+      <ambientLight intensity={0.3} color={PAL.amber} />
+      <hemisphereLight intensity={0.26} color={PAL.amber} groundColor={PAL.warmBlack} />
 
       <FilmEnv />
       <FilmCamera reduced={reduced} />
@@ -121,9 +121,12 @@ export function Film({ reduced, lowPerf }: { reduced: boolean; lowPerf: boolean 
       {MOMENTS.map((m) => (
         <group key={m.id}>
           <MomentProp prop={m.prop} pos={m.propPos} tex={tex} lowPerf={lowPerf} />
-          {/* a soft key light lifts each hero object off the dark */}
+          {/* a soft key + a cool rim lift each hero object off the dark */}
           {m.prop !== 'none' && (
-            <pointLight position={[m.propPos[0] + 0.3, m.propPos[1] + 0.7, m.propPos[2] + 0.3]} color={PAL.amber} intensity={3} distance={2.8} decay={2} />
+            <>
+              <pointLight position={[m.propPos[0] + 0.35, m.propPos[1] + 0.75, m.propPos[2] + 0.35]} color={'#ffd9a0'} intensity={4.2} distance={3.4} decay={2} />
+              <pointLight position={[m.propPos[0] - 0.4, m.propPos[1] + 0.5, m.propPos[2] - 0.5]} color={'#9fb6d8'} intensity={1.6} distance={3} decay={2} />
+            </>
           )}
           {m.video && (
             <VideoMoment

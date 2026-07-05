@@ -1,6 +1,6 @@
 import { useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { MeshReflectorMaterial, Billboard } from '@react-three/drei'
+import { Billboard } from '@react-three/drei'
 import * as THREE from 'three'
 import { PAL } from './stageData'
 import { COUNTER } from './film'
@@ -25,23 +25,24 @@ export function softTexture(): THREE.Texture {
   return t
 }
 
-/* Crystal — real refraction on desktop, a clean tinted glass on low-power. */
+/* Crystal — real refraction on desktop, a clean reflective glass on low-power. */
 function Crystal({ lowPerf }: { lowPerf: boolean }) {
   if (lowPerf) {
-    return <meshPhysicalMaterial color={'#eef1f4'} transparent opacity={0.22} roughness={0.08} metalness={0} />
+    return <meshPhysicalMaterial color={'#f2f6f8'} transparent opacity={0.2} roughness={0.04} metalness={0} envMapIntensity={1.4} clearcoat={1} clearcoatRoughness={0.04} />
   }
   return (
     <meshPhysicalMaterial
       color={'#ffffff'}
       transmission={1}
-      thickness={0.4}
-      roughness={0.05}
-      ior={1.46}
+      thickness={0.22}
+      roughness={0.025}
+      ior={1.5}
       transparent
       opacity={1}
       metalness={0}
+      envMapIntensity={1.5}
       clearcoat={1}
-      clearcoatRoughness={0.06}
+      clearcoatRoughness={0.03}
     />
   )
 }
@@ -50,32 +51,24 @@ function Crystal({ lowPerf }: { lowPerf: boolean }) {
 export function Counter({ lowPerf }: { lowPerf: boolean }) {
   const midZ = (COUNTER.from + COUNTER.to) / 2
   const len = COUNTER.from - COUNTER.to + 8
+  void lowPerf
   return (
     <group>
       {/* body */}
       <mesh position={[0, COUNTER.top - 0.45, midZ]}>
         <boxGeometry args={[2.6, 0.9, len]} />
-        <meshStandardMaterial color={PAL.stoneDark} roughness={0.4} metalness={0.2} />
+        <meshStandardMaterial color={PAL.stoneDark} roughness={0.5} metalness={0.15} />
       </mesh>
-      {/* polished marble top with real-time reflections */}
-      <mesh rotation-x={-Math.PI / 2} position={[0, COUNTER.top, midZ]}>
-        <planeGeometry args={[2.6, len]} />
-        <MeshReflectorMaterial
-          resolution={lowPerf ? 128 : 512}
-          mirror={0.5}
-          blur={[400, 120]}
-          mixBlur={1.1}
-          mixStrength={2}
-          roughness={0.55}
-          depthScale={0.8}
-          color={'#20211f'}
-          metalness={0.4}
-        />
+      {/* polished dark-marble top — a clean lacquered clearcoat reflects the warm
+          environment sharply (no low-res reflector = no pixelation) */}
+      <mesh position={[0, COUNTER.top, midZ]}>
+        <boxGeometry args={[2.6, 0.05, len]} />
+        <meshPhysicalMaterial color={'#211f1b'} roughness={0.16} metalness={0.2} clearcoat={1} clearcoatRoughness={0.08} envMapIntensity={1.4} />
       </mesh>
       {/* a brass rail catches the warm light down the front edge */}
-      <mesh position={[0, COUNTER.top - 0.03, midZ + 0]}>
+      <mesh position={[0, COUNTER.top - 0.04, midZ]}>
         <boxGeometry args={[2.62, 0.02, len]} />
-        <meshStandardMaterial color={PAL.brass} metalness={0.9} roughness={0.3} emissive={PAL.amber} emissiveIntensity={0.12} />
+        <meshStandardMaterial color={PAL.brass} metalness={1} roughness={0.24} envMapIntensity={1.3} />
       </mesh>
     </group>
   )
@@ -117,7 +110,7 @@ export function WineGlass({ position, lowPerf, wine = PAL.wine }: { position: [n
   useFrame((s) => {
     if (liq.current) {
       const m = liq.current.material as THREE.MeshStandardMaterial
-      m.emissiveIntensity = 0.14 + 0.06 * Math.sin(s.clock.elapsedTime * 1.4)
+      m.emissiveIntensity = 0.05 + 0.03 * Math.sin(s.clock.elapsedTime * 1.4)
     }
   })
   return (
@@ -136,7 +129,7 @@ export function WineGlass({ position, lowPerf, wine = PAL.wine }: { position: [n
       </mesh>
       <mesh ref={liq} position={[0, 0.185, 0]}>
         <cylinderGeometry args={[0.05, 0.02, 0.09, 24]} />
-        <meshStandardMaterial color={wine} roughness={0.15} metalness={0.05} emissive={wine} emissiveIntensity={0.16} transparent opacity={0.94} />
+        <meshPhysicalMaterial color={'#4a0f1c'} roughness={0.1} metalness={0} transmission={0.35} thickness={0.3} ior={1.36} emissive={wine} emissiveIntensity={0.05} envMapIntensity={1.2} />
       </mesh>
     </group>
   )
@@ -191,7 +184,7 @@ export function Cocktail({ position, lowPerf }: { position: [number, number, num
       {/* liquid */}
       <mesh position={[0, 0.05, 0]}>
         <cylinderGeometry args={[0.055, 0.05, 0.08, 24]} />
-        <meshStandardMaterial color={PAL.amber} roughness={0.1} emissive={PAL.amber} emissiveIntensity={0.3} transparent opacity={0.85} />
+        <meshPhysicalMaterial color={'#c86a1e'} roughness={0.08} transmission={0.5} thickness={0.2} ior={1.34} emissive={PAL.amber} emissiveIntensity={0.08} envMapIntensity={1.2} />
       </mesh>
       {/* ice */}
       <group ref={ice} position={[0, 0.07, 0]}>
@@ -221,16 +214,16 @@ export function Shaker({ position }: { position: [number, number, number] }) {
   return (
     <group position={position}>
       <mesh position={[0, 0.11, 0]}>
-        <cylinderGeometry args={[0.05, 0.06, 0.22, 28]} />
-        <meshStandardMaterial color={'#cdb488'} metalness={0.95} roughness={0.16} />
+        <cylinderGeometry args={[0.05, 0.06, 0.22, 40]} />
+        <meshStandardMaterial color={'#cdb488'} metalness={1} roughness={0.15} envMapIntensity={1.4} />
       </mesh>
       <mesh position={[0, 0.25, 0]}>
-        <cylinderGeometry args={[0.055, 0.05, 0.07, 28]} />
-        <meshStandardMaterial color={'#d8c199'} metalness={0.95} roughness={0.14} />
+        <cylinderGeometry args={[0.055, 0.05, 0.07, 40]} />
+        <meshStandardMaterial color={'#d8c199'} metalness={1} roughness={0.13} envMapIntensity={1.4} />
       </mesh>
       <mesh position={[0, 0.3, 0]}>
-        <cylinderGeometry args={[0.03, 0.055, 0.03, 28]} />
-        <meshStandardMaterial color={'#e0cba6'} metalness={0.95} roughness={0.12} />
+        <cylinderGeometry args={[0.03, 0.055, 0.03, 40]} />
+        <meshStandardMaterial color={'#e0cba6'} metalness={1} roughness={0.11} envMapIntensity={1.4} />
       </mesh>
     </group>
   )
@@ -280,8 +273,8 @@ export function Plates({ position, tex }: { position: [number, number, number]; 
       {[-0.2, 0.2].map((x, i) => (
         <group key={i} position={[x, 0, 0]}>
           <mesh position={[0, 0.01, 0]}>
-            <cylinderGeometry args={[0.16, 0.15, 0.014, 40]} />
-            <meshStandardMaterial color={PAL.ivory} roughness={0.35} metalness={0.05} />
+            <cylinderGeometry args={[0.16, 0.15, 0.014, 48]} />
+            <meshPhysicalMaterial color={'#efe9dd'} roughness={0.3} metalness={0} clearcoat={1} clearcoatRoughness={0.12} envMapIntensity={1} />
           </mesh>
           <mesh position={[0, 0.03, 0]}>
             <sphereGeometry args={[0.05, 16, 12]} />
