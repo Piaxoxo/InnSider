@@ -8,7 +8,7 @@ import './reservation.css'
 // FormSubmit: no backend needed on a static host. Posts the form and emails it
 // straight to the house — nothing opens the visitor's mail app. The endpoint is
 // activated once via a confirmation link sent to this address on first use.
-const FORM_ENDPOINT = 'https://formsubmit.co/ajax/office@innsider.at'
+const FORM_ENDPOINT = 'https://formsubmit.co/ajax/office@innsider-restaurant.at'
 
 /**
  * Kapitel Neun — Reservieren.
@@ -124,6 +124,24 @@ export function Reservation() {
           )}
 
           <aside className="reservation__aside">
+            <div className="reservation__direct">
+              <span className="reservation__block-title">{reservation.direct.heading}</span>
+              <p className="reservation__direct-note">{reservation.direct.note}</p>
+              <div className="reservation__direct-actions">
+                <a className="btn btn--gold" href={contact.phoneHref}>
+                  <span className="btn__ico" aria-hidden="true">☎</span>
+                  {reservation.direct.callCta}
+                </a>
+                <a className="btn btn--ghost" href={contact.emailReserveHref}>
+                  {reservation.direct.mailCta}
+                  <span className="btn__arrow">→</span>
+                </a>
+              </div>
+              <a className="reservation__direct-phone" href={contact.phoneHref}>
+                {contact.phone}
+              </a>
+            </div>
+
             <div className="reservation__block">
               <span className="reservation__block-title">So finden Sie uns</span>
               <p>

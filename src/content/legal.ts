@@ -47,7 +47,7 @@ export const impressum = {
       title: 'Kontakt',
       rows: [
         { label: 'Telefon', value: '+43 670 182 9565', href: 'tel:+436701829565' },
-        { label: 'E-Mail', value: 'office@innsider.at', href: 'mailto:office@innsider.at' },
+        { label: 'E-Mail', value: 'office@innsider-restaurant.at', href: 'mailto:office@innsider-restaurant.at' },
         {
           label: 'Webseite',
           value: 'www.innsider-restaurant.at',

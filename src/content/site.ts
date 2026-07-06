@@ -27,8 +27,11 @@ export const contact = {
   },
   phone: '+43 670 182 9565',
   phoneHref: 'tel:+436701829565',
-  email: 'office@innsider.at',
-  emailHref: 'mailto:office@innsider.at',
+  email: 'office@innsider-restaurant.at',
+  emailHref: 'mailto:office@innsider-restaurant.at',
+  // A reservation-ready mailto: opens the mail app with a subject prefilled.
+  emailReserveHref:
+    'mailto:office@innsider-restaurant.at?subject=Reservierungsanfrage%20%E2%80%93%20Innsider&body=Guten%20Tag%2C%0A%0Aich%20m%C3%B6chte%20gerne%20reservieren.%0A%0AName%3A%0AWunschdatum%20%26%20Uhrzeit%3A%0APersonen%3A%0AAnlass%20(optional)%3A%0A%0AVielen%20Dank!',
   instagram: '@innsider.vienna',
   instagramHref: 'https://www.instagram.com/innsider.vienna/',
 } as const
@@ -237,6 +240,13 @@ export const reservation = {
   reassurance: 'Wir antworten persönlich auf jede Anfrage.',
   // Genaue Öffnungszeiten liegen uns nicht vor → ehrlicher Hinweis statt Fantasie.
   hoursNote: 'Frühstück · Mittagstisch · Abend. Aktuelle Öffnungszeiten und Reservierungen gerne telefonisch oder per E-Mail.',
+  // Weitere Wege zu reservieren — direkt, ohne Formular.
+  direct: {
+    heading: 'Lieber direkt?',
+    note: 'Rufen Sie uns an oder schreiben Sie uns – wir sind persönlich für Sie da.',
+    callCta: 'Anrufen',
+    mailCta: 'Per E-Mail reservieren',
+  },
 } as const
 
 // Echte Google-Bewertungen (21 Rezensionen).
