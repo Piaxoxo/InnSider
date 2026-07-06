@@ -3,7 +3,7 @@ import { Atmosphere } from './three/Atmosphere'
 import { Loader } from './components/Loader'
 import { Nav } from './components/Nav'
 import { Cursor } from './components/Cursor'
-import { SoundToggle } from './components/SoundToggle'
+import { CallButton } from './components/CallButton'
 import { PageTransition } from './components/PageTransition'
 import { Hero } from './chapters/Hero'
 import { Dream } from './chapters/Dream'
@@ -111,7 +111,7 @@ function HomeShell() {
       <Cursor />
       {!seen.current && <Loader onDone={handleLoaded} />}
       <Nav visible={ready} />
-      <SoundToggle visible={ready} />
+      <CallButton visible={ready} />
 
       <main id="main">
         <Hero ready={ready} />

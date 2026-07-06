@@ -26,7 +26,7 @@ export function Atmosphere({ showOrb = true }: { showOrb?: boolean }) {
   const touch = isTouch()
   // Scale the world down on touch/low-power; none of it is load-bearing.
   const dust = touch ? 150 : 340
-  const orb = touch ? 3500 : 9000
+  const orb = touch ? 6000 : 16000
   const veils = touch ? 10 : 16
   const depth = touch ? 240 : 520
 
@@ -52,7 +52,7 @@ export function Atmosphere({ showOrb = true }: { showOrb?: boolean }) {
               the single biggest lift toward a "webgl world" look. */}
           <EffectComposer multisampling={0}>
             <Bloom mipmapBlur intensity={touch ? 0.5 : 0.85} luminanceThreshold={0.5} luminanceSmoothing={0.25} radius={0.75} />
-            <Vignette offset={0.22} darkness={0.72} eskil={false} />
+            <Vignette offset={0.2} darkness={0.88} eskil={false} />
           </EffectComposer>
         </Suspense>
       </Canvas>

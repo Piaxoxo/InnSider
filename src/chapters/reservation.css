@@ -138,11 +138,17 @@
   grid-column: 1 / -1;
   margin-top: 0.4rem;
   font-size: 0.9rem;
-  color: #d98a6a;
+  color: var(--ink-soft);
 }
-.reservation__error a {
-  color: var(--gold-bright);
-  border-bottom: 1px solid var(--line-strong);
+.reservation__error p {
+  color: #d9a06a;
+  margin-bottom: 1rem;
+  max-width: 46ch;
+}
+.reservation__error-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
 }
 
 /* ── Confirmation ──────────────────────────────────────────────────────── */

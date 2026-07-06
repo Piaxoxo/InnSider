@@ -79,10 +79,10 @@ export const atmosphereFrag = /* glsl */ `
     lightPos.y += cos(t * 0.05) * 0.03;
     float d = distance(p, lightPos);
 
-    // Base wash + soft top warmth.
-    vec3 col = uBase;
+    // Base wash + soft top warmth (dialled back so text stays readable).
+    vec3 col = uBase * 0.82;
     float topWarm = smoothstep(1.0, -0.25, uv.y);
-    col = mix(col, uBase * 1.55 + uAccent * 0.16, topWarm * 0.5);
+    col = mix(col, uBase * 1.15 + uAccent * 0.1, topWarm * 0.38);
 
     // Rising, domain-warped fog — parallaxes upward with time + scroll.
     vec2 fogUv = vec2(p.x * 1.15, uv.y * 1.5 - t * 0.03 - depth * 0.4);
@@ -94,7 +94,7 @@ export const atmosphereFrag = /* glsl */ `
     // Two-layer glow: tight near-core + soft far halo.
     float core = 0.14 / (d * d + 0.045);
     float halo = 0.10 / (d + 0.16);
-    col += uGlow * (core * 0.5 + halo * 0.5);
+    col += uGlow * (core * 0.36 + halo * 0.4);
 
     // Refined god-rays radiating from the light.
     vec2 dir = normalize(p - lightPos + 1e-4);
@@ -114,9 +114,9 @@ export const atmosphereFrag = /* glsl */ `
     spark = pow(smoothstep(0.86, 1.0, spark), 3.0);
     col += uGlow * spark * 0.6;
 
-    // Vignette — deepen the shadows, draw the eye in.
+    // Vignette — deepen the shadows, draw the eye in (darker for readability).
     float vig = smoothstep(1.3, 0.25, length(p));
-    col *= mix(0.5, 1.06, vig);
+    col *= mix(0.3, 0.92, vig);
 
     // Film grain (subtle, animated).
     float grain = hash(uv * uResolution + t) - 0.5;

@@ -21,6 +21,7 @@ export function Reservation() {
   const formRef = useReveal<HTMLDivElement>({ selector: '[data-reveal-f]', y: 26, stagger: 0.08 })
   const voicesRef = useReveal<HTMLDivElement>({ selector: '[data-reveal-v]', y: 30, stagger: 0.1 })
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const [fallbackHref, setFallbackHref] = useState('')
   const nameRef = useRef<HTMLInputElement>(null)
   const sent = status === 'sent'
 
@@ -28,6 +29,29 @@ export function Reservation() {
     e.preventDefault()
     if (status === 'sending') return
     const data = new FormData(e.currentTarget)
+
+    // A guaranteed fallback: a mailto prefilled with the request, used only if
+    // the serverless relay is unreachable or hasn't been activated yet — so a
+    // reservation is never lost.
+    const body = [
+      'Guten Tag,',
+      '',
+      'ich möchte gerne reservieren.',
+      '',
+      `Name: ${data.get('name') || ''}`,
+      `E-Mail: ${data.get('email') || ''}`,
+      `Wunschdatum: ${data.get('date') || ''}`,
+      `Personen: ${data.get('guests') || ''}`,
+      `Anlass: ${data.get('occasion') || '—'}`,
+      '',
+      'Vielen Dank!',
+    ].join('\n')
+    setFallbackHref(
+      `mailto:office@innsider-restaurant.at?subject=${encodeURIComponent(
+        `Reservierungsanfrage — ${data.get('name') || ''}`,
+      )}&body=${encodeURIComponent(body)}`,
+    )
+
     setStatus('sending')
     try {
       const res = await fetch(FORM_ENDPOINT, {
@@ -44,7 +68,11 @@ export function Reservation() {
           _captcha: 'false',
         }),
       })
-      if (!res.ok) throw new Error(String(res.status))
+      // FormSubmit returns 200 with { success } — treat a false/missing success
+      // (e.g. not-yet-activated) as a failure so the fallback kicks in.
+      const json = (await res.json().catch(() => ({}))) as { success?: string | boolean }
+      const ok = res.ok && String(json.success ?? 'true') !== 'false'
+      if (!ok) throw new Error('relay')
       setStatus('sent')
     } catch {
       setStatus('error')
@@ -105,10 +133,22 @@ export function Reservation() {
                 <span className="reservation__reassure">{reservation.reassurance}</span>
               </div>
               {status === 'error' && (
-                <p className="reservation__error" role="alert">
-                  Die Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder
-                  schreiben Sie an <a href={contact.emailHref}>{contact.email}</a>.
-                </p>
+                <div className="reservation__error" role="alert">
+                  <p>
+                    Die Online-Übermittlung ist gerade nicht möglich. Ihre Anfrage geht auf einem
+                    dieser Wege garantiert bei uns ein:
+                  </p>
+                  <div className="reservation__error-actions">
+                    <a className="btn btn--gold" href={fallbackHref || contact.emailReserveHref}>
+                      Als E-Mail senden
+                      <span className="btn__arrow">→</span>
+                    </a>
+                    <a className="btn btn--ghost" href={contact.phoneHref}>
+                      <span className="btn__ico" aria-hidden="true">☎</span>
+                      {contact.phone}
+                    </a>
+                  </div>
+                </div>
               )}
             </form>
           ) : (

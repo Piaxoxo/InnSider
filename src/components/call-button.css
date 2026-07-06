@@ -1,0 +1,40 @@
+.callfab {
+  position: fixed;
+  bottom: clamp(1.2rem, 3vh, 2.4rem);
+  right: clamp(1.2rem, 3vw, 2.4rem);
+  z-index: var(--z-nav);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.75em 1.25em;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: rgba(20, 14, 8, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--gold-bright);
+  transition: border-color 0.4s var(--ease-lux), color 0.4s, background 0.4s, transform 0.4s var(--ease-lux);
+}
+.callfab:hover {
+  border-color: var(--gold);
+  color: var(--warm-white);
+  background: rgba(201, 169, 106, 0.16);
+  transform: translateY(-2px);
+}
+.callfab__ico {
+  font-size: 0.95em;
+}
+.callfab__label {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+@media (max-width: 600px) {
+  .callfab {
+    padding: 0.85em;
+  }
+  .callfab__label {
+    display: none;
+  }
+}
