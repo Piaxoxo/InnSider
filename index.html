@@ -11,12 +11,52 @@
       name="description"
       content="Innsider Restaurant, Wien-Meidling. Mehr als ein Restaurant — ein sorgfältig gestaltetes Ambiente von Alice Kern. Regionale Küche, österreichische Weine, einer der fotogensten Orte Wiens."
     />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Innsider Restaurant" />
+    <link rel="canonical" href="https://inn-sider.vercel.app/" />
+
+    <!-- Open Graph -->
+    <meta property="og:site_name" content="Innsider Restaurant" />
     <meta property="og:title" content="Inn | Sider — Restaurant Wien" />
     <meta
       property="og:description"
       content="Mehr als ein Restaurant – ein Ort zum Erleben und Erinnern. Wurmbstraße 36, 1120 Wien."
     />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="de_AT" />
+    <meta property="og:url" content="https://inn-sider.vercel.app/" />
+    <meta property="og:image" content="https://inn-sider.vercel.app/media/innsider-facade-guests.jpg" />
+    <meta property="og:image:alt" content="Innsider Restaurant, Wien — Fassade mit Gästen am Fenster" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Inn | Sider — Restaurant Wien" />
+    <meta name="twitter:description" content="Mehr als ein Restaurant – ein Ort zum Erleben und Erinnern. Wurmbstraße 36, 1120 Wien." />
+    <meta name="twitter:image" content="https://inn-sider.vercel.app/media/innsider-facade-guests.jpg" />
+
+    <!-- Local-business structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Restaurant",
+        "name": "Innsider Restaurant",
+        "description": "Mehr als ein Restaurant – ein sorgfältig gestaltetes Ambiente von Alice Kern. Regionale Küche, österreichische Weine.",
+        "url": "https://inn-sider.vercel.app/",
+        "image": "https://inn-sider.vercel.app/media/innsider-facade-guests.jpg",
+        "servesCuisine": ["Österreichisch", "Regional"],
+        "priceRange": "$$",
+        "telephone": "+43 670 182 9565",
+        "email": "office@innsider.at",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Wurmbstraße 36",
+          "postalCode": "1120",
+          "addressLocality": "Wien",
+          "addressCountry": "AT"
+        },
+        "founder": { "@type": "Person", "name": "Alice Kern" }
+      }
+    </script>
 
     <!-- Editorial serif display + modern sans. Runtime CDN so premium type ships with no build-time asset dependency. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

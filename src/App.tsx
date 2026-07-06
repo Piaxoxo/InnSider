@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, lazy, Suspense } from 'react'
 import { Atmosphere } from './three/Atmosphere'
 import { Loader } from './components/Loader'
 import { Nav } from './components/Nav'
@@ -16,13 +16,17 @@ import { Gallery } from './chapters/Gallery'
 import { Events } from './chapters/Events'
 import { Reservation } from './chapters/Reservation'
 import { Legal } from './legal/Legal'
-import { StageFilm } from './filmv/StageFilm'
 import { useRoute } from './lib/useRoute'
 import { useRouteTransition } from './lib/useRouteTransition'
 import { initSmoothScroll, startScroll, stopScroll, ScrollTrigger } from './lib/scroll'
 import { usePointerTracking } from './lib/pointer'
 
 const OVERTURE_KEY = 'innsider-overture'
+
+// The experimental video film lives behind a lazy import, so none of its code
+// or assets touch the main website's bundle or load time. It only loads if a
+// visitor explicitly opens #/stage.
+const StageFilm = lazy(() => import('./filmv/StageFilm').then((m) => ({ default: m.StageFilm })))
 
 /**
  * The evening, assembled. The atmosphere canvas lives behind everything and
@@ -42,7 +46,9 @@ export default function App() {
   return (
     <>
       {shown === 'stage' ? (
-        <StageFilm />
+        <Suspense fallback={<div style={{ position: 'fixed', inset: 0, background: '#0a0806' }} />}>
+          <StageFilm />
+        </Suspense>
       ) : shown ? (
         <LegalShell route={shown as 'impressum' | 'agb'} />
       ) : (
