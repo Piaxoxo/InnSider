@@ -28,13 +28,21 @@ export function Evening() {
     }
 
     const ctx = gsap.context(() => {
-      // Fill the brass line across the whole timeline.
-      gsap.to('.evening__progress-fill', {
-        scaleY: 1,
-        ease: 'none',
-        scrollTrigger: { trigger: '.evening__track', start: 'top 60%', end: 'bottom 70%', scrub: true },
-      })
-      // Light each hour as it arrives.
+      const track = { trigger: '.evening__track', start: 'top 60%', end: 'bottom 70%', scrub: true }
+      // The brass line is drawn by the travelling flame…
+      gsap.to('.evening__progress-fill', { scaleY: 1, ease: 'none', scrollTrigger: track })
+      // …and the flame itself rides the leading edge, carrying its own glow.
+      gsap.fromTo(
+        '.evening__flame',
+        { top: '0%', autoAlpha: 0 },
+        {
+          top: '100%',
+          autoAlpha: 1,
+          ease: 'none',
+          scrollTrigger: { ...track, onLeave: () => gsap.to('.evening__flame', { autoAlpha: 0, duration: 0.6 }) },
+        },
+      )
+      // Each year ignites as the flame reaches it.
       rows.forEach((row) => {
         ScrollTriggerLight(row)
       })
@@ -59,6 +67,7 @@ export function Evening() {
         <div className="evening__track">
           <div className="evening__progress" aria-hidden="true">
             <span className="evening__progress-fill" />
+            <span className="evening__flame" />
           </div>
           <ol className="evening__rows">
             {evening.timeline.map((t) => (

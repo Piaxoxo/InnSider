@@ -1,6 +1,9 @@
+import { useEffect, useRef } from 'react'
 import { Heading } from '../components/Heading'
 import { Placeholder } from '../components/Placeholder'
 import { useReveal } from '../hooks/useReveal'
+import { gsap } from '../lib/scroll'
+import { prefersReducedMotion } from '../lib/useReducedMotion'
 import { bar } from '../content/site'
 import { media } from '../content/assets'
 import './bar.css'
@@ -12,12 +15,47 @@ import './bar.css'
  * real scene of the bar after dark, with a portrait of the room in good hands.
  */
 export function Bar() {
+  const root = useRef<HTMLElement>(null)
   const headRef = useReveal<HTMLDivElement>({ selector: '[data-reveal]', y: 28 })
   const cardsRef = useReveal<HTMLDivElement>({ selector: '.bar__card', y: 50, stagger: 0.12 })
   const glassRef = useReveal<HTMLDivElement>({ selector: '.bar__glass-item', y: 44, stagger: 0.15 })
 
+  // Signature: the glass fills. An amber level rises behind the drinks list
+  // while each entry lights in turn — bottles coming up on the back bar.
+  useEffect(() => {
+    const el = root.current
+    if (!el) return
+    const cards = el.querySelectorAll<HTMLElement>('.bar__card')
+    if (prefersReducedMotion()) {
+      cards.forEach((c) => c.classList.add('is-lit'))
+      return
+    }
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        '.bar__level',
+        { scaleY: 0 },
+        {
+          scaleY: 1,
+          ease: 'none',
+          scrollTrigger: { trigger: '.bar__cards', start: 'top 88%', end: 'bottom 55%', scrub: true },
+        },
+      )
+      cards.forEach((card, i) => {
+        gsap.to(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: `top ${82 - i * 2}%`,
+            onEnter: () => card.classList.add('is-lit'),
+            onLeaveBack: () => card.classList.remove('is-lit'),
+          },
+        })
+      })
+    }, el)
+    return () => ctx.revert()
+  }, [])
+
   return (
-    <section id="bar" className="chapter bar" aria-label="The bar">
+    <section id="bar" ref={root} className="chapter bar" aria-label="The bar">
       <div className="bar__motion">
         <Placeholder slot={media.barScene} rounded={false} />
         <span className="bar__motion-veil" aria-hidden="true" />
@@ -46,6 +84,7 @@ export function Bar() {
         </div>
 
         <div className="bar__cards" ref={cardsRef}>
+          <span className="bar__level" aria-hidden="true" />
           {bar.drinks.map((d, i) => (
             <article className="bar__card" key={d.name} data-cursor="hover">
               <span className="bar__card-sheen" aria-hidden="true" />

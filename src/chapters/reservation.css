@@ -35,16 +35,37 @@
   filter: blur(12px);
   animation: reservation-candle 6s var(--ease-in-out) infinite;
 }
+/* Signature: the flame steadies. Everywhere else the light flickers; here it
+   settles into a slow, even breath — the evening arriving home. */
 @keyframes reservation-candle {
   0%,
   100% {
-    opacity: 0.8;
+    opacity: 0.9;
     transform: scale(1);
   }
   50% {
     opacity: 1;
-    transform: scale(1.05);
+    transform: scale(1.018);
   }
+}
+.reservation__candle {
+  animation-duration: 11s;
+}
+
+/* Two place settings, drawn as hairlines under the headline — the table laid. */
+.reservation__setting {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: clamp(2.4rem, 8vw, 6rem);
+  margin: clamp(1.6rem, 4vh, 2.6rem) auto 0;
+  max-width: 30rem;
+}
+.reservation__setting span {
+  display: block;
+  width: clamp(3.4rem, 9vw, 6rem);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line-strong), transparent);
 }
 .reservation__headline {
   position: relative;

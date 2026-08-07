@@ -125,7 +125,8 @@ export const menu = {
   overline: 'Gaumenfreuden',
   headline: 'Eine Reise\nfür alle Sinne.',
   intro: 'Jedes Gericht wird mit höchster Präzision zubereitet und vereint Geschmack, Textur und Präsentation zu vollkommener Harmonie. Von den Vorspeisen bis zu den Desserts erzählt jeder Teller eine Geschichte.',
-  galleryNote: 'Gaumenfreuden',
+  galleryNote: 'Aus unserer Küche',
+  cardLabel: 'Die Karte',
   // Echte Speisekarte 1:1 aus der PDF (Speisekarte1.pdf).
   sections: [
     {

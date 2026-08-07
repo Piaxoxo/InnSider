@@ -93,6 +93,11 @@ export function Reservation() {
           <p className="lead reservation__sub" data-reveal>
             {reservation.sub}
           </p>
+          {/* The table laid — two place settings as hairlines. */}
+          <div className="reservation__setting" aria-hidden="true">
+            <span />
+            <span />
+          </div>
         </div>
 
         <div className="reservation__panel" ref={formRef}>

@@ -8,9 +8,11 @@
   overflow: hidden;
 }
 
+/* Sits in the outer margin, never in the type column — and only appears once
+   there is genuinely room for it beside the headline. */
 .hero__rail {
   position: absolute;
-  left: var(--pad-x);
+  left: clamp(1rem, 2vw, 2rem);
   top: 50%;
   transform: translateY(-50%) rotate(180deg);
   writing-mode: vertical-rl;
@@ -165,7 +167,8 @@
   }
 }
 
-@media (max-width: 760px) {
+/* Below this the outer margin is too narrow to hold the rail clear of the type. */
+@media (max-width: 1180px) {
   .hero__rail {
     display: none;
   }

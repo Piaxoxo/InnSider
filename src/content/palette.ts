@@ -22,26 +22,33 @@ export interface Grade {
 
 const rgb = (r: number, g: number, b: number): [number, number, number] => [r / 255, g / 255, b / 255]
 
-// Ordered to match nav / chapter scroll order.
+/**
+ * Ordered to match nav / chapter scroll order.
+ *
+ * All stops are held to a common, low luminance band so the room never washes
+ * out under the text — each chapter keeps its hue identity (kitchen fire, bar
+ * blue hour, the warm return) but none of them out-brightens the others. Text
+ * legibility is a design constraint here, not an afterthought.
+ */
 export const grades: Grade[] = [
   // 01 Hero — candlelit golden hour
-  { base: rgb(14, 11, 9), glow: rgb(201, 169, 106), accent: rgb(120, 78, 40) },
+  { base: rgb(12, 10, 8), glow: rgb(168, 140, 88), accent: rgb(92, 60, 30) },
   // 02 Dream — warm stone, daylight memory of the sketch
-  { base: rgb(20, 17, 13), glow: rgb(214, 184, 122), accent: rgb(150, 110, 70) },
-  // 03 Kitchen — fire & heat (hotter: the kitchen glows)
-  { base: rgb(22, 13, 8), glow: rgb(233, 124, 52), accent: rgb(170, 62, 26) },
+  { base: rgb(14, 12, 9), glow: rgb(176, 150, 100), accent: rgb(104, 76, 48) },
+  // 03 Kitchen — fire & heat
+  { base: rgb(15, 10, 7), glow: rgb(196, 104, 44), accent: rgb(120, 46, 20) },
   // 04 Menu — deep dinner amber
-  { base: rgb(16, 12, 9), glow: rgb(206, 160, 96), accent: rgb(110, 74, 42) },
-  // 05 Bar — blue hour: the room cools, steel light, gold drinks against blue
-  { base: rgb(8, 11, 17), glow: rgb(150, 164, 190), accent: rgb(44, 60, 92) },
+  { base: rgb(12, 10, 8), glow: rgb(170, 132, 80), accent: rgb(84, 56, 32) },
+  // 05 Bar — blue hour: the room cools, gold drinks against blue
+  { base: rgb(8, 10, 15), glow: rgb(118, 132, 158), accent: rgb(36, 48, 74) },
   // 06 Evening — night deepening, blue creeping in
-  { base: rgb(9, 10, 14), glow: rgb(170, 140, 96), accent: rgb(46, 52, 74) },
+  { base: rgb(8, 9, 13), glow: rgb(132, 110, 76), accent: rgb(38, 44, 62) },
   // 07 Gallery — cool museum light
-  { base: rgb(13, 13, 15), glow: rgb(184, 168, 132), accent: rgb(60, 62, 72) },
+  { base: rgb(11, 11, 13), glow: rgb(140, 128, 102), accent: rgb(48, 50, 60) },
   // 08 Events — warm celebration returns
-  { base: rgb(16, 12, 10), glow: rgb(214, 176, 112), accent: rgb(120, 80, 46) },
+  { base: rgb(13, 10, 8), glow: rgb(178, 146, 92), accent: rgb(96, 64, 38) },
   // 09 Reservation — the warm invitation, candle close
-  { base: rgb(13, 10, 8), glow: rgb(212, 175, 122), accent: rgb(130, 88, 48) },
+  { base: rgb(11, 9, 7), glow: rgb(176, 144, 100), accent: rgb(104, 70, 38) },
 ]
 
 /** Static brand tokens (kept in sync with CSS custom properties in tokens.css). */

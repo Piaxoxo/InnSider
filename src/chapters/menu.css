@@ -2,47 +2,108 @@
   max-width: var(--maxw);
   margin: 0 auto;
 }
+/* Editorial header: copy left, an anchoring mark in the right column so the
+   page is composed rather than left-heavy. */
+.menu__head {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(1.5rem, 5vw, 4rem);
+  align-items: start;
+}
 .menu__head-top {
   display: flex;
-  justify-content: space-between;
   align-items: baseline;
   gap: 1rem;
   margin-bottom: clamp(1.4rem, 4vh, 2.6rem);
+}
+.menu__head-mark {
+  position: relative;
+  min-height: clamp(9rem, 20vw, 18rem);
+  display: flex;
+  justify-content: flex-end;
+}
+.menu__head-mark .ghost-numeral {
+  right: 0;
+  top: -0.12em;
+}
+.menu__head-vertical {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  writing-mode: vertical-rl;
+  letter-spacing: 0.42em;
+  color: var(--ink-faint);
 }
 .menu__headline {
   max-width: 18ch;
 }
 .menu__intro {
   margin-top: 1.6rem;
-  max-width: 52ch;
+  max-width: 46ch;
 }
 
-/* ── Gaumenfreuden gallery (real photos, neutral captions) ─────────────── */
+/* ── Gaumenfreuden gallery — an asymmetric magazine grid ───────────────── */
 .menu__plates {
   margin-top: clamp(2.6rem, 7vh, 5rem);
 }
-.menu__plates-label {
-  display: block;
-  font-family: var(--sans);
-  font-size: 0.66rem;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 1.2rem;
+.menu__plates-head,
+.menu__card-head {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: clamp(1.2rem, 3vh, 2rem);
+}
+.menu__card-head {
+  margin-top: clamp(3rem, 8vh, 6rem);
 }
 .menu__plates-grid {
-  column-count: 3;
-  column-gap: clamp(0.8rem, 2vw, 1.4rem);
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: clamp(0.7rem, 1.8vw, 1.4rem);
+  align-items: start;
 }
 .menu__plate {
   position: relative;
-  break-inside: avoid;
-  margin-bottom: clamp(0.8rem, 2vw, 1.4rem);
-  border-radius: 10px;
+  border-radius: 4px;
   overflow: hidden;
 }
+/* Deliberately uneven: a wide opener, a tall anchor, small details between —
+   varying sizes and vertical offsets give the page an editorial rhythm. */
+.menu__plate--1 { grid-column: span 4; }
+.menu__plate--2 { grid-column: span 2; grid-row: span 2; }
+.menu__plate--3 { grid-column: span 2; margin-top: clamp(0.5rem, 2vh, 1.6rem); }
+.menu__plate--4 { grid-column: span 2; }
+.menu__plate--5 { grid-column: span 3; }
+.menu__plate--6 { grid-column: span 3; margin-top: clamp(0.5rem, 3vh, 2.4rem); }
+.menu__plate--7 { grid-column: span 4; }
+.menu__plate--8 { grid-column: span 2; margin-top: clamp(-2rem, -3vh, 0rem); }
+/* Each frame owns its shape; the photo fills it. Keeps the grid honest even
+   though the source photos have mixed aspect ratios. */
+.menu__plate--1 { aspect-ratio: 16 / 9; }
+.menu__plate--2 { aspect-ratio: 2 / 3; }
+.menu__plate--3 { aspect-ratio: 1 / 1; }
+.menu__plate--4 { aspect-ratio: 1 / 1; }
+.menu__plate--5 { aspect-ratio: 4 / 3; }
+.menu__plate--6 { aspect-ratio: 4 / 3; }
+.menu__plate--7 { aspect-ratio: 16 / 9; }
+.menu__plate--8 { aspect-ratio: 1 / 1; }
+
 .menu__plate .ph {
+  width: 100% !important;
+  height: 100% !important;
+  aspect-ratio: auto !important;
+  border-radius: 0;
   transition: transform 1s var(--ease-lux);
+}
+.menu__plate .ph__media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.menu__plate:hover .ph {
+  transform: scale(1.03);
 }
 .menu__plate figcaption {
   position: absolute;
@@ -103,11 +164,15 @@
   font-size: 1.12rem;
   color: var(--warm-white);
 }
+/* Drawn left-to-right on arrival — the pen stroke that joins dish to price.
+   Offset with `bottom`, not `transform`, so the draw animation owns transform. */
 .menu__row-dots {
   flex: 1;
-  border-bottom: 1px dotted var(--line);
-  transform: translateY(-0.25em);
+  position: relative;
+  bottom: 0.25em;
+  border-bottom: 1px dotted var(--stone-dim);
   min-width: 1.5rem;
+  transform-origin: left center;
 }
 .menu__row-price {
   font-family: var(--serif);
@@ -174,17 +239,43 @@
 }
 
 @media (max-width: 900px) {
-  .menu__plates-grid {
-    column-count: 2;
+  .menu__head {
+    grid-template-columns: 1fr;
+  }
+  .menu__head-mark {
+    display: none;
   }
   .menu__card {
     column-count: 1;
   }
-}
-@media (max-width: 520px) {
+  /* Keep an editorial feel on tablet: a 4-column grid, still uneven. */
   .menu__plates-grid {
-    column-count: 1;
-    max-width: 460px;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .menu__plate--1 { grid-column: span 4; }
+  .menu__plate--2 { grid-column: span 2; grid-row: auto; aspect-ratio: 1 / 1; }
+  .menu__plate--3 { grid-column: span 2; }
+  .menu__plate--4 { grid-column: span 2; }
+  .menu__plate--5 { grid-column: span 2; }
+  .menu__plate--6 { grid-column: span 4; }
+  .menu__plate--7 { grid-column: span 2; aspect-ratio: 1 / 1; }
+  .menu__plate--8 { grid-column: span 2; }
+}
+@media (max-width: 560px) {
+  .menu__plates-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+  }
+  .menu__plate[class] {
+    grid-column: span 2;
+    grid-row: auto;
+    margin-top: 0;
+    aspect-ratio: 4 / 3;
+  }
+  /* One tall hero frame every third photo keeps the phone view from flattening. */
+  .menu__plate--2[class],
+  .menu__plate--5[class] {
+    aspect-ratio: 3 / 4;
   }
   .menu__plate figcaption {
     transform: translateY(0);

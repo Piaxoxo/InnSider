@@ -74,7 +74,8 @@ export const atmosphereFrag = /* glsl */ `
     float depth = uScroll;
 
     // Drifting light source (candle / window), nudged by pointer + scroll.
-    vec2 lightPos = vec2(0.12 + uPointer.x * 0.12, 0.36 + uPointer.y * 0.07 - depth * 0.15);
+    // Held to the upper right so it never blooms behind the (left-set) copy.
+    vec2 lightPos = vec2(0.36 + uPointer.x * 0.1, 0.42 + uPointer.y * 0.06 - depth * 0.12);
     lightPos.x += sin(t * 0.07) * 0.06;
     lightPos.y += cos(t * 0.05) * 0.03;
     float d = distance(p, lightPos);
@@ -89,12 +90,13 @@ export const atmosphereFrag = /* glsl */ `
     float fog = warp(fogUv * 2.1, t);
     fog = smoothstep(0.28, 1.0, fog);
     float floorMask = smoothstep(0.05, 0.8, uv.y);
-    col = mix(col, col + uAccent * 0.7, fog * (1.0 - floorMask) * 0.55);
+    col = mix(col, col + uAccent * 0.45, fog * (1.0 - floorMask) * 0.4);
 
-    // Two-layer glow: tight near-core + soft far halo.
+    // Two-layer glow: tight near-core + soft far halo. Deliberately restrained —
+    // the room should feel candlelit, never washed out.
     float core = 0.14 / (d * d + 0.045);
     float halo = 0.10 / (d + 0.16);
-    col += uGlow * (core * 0.36 + halo * 0.4);
+    col += uGlow * (core * 0.2 + halo * 0.24);
 
     // Refined god-rays radiating from the light.
     vec2 dir = normalize(p - lightPos + 1e-4);

@@ -27,14 +27,15 @@
   margin: 0 auto;
   padding-left: clamp(3rem, 8vw, 7rem);
 }
+/* The rail sits at the very left of the track; the rows are indented past it,
+   so the line and its dots align and the copy stays clear of both. */
 .evening__progress {
   position: absolute;
-  left: clamp(3rem, 8vw, 7rem);
+  left: 0;
   top: 0.6rem;
   bottom: 0.6rem;
   width: 1px;
   background: var(--line);
-  transform: translateX(-50%);
 }
 .evening__progress-fill {
   position: absolute;
@@ -42,6 +43,34 @@
   transform-origin: top;
   transform: scaleY(0);
   background: linear-gradient(var(--gold-bright), var(--bronze));
+}
+
+/* The travelling flame — it draws the line and ignites each year it reaches.
+   A hot core with a soft halo, breathing like a real wick. */
+.evening__flame {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 9px;
+  height: 9px;
+  margin: -4px 0 0 -4.5px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff3d8 0%, var(--amber) 45%, rgba(224, 164, 88, 0) 72%);
+  box-shadow:
+    0 0 14px 4px rgba(224, 164, 88, 0.55),
+    0 0 34px 10px rgba(201, 169, 106, 0.28);
+  animation: evening-flicker 2.4s var(--ease-in-out) infinite;
+}
+@keyframes evening-flicker {
+  0%, 100% { transform: scale(1); opacity: 0.92; }
+  40% { transform: scale(1.22); opacity: 1; }
+  70% { transform: scale(0.94); opacity: 0.86; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .evening__flame {
+    animation: none;
+    opacity: 0;
+  }
 }
 
 .evening__rows {
@@ -66,7 +95,7 @@
 }
 .evening__dot {
   position: absolute;
-  left: calc(clamp(3rem, 8vw, 7rem) * -1);
+  left: calc(clamp(3rem, 8vw, 7rem) * -1 + 0.5px);
   top: 0.5em;
   width: 11px;
   height: 11px;

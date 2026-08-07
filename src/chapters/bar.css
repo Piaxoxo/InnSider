@@ -115,10 +115,38 @@
 }
 
 .bar__cards {
+  position: relative;
   margin-top: clamp(3rem, 8vh, 6rem);
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: clamp(1rem, 2vw, 1.6rem);
+}
+
+/* Signature: the glass fills. An amber level rises behind the drinks as you
+   scroll — the pour that never quite finishes. */
+.bar__level {
+  position: absolute;
+  left: -2%;
+  right: -2%;
+  bottom: -3%;
+  top: -3%;
+  z-index: 0;
+  pointer-events: none;
+  transform-origin: bottom;
+  transform: scaleY(0);
+  border-radius: 12px;
+  background: linear-gradient(
+    0deg,
+    rgba(224, 164, 88, 0.16) 0%,
+    rgba(201, 169, 106, 0.08) 45%,
+    rgba(201, 169, 106, 0.02) 78%,
+    transparent 100%
+  );
+}
+@media (prefers-reduced-motion: reduce) {
+  .bar__level {
+    display: none;
+  }
 }
 .bar__card {
   position: relative;
@@ -142,6 +170,25 @@
   transform: translateY(-10px);
   border-color: rgba(176, 200, 232, 0.4);
   background: linear-gradient(165deg, rgba(32, 46, 70, 0.7), rgba(14, 20, 32, 0.52));
+}
+/* Each drink lights in turn as the level reaches it — bottles coming up on
+   the back bar, one after another. */
+.bar__card {
+  z-index: 1;
+}
+.bar__card:not(.is-lit) .bar__card-name,
+.bar__card:not(.is-lit) .bar__card-mood {
+  color: var(--stone-dim);
+}
+.bar__card-name,
+.bar__card-mood {
+  transition: color 0.9s var(--ease-lux), text-shadow 0.9s var(--ease-lux);
+}
+.bar__card.is-lit .bar__card-mood {
+  text-shadow: 0 0 22px rgba(224, 164, 88, 0.35);
+}
+.bar__card.is-lit {
+  border-color: rgba(201, 169, 106, 0.34);
 }
 .bar__card-sheen {
   position: absolute;

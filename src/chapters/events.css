@@ -22,10 +22,32 @@
   height: 100%;
   aspect-ratio: auto !important;
 }
+
+/* Signature: the lights come up. Warm lamps bloom in sequence over the room. */
+.events__lamps {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.events__lamp {
+  position: absolute;
+  width: clamp(90px, 14vw, 190px);
+  height: clamp(90px, 14vw, 190px);
+  margin: calc(clamp(90px, 14vw, 190px) / -2) 0 0 calc(clamp(90px, 14vw, 190px) / -2);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 208, 140, 0.42) 0%, rgba(224, 164, 88, 0.16) 40%, transparent 70%);
+  mix-blend-mode: screen;
+  filter: blur(2px);
+}
+/* Text scrim: a directional wash so the headline always lands on shade, whatever
+   the photo is doing underneath. Heavier bottom-left, where the copy sits. */
 .events__hero-veil {
   position: absolute;
   inset: 0;
-  background: linear-gradient(0deg, rgba(10, 9, 8, 0.92) 0%, rgba(10, 9, 8, 0.3) 55%, rgba(10, 9, 8, 0.6) 100%);
+  background:
+    linear-gradient(60deg, rgba(8, 7, 5, 0.9) 0%, rgba(8, 7, 5, 0.62) 38%, rgba(8, 7, 5, 0.12) 72%),
+    linear-gradient(0deg, rgba(8, 7, 5, 0.88) 0%, rgba(8, 7, 5, 0.15) 52%, rgba(8, 7, 5, 0.5) 100%);
 }
 .events__head {
   position: relative;
@@ -41,26 +63,32 @@
   max-width: 50ch;
 }
 
-/* ── Occasion cards ────────────────────────────────────────────────────── */
+/* ── Occasion cards — editorial columns, not three equal boxes ─────────── */
 .events__cards {
   margin-top: clamp(2.5rem, 7vh, 5rem);
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  overflow: hidden;
+  grid-template-columns: repeat(12, 1fr);
+  gap: clamp(1.6rem, 4vw, 3.4rem);
+  align-items: start;
 }
+/* Uneven measures + a stepped baseline: the eye travels instead of scanning. */
+.events__card--1 { grid-column: span 5; }
+.events__card--2 { grid-column: span 4; margin-top: clamp(1rem, 4vh, 3rem); }
+.events__card--3 { grid-column: span 3; margin-top: clamp(2rem, 8vh, 6rem); }
+
 .events__card {
   position: relative;
-  padding: clamp(1.6rem, 3vw, 2.6rem);
-  background: var(--bg);
-  transition: background 0.6s var(--ease-lux);
-  overflow: hidden;
+  padding-top: clamp(1.2rem, 2.4vh, 1.8rem);
+  border-top: 1px solid var(--line-strong);
+  transition: border-color 0.6s var(--ease-lux);
 }
 .events__card:hover {
-  background: linear-gradient(160deg, rgba(31, 26, 20, 0.7), rgba(10, 9, 8, 0.2));
+  border-color: var(--gold);
+}
+.events__card-n {
+  display: block;
+  margin-bottom: 0.9rem;
+  color: var(--gold);
 }
 .events__card-title {
   font-family: var(--display);
@@ -77,16 +105,27 @@
 .events__card-line {
   position: absolute;
   left: 0;
-  bottom: 0;
-  height: 2px;
+  top: -1px;
+  height: 1px;
   width: 100%;
-  background: linear-gradient(90deg, var(--gold), transparent);
+  background: linear-gradient(90deg, var(--gold-bright), transparent);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.7s var(--ease-lux);
 }
 .events__card:hover .events__card-line {
   transform: scaleX(1);
+}
+
+@media (max-width: 900px) {
+  .events__cards {
+    grid-template-columns: 1fr;
+    gap: clamp(1.6rem, 4vh, 2.4rem);
+  }
+  .events__card[class] {
+    grid-column: auto;
+    margin-top: 0;
+  }
 }
 
 /* ── Moments collage ───────────────────────────────────────────────────── */

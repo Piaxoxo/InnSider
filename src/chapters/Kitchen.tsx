@@ -38,6 +38,17 @@ export function Kitchen() {
           scrollTrigger: { trigger: '.kitchen__hands', start: 'top bottom', end: 'bottom top', scrub: true },
         },
       )
+      // Signature: the service light comes on. A warm band travels across
+      // Stefan's portrait as the guest scrolls — the kitchen waking for service.
+      gsap.fromTo(
+        '.kitchen__wipe',
+        { xPercent: -120 },
+        {
+          xPercent: 120,
+          ease: 'none',
+          scrollTrigger: { trigger: '.kitchen__portrait', start: 'top 85%', end: 'bottom 25%', scrub: 0.8 },
+        },
+      )
     }, el)
     return () => ctx.revert()
   }, [])
@@ -63,6 +74,8 @@ export function Kitchen() {
             </div>
             {/* Heat off the pass — a warm ember glow that breathes */}
             <span className="kitchen__heat" aria-hidden="true" />
+            {/* The service light travelling across the frame */}
+            <span className="kitchen__wipe" aria-hidden="true" />
           </div>
           <div className="kitchen__story">
             {kitchen.paragraphs.map((p, i) => (

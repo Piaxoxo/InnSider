@@ -159,6 +159,70 @@ select {
   font-weight: 300;
 }
 
+/* ── Editorial layer ───────────────────────────────────────────────────────
+   The small typographic furniture that separates a designed page from a
+   styled one: hairline rules, letterspaced metadata, oversized ghost numerals
+   and a drop cap. Deliberately quiet — they frame the copy, never shout.
+   ─────────────────────────────────────────────────────────────────────── */
+
+/* Hairline rule with a warm brass fade — used to open and close passages. */
+.rule {
+  display: block;
+  height: 1px;
+  border: 0;
+  background: linear-gradient(90deg, var(--line-strong), var(--line) 40%, transparent);
+}
+.rule--center {
+  background: linear-gradient(90deg, transparent, var(--line-strong) 50%, transparent);
+}
+
+/* Letterspaced metadata — the caption voice of the site. */
+.meta {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--stone-dim);
+}
+
+/* Oversized ghost numeral — anchors an otherwise empty column. */
+.ghost-numeral {
+  position: absolute;
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(9rem, 22vw, 22rem);
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(201, 169, 106, 0.16);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+/* Drop cap for the opening paragraph of a story passage. */
+.dropcap::first-letter {
+  float: left;
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: 3.7em;
+  line-height: 0.82;
+  padding: 0.06em 0.12em 0 0;
+  color: var(--gold-bright);
+}
+
+/* ── Unified photography grade ─────────────────────────────────────────────
+   The delivered photos span very different colour temperatures. One shared
+   warm grade ties the whole site into a single hand — the single cheapest
+   move toward "art directed" rather than "a folder of images".
+   ─────────────────────────────────────────────────────────────────────── */
+.ph__media,
+.wall__frame img,
+.worldg__focus-figure img {
+  filter: saturate(0.92) contrast(1.06) brightness(0.95) sepia(0.12) hue-rotate(-6deg);
+}
+
 /* ── Buttons ───────────────────────────────────────────────────────────── */
 .btn {
   --_pad-y: 1.05em;

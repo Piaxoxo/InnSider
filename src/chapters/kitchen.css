@@ -27,6 +27,33 @@
   overflow: hidden;
   height: clamp(420px, 62vh, 720px);
 }
+/* Signature: the service light. A soft warm band that travels across the
+   portrait on scroll — as if a door opened onto the pass. */
+.kitchen__wipe {
+  position: absolute;
+  top: -12%;
+  bottom: -12%;
+  left: 0;
+  width: 46%;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 216, 160, 0.05) 30%,
+    rgba(255, 224, 176, 0.16) 50%,
+    rgba(255, 216, 160, 0.05) 70%,
+    transparent 100%
+  );
+  mix-blend-mode: screen;
+  filter: blur(6px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .kitchen__wipe {
+    display: none;
+  }
+}
+
 /* Heat off the pass — warm ember glow, breathing */
 .kitchen__heat {
   position: absolute;
