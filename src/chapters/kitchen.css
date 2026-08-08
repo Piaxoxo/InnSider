@@ -164,12 +164,18 @@
   align-items: stretch;
 }
 .kitchen__motion,
-.kitchen__hands {
-  border-radius: 10px;
+.kitchen__craft {
+  border-radius: 4px;
   overflow: hidden;
 }
 .kitchen__motion {
   position: relative;
+}
+/* The craft clip is portrait; it anchors the narrow column beside the plate. */
+.kitchen__craft {
+  aspect-ratio: 620 / 1102;
+  max-height: clamp(420px, 70vh, 760px);
+  justify-self: stretch;
 }
 /* Steam rising off the plate */
 .kitchen__steam {

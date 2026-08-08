@@ -3,6 +3,7 @@ import { gsap } from '../lib/scroll'
 import { prefersReducedMotion } from '../lib/useReducedMotion'
 import { Heading } from '../components/Heading'
 import { Placeholder } from '../components/Placeholder'
+import { CraftVideo } from '../components/CraftVideo'
 import { useReveal } from '../hooks/useReveal'
 import { kitchen } from '../content/site'
 import { media } from '../content/assets'
@@ -29,15 +30,6 @@ export function Kitchen() {
         ease: 'none',
         scrollTrigger: { trigger: '.kitchen__portrait', start: 'top bottom', end: 'bottom top', scrub: true },
       })
-      gsap.fromTo(
-        '.kitchen__hands-media',
-        { scale: 1.15 },
-        {
-          scale: 1,
-          ease: 'none',
-          scrollTrigger: { trigger: '.kitchen__hands', start: 'top bottom', end: 'bottom top', scrub: true },
-        },
-      )
       // Signature: the service light comes on. A warm band travels across
       // Stefan's portrait as the guest scrolls — the kitchen waking for service.
       gsap.fromTo(
@@ -108,11 +100,13 @@ export function Kitchen() {
           {/* Steam rising off the plate */}
           <span className="kitchen__steam" aria-hidden="true" />
         </div>
-        <div className="kitchen__hands">
-          <div className="kitchen__hands-media">
-            <Placeholder slot={media.stefanHands} />
-          </div>
-        </div>
+        {/* The craft, in motion: gnocchi rolled and cut by hand in our kitchen. */}
+        <CraftVideo
+          className="kitchen__craft"
+          src="media/film/kitchen-pasta.mp4"
+          poster="media/film/kitchen-pasta.jpg"
+          caption="Handgemacht — jeden Tag frisch."
+        />
       </div>
     </section>
   )
