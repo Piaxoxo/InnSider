@@ -268,6 +268,6 @@ export const footer = {
     prefix: 'Made by',
     name: 'BANDITA',
     suffix: 'Creative Agency',
-    href: 'https://bandita-pink.vercel.app/de',
+    href: 'https://www.bandita.agency/de',
   },
 } as const
