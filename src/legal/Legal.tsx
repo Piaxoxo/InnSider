@@ -3,10 +3,19 @@ import { Heading } from '../components/Heading'
 import { useReveal } from '../hooks/useReveal'
 import { navigate } from '../lib/useRoute'
 import { prefersReducedMotion } from '../lib/useReducedMotion'
-import { impressum, agb } from '../content/legal'
+import { impressum, agb, datenschutz, type AgbSection as AgbSectionType } from '../content/legal'
 import { site, contact, footer } from '../content/site'
 import type { Route } from '../lib/useRoute'
 import './legal.css'
+
+/** Shape shared by the sectioned documents (AGB, Datenschutz). */
+interface SectionedContent {
+  overline: string
+  title: string
+  sub: string
+  intro: string
+  sections: readonly AgbSectionType[]
+}
 
 /**
  * The legal pages — Impressum & AGB — rendered in the exact design language of
@@ -20,7 +29,9 @@ import './legal.css'
  * gracefully under reduced motion (reveals become plain, ToC stays usable).
  */
 export function Legal({ route }: { route: Exclude<Route, ''> }) {
-  return route === 'agb' ? <Agb /> : <Impressum />
+  if (route === 'agb') return <SectionedDoc doc={agb} variant="agb" />
+  if (route === 'datenschutz') return <SectionedDoc doc={datenschutz} variant="datenschutz" />
+  return <Impressum />
 }
 
 /** Shared cinematic header + a quiet "back to the evening" link. */
@@ -117,12 +128,16 @@ function Impressum() {
   )
 }
 
-function Agb() {
-  const [active, setActive] = useState(agb.sections[0]?.id ?? '')
+/**
+ * A sectioned legal document (AGB, Datenschutz) — sticky table of contents with
+ * scroll-spy, numbered sections, back-to-top. One layout, any document.
+ */
+function SectionedDoc({ doc, variant }: { doc: SectionedContent; variant: string }) {
+  const [active, setActive] = useState(doc.sections[0]?.id ?? '')
 
   // Scroll-spy: light up the ToC entry whose section is centred in the viewport.
   useEffect(() => {
-    const els = agb.sections
+    const els = doc.sections
       .map((s) => document.getElementById(s.id))
       .filter(Boolean) as HTMLElement[]
     if (!els.length) return
@@ -136,7 +151,7 @@ function Agb() {
     )
     els.forEach((el) => io.observe(el))
     return () => io.disconnect()
-  }, [])
+  }, [doc])
 
   const jump = (id: string) => {
     const el = document.getElementById(id)
@@ -146,13 +161,13 @@ function Agb() {
   }
 
   return (
-    <article className="legal legal--agb">
+    <article className={`legal legal--${variant}`}>
       <div className="legal__wrap">
         <LegalHero
-          overline={agb.overline}
-          title={agb.title}
-          sub={agb.sub}
-          intro={agb.intro}
+          overline={doc.overline}
+          title={doc.title}
+          sub={doc.sub}
+          intro={doc.intro}
         />
 
         <div className="legal__layout">
@@ -160,7 +175,7 @@ function Agb() {
             <span className="legal__toc-label">Inhalt</span>
             <nav>
               <ol>
-                {agb.sections.map((s) => (
+                {doc.sections.map((s) => (
                   <li key={s.id}>
                     <button
                       className={`legal__toc-link ${active === s.id ? 'is-active' : ''}`}
@@ -177,7 +192,7 @@ function Agb() {
           </aside>
 
           <div className="legal__sections">
-            {agb.sections.map((s) => (
+            {doc.sections.map((s) => (
               <AgbSection key={s.id} id={s.id} n={s.n} title={s.title} paragraphs={s.paragraphs} />
             ))}
           </div>
@@ -241,9 +256,14 @@ function BackToTop() {
 }
 
 function LegalFooter() {
-  const other = window.location.hash.includes('agb')
-    ? { route: 'impressum' as const, label: 'Impressum' }
-    : { route: 'agb' as const, label: 'AGB' }
+  // Always offer the two sibling documents, whichever one you're reading.
+  const all = [
+    { route: 'impressum' as const, label: 'Impressum' },
+    { route: 'agb' as const, label: 'AGB' },
+    { route: 'datenschutz' as const, label: 'Datenschutz' },
+  ]
+  const hash = window.location.hash.replace(/^#\/?/, '').toLowerCase()
+  const others = all.filter((l) => l.route !== hash)
   return (
     <footer className="legal__footer">
       <div className="legal__footer-inner">
@@ -252,9 +272,11 @@ function LegalFooter() {
         </button>
         <p className="legal__footer-line">{footer.line}</p>
         <div className="legal__footer-meta">
-          <button onClick={() => navigate(other.route)} data-cursor="hover">
-            {other.label}
-          </button>
+          {others.map((l) => (
+            <button key={l.route} onClick={() => navigate(l.route)} data-cursor="hover">
+              {l.label}
+            </button>
+          ))}
           <a href={contact.instagramHref} target="_blank" rel="noreferrer" data-cursor="hover">
             {contact.instagram}
           </a>

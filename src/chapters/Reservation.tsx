@@ -238,6 +238,9 @@ export function Reservation() {
             <button type="button" onClick={() => navigate('agb')} data-cursor="hover">
               AGB
             </button>
+            <button type="button" onClick={() => navigate('datenschutz')} data-cursor="hover">
+              Datenschutz
+            </button>
             <a href={contact.instagramHref} target="_blank" rel="noreferrer">
               {contact.instagram}
             </a>

@@ -84,6 +84,86 @@ export interface AgbSection {
   paragraphs: string[]
 }
 
+/**
+ * Datenschutzerklärung.
+ *
+ * Beschreibt ausschließlich, was diese Website TATSÄCHLICH tut — keine
+ * erfundenen Klauseln: das Reservierungsformular (Versand über FormSubmit),
+ * die Kontaktaufnahme per E-Mail/Telefon, Google Fonts, das Hosting bei Vercel
+ * sowie die Speicherung im Browser (sessionStorage für die Eröffnungssequenz).
+ * Diese Seite ersetzt keine Rechtsberatung — bitte vor dem Livegang von einer
+ * Juristin oder einem Juristen prüfen lassen.
+ */
+export const datenschutz = {
+  route: 'datenschutz',
+  overline: 'Datenschutz',
+  title: 'Ihre Daten,\nin guten Händen.',
+  sub: 'Transparenz nach DSGVO.',
+  intro:
+    'Wir verarbeiten personenbezogene Daten ausschließlich, soweit es für die Beantwortung Ihrer Anfrage und den Betrieb dieser Website erforderlich ist. Nachfolgend erfahren Sie, welche Daten das sind, wofür wir sie nutzen und welche Rechte Sie haben.',
+  sections: [
+    {
+      id: 'verantwortlich',
+      n: '1',
+      title: 'Verantwortlicher',
+      paragraphs: [
+        'Verantwortlich für die Datenverarbeitung auf dieser Website ist: Innsider Restaurant, Inhaber Gerald Kern, Wurmbstraße 36, 1120 Wien, Österreich. Telefon: +43 670 182 9565, E-Mail: office@innsider-restaurant.at.',
+      ],
+    },
+    {
+      id: 'reservierung',
+      n: '2',
+      title: 'Reservierungsanfragen',
+      paragraphs: [
+        'Wenn Sie das Reservierungsformular nutzen, verarbeiten wir die von Ihnen eingegebenen Daten: Name, E-Mail-Adresse, Wunschdatum, Personenzahl und – sofern angegeben – den Anlass.',
+        'Die Übermittlung erfolgt über den Dienst FormSubmit (FormSubmit.co), der die Formulardaten als E-Mail an unser Postfach weiterleitet. Dabei werden die Daten technisch bedingt über die Server dieses Anbieters geleitet. Alternativ können Sie uns jederzeit direkt per E-Mail oder telefonisch erreichen, ohne das Formular zu nutzen.',
+        'Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen) sowie Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Bearbeitung Ihrer Anfrage). Wir speichern die Daten nur so lange, wie es für die Bearbeitung Ihrer Anfrage und zur Erfüllung gesetzlicher Aufbewahrungspflichten erforderlich ist.',
+      ],
+    },
+    {
+      id: 'kontakt',
+      n: '3',
+      title: 'Kontakt per E-Mail und Telefon',
+      paragraphs: [
+        'Wenn Sie uns per E-Mail oder telefonisch kontaktieren, verarbeiten wir Ihre Angaben zur Bearbeitung des Anliegens. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b bzw. lit. f DSGVO.',
+      ],
+    },
+    {
+      id: 'hosting',
+      n: '4',
+      title: 'Hosting und Server-Logfiles',
+      paragraphs: [
+        'Diese Website wird bei Vercel Inc. gehostet. Beim Aufruf der Seite werden technisch notwendige Daten verarbeitet, die Ihr Browser automatisch übermittelt – insbesondere IP-Adresse, Datum und Uhrzeit des Zugriffs, aufgerufene Seite sowie Browser- und Betriebssystemangaben. Diese Verarbeitung dient dem sicheren und stabilen Betrieb der Website (Art. 6 Abs. 1 lit. f DSGVO).',
+      ],
+    },
+    {
+      id: 'schriften',
+      n: '5',
+      title: 'Schriftarten (Google Fonts)',
+      paragraphs: [
+        'Zur einheitlichen Darstellung der Typografie werden Schriftarten von Google Fonts geladen. Beim Aufruf der Seite baut Ihr Browser dafür eine Verbindung zu Servern von Google auf, wobei Ihre IP-Adresse übertragen wird. Rechtsgrundlage ist unser berechtigtes Interesse an einer ansprechenden Darstellung (Art. 6 Abs. 1 lit. f DSGVO).',
+      ],
+    },
+    {
+      id: 'speicherung',
+      n: '6',
+      title: 'Speicherung im Browser',
+      paragraphs: [
+        'Diese Website setzt keine Tracking-Cookies und bindet keine Analyse- oder Werbedienste ein. Wir speichern lediglich einen technischen Hinweis im Sitzungsspeicher Ihres Browsers (sessionStorage), damit die Eröffnungssequenz nicht bei jedem Seitenwechsel erneut abgespielt wird. Dieser Eintrag wird gelöscht, sobald Sie den Browser-Tab schließen, und lässt keine Rückschlüsse auf Ihre Person zu.',
+      ],
+    },
+    {
+      id: 'rechte',
+      n: '7',
+      title: 'Ihre Rechte',
+      paragraphs: [
+        'Sie haben jederzeit das Recht auf Auskunft über die zu Ihrer Person gespeicherten Daten, auf Berichtigung, Löschung oder Einschränkung der Verarbeitung, auf Widerspruch gegen die Verarbeitung sowie auf Datenübertragbarkeit. Wenden Sie sich dafür formlos an office@innsider-restaurant.at.',
+        'Wenn Sie der Ansicht sind, dass die Verarbeitung Ihrer Daten gegen das Datenschutzrecht verstößt, können Sie sich bei der Österreichischen Datenschutzbehörde (Barichgasse 40–42, 1030 Wien, dsb.gv.at) beschweren.',
+      ],
+    },
+  ] as AgbSection[],
+} as const
+
 export const agb = {
   route: 'agb',
   overline: 'AGB',

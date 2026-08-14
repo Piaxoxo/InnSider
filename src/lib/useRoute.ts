@@ -5,11 +5,13 @@ import { useEffect, useState } from 'react'
  * (the hash never hits the server). Routes: '' (home), 'impressum', 'agb',
  * 'stage' (the 3-D film set).
  */
-export type Route = '' | 'impressum' | 'agb' | 'stage'
+export type Route = '' | 'impressum' | 'agb' | 'datenschutz' | 'stage'
+
+const ROUTES: Route[] = ['impressum', 'agb', 'datenschutz', 'stage']
 
 function parse(): Route {
   const h = window.location.hash.replace(/^#\/?/, '').toLowerCase()
-  return h === 'impressum' || h === 'agb' || h === 'stage' ? h : ''
+  return (ROUTES as string[]).includes(h) ? (h as Route) : ''
 }
 
 export function useRoute(): Route {
