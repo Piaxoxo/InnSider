@@ -94,6 +94,17 @@ export interface AgbSection {
  * Diese Seite ersetzt keine Rechtsberatung — bitte vor dem Livegang von einer
  * Juristin oder einem Juristen prüfen lassen.
  */
+/**
+ * Der Hoster, der die Seite ausliefert, MUSS namentlich genannt werden
+ * (Server-Logfiles enthalten IP-Adressen = personenbezogene Daten). Sobald der
+ * genaue Anbieter samt Firmensitz feststeht, diese Zeile ersetzen, z. B.:
+ * 'Diese Website wird bei der netcup GmbH, Daimlerstraße 25, 76185 Karlsruhe,
+ *  Deutschland gehostet. Mit dem Anbieter besteht ein Auftragsverarbeitungs-
+ *  vertrag nach Art. 28 DSGVO.'
+ */
+const HOSTING_PROVIDER_HINWEIS =
+  'Diese Website wird bei einem Dienstleister in der Europäischen Union gehostet; mit diesem Anbieter besteht ein Auftragsverarbeitungsvertrag nach Art. 28 DSGVO. Den vollständigen Namen und die Anschrift des Hosters teilen wir Ihnen auf Anfrage unter office@innsider-restaurant.at gerne mit.'
+
 export const datenschutz = {
   route: 'datenschutz',
   overline: 'Datenschutz',
@@ -133,7 +144,13 @@ export const datenschutz = {
       n: '4',
       title: 'Hosting und Server-Logfiles',
       paragraphs: [
-        'Diese Website wird bei Vercel Inc. gehostet. Beim Aufruf der Seite werden technisch notwendige Daten verarbeitet, die Ihr Browser automatisch übermittelt – insbesondere IP-Adresse, Datum und Uhrzeit des Zugriffs, aufgerufene Seite sowie Browser- und Betriebssystemangaben. Diese Verarbeitung dient dem sicheren und stabilen Betrieb der Website (Art. 6 Abs. 1 lit. f DSGVO).',
+        'Beim Aufruf dieser Website werden technisch notwendige Daten verarbeitet, die Ihr Browser automatisch übermittelt – insbesondere IP-Adresse, Datum und Uhrzeit des Zugriffs, aufgerufene Seite sowie Browser- und Betriebssystemangaben. Diese Verarbeitung dient dem sicheren und stabilen Betrieb der Website (Art. 6 Abs. 1 lit. f DSGVO).',
+        // BITTE PRÜFEN: Hier gehört der Hoster hin, der die Seite tatsächlich
+        // ausliefert (vermutlich netcup GmbH, Karlsruhe) – mit vollständigem
+        // Firmennamen. Solange die Seite zusätzlich Inhalte von Vercel einbindet,
+        // muss auch Vercel genannt bleiben.
+        HOSTING_PROVIDER_HINWEIS,
+        'Teile dieser Website werden über Vercel Inc. (340 S Lemon Ave #4133, Walnut, CA 91789, USA) ausgeliefert. Dabei wird Ihre IP-Adresse an diesen Anbieter übertragen. Die Übermittlung in die USA erfolgt auf Grundlage der EU-Standardvertragsklauseln.',
       ],
     },
     {
