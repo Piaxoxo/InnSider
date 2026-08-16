@@ -95,15 +95,13 @@ export interface AgbSection {
  * Juristin oder einem Juristen prüfen lassen.
  */
 /**
- * Der Hoster, der die Seite ausliefert, MUSS namentlich genannt werden
- * (Server-Logfiles enthalten IP-Adressen = personenbezogene Daten). Sobald der
- * genaue Anbieter samt Firmensitz feststeht, diese Zeile ersetzen, z. B.:
- * 'Diese Website wird bei der netcup GmbH, Daimlerstraße 25, 76185 Karlsruhe,
- *  Deutschland gehostet. Mit dem Anbieter besteht ein Auftragsverarbeitungs-
- *  vertrag nach Art. 28 DSGVO.'
+ * Der ausliefernde Hoster. Art. 13 DSGVO verlangt Empfänger ODER Kategorien —
+ * die namentliche Nennung ist damit nicht zwingend, aber gängige Praxis und
+ * ohne Nachteil. Server-Logfiles enthalten IP-Adressen, also personenbezogene
+ * Daten.
  */
 const HOSTING_PROVIDER_HINWEIS =
-  'Diese Website wird bei einem Dienstleister in der Europäischen Union gehostet; mit diesem Anbieter besteht ein Auftragsverarbeitungsvertrag nach Art. 28 DSGVO. Den vollständigen Namen und die Anschrift des Hosters teilen wir Ihnen auf Anfrage unter office@innsider-restaurant.at gerne mit.'
+  'Diese Website wird bei der netcup GmbH, Daimlerstraße 25, 76185 Karlsruhe, Deutschland gehostet. Mit dem Anbieter besteht ein Auftragsverarbeitungsvertrag nach Art. 28 DSGVO. Die Server befinden sich in der Europäischen Union.'
 
 export const datenschutz = {
   route: 'datenschutz',
