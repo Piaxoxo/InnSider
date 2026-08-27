@@ -36,6 +36,19 @@ export const contact = {
   instagramHref: 'https://www.instagram.com/innsider.vienna/',
 } as const
 
+/**
+ * Das hauseigene Reservierungstool. Wird direkt auf der Seite eingebettet, damit
+ * der Gast die Website nicht verlässt; der Direktlink bleibt als Rückfallebene
+ * sichtbar, falls die Einbettung im Browser blockiert wird.
+ */
+export const booking = {
+  url: 'https://innsider-reservierung.vercel.app',
+  cta: 'Tisch reservieren',
+  ctaShort: 'Reservieren',
+  openLabel: 'In neuem Tab öffnen',
+  fallbackNote: 'Formular lädt nicht?',
+} as const
+
 export const nav = [
   { id: 'hero', label: 'Willkommen', index: '01' },
   { id: 'dream', label: 'Die Vision', index: '02' },

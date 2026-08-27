@@ -1,40 +1,65 @@
-.callfab {
+/* Floating actions: reserve + call. */
+.fab {
   position: fixed;
   bottom: clamp(1.2rem, 3vh, 2.4rem);
   right: clamp(1.2rem, 3vw, 2.4rem);
   z-index: var(--z-nav);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.fab__btn {
   display: inline-flex;
   align-items: center;
   gap: 0.6em;
   padding: 0.75em 1.25em;
   border: 1px solid var(--line-strong);
   border-radius: 999px;
-  background: rgba(20, 14, 8, 0.55);
+  background: rgba(20, 14, 8, 0.6);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   color: var(--gold-bright);
-  transition: border-color 0.4s var(--ease-lux), color 0.4s, background 0.4s, transform 0.4s var(--ease-lux);
+  transition: border-color 0.4s var(--ease-lux), color 0.4s, background 0.4s,
+    transform 0.4s var(--ease-lux);
 }
-.callfab:hover {
+.fab__btn:hover {
   border-color: var(--gold);
   color: var(--warm-white);
-  background: rgba(201, 169, 106, 0.16);
+  background: rgba(201, 169, 106, 0.18);
   transform: translateY(-2px);
 }
-.callfab__ico {
+/* The primary action reads as the warmer of the two. */
+.fab__btn--primary {
+  background: linear-gradient(140deg, rgba(201, 169, 106, 0.9), rgba(160, 126, 68, 0.85));
+  border-color: var(--gold-bright);
+  color: var(--black);
+}
+.fab__btn--primary:hover {
+  background: linear-gradient(140deg, var(--gold-bright), var(--gold));
+  color: var(--black);
+}
+.fab__ico {
   font-size: 0.95em;
 }
-.callfab__label {
+.fab__label {
   font-family: var(--sans);
   font-size: 0.68rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
 }
+
 @media (max-width: 600px) {
-  .callfab {
+  .fab {
+    gap: 0.5rem;
+  }
+  .fab__btn {
     padding: 0.85em;
   }
-  .callfab__label {
+  /* Keep the primary action legible on a phone; the call button becomes an icon. */
+  .fab__btn--primary {
+    padding: 0.85em 1.1em;
+  }
+  .fab__btn:not(.fab__btn--primary) .fab__label {
     display: none;
   }
 }

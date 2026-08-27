@@ -2,9 +2,9 @@ import { useEffect, useRef } from 'react'
 import { Heading } from '../components/Heading'
 import { Placeholder } from '../components/Placeholder'
 import { useReveal } from '../hooks/useReveal'
-import { gsap } from '../lib/scroll'
+import { gsap, scrollToId } from '../lib/scroll'
 import { prefersReducedMotion } from '../lib/useReducedMotion'
-import { menu } from '../content/site'
+import { menu, booking } from '../content/site'
 import { media } from '../content/assets'
 import './menu.css'
 
@@ -129,6 +129,15 @@ export function Menu() {
             <span>{menu.pdfLabel}</span>
             <span aria-hidden="true">↓</span>
           </a>
+        </div>
+
+        {/* Hunger geweckt? Der kürzeste Weg an den Tisch. */}
+        <div className="chapter-cta">
+          <p className="chapter-cta__text">Hunger bekommen?</p>
+          <button className="btn btn--gold" onClick={() => scrollToId('reservation')}>
+            {booking.cta}
+            <span className="btn__arrow">→</span>
+          </button>
         </div>
       </div>
     </section>

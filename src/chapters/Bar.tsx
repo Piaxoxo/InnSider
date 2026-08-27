@@ -2,9 +2,9 @@ import { useEffect, useRef } from 'react'
 import { Heading } from '../components/Heading'
 import { Placeholder } from '../components/Placeholder'
 import { useReveal } from '../hooks/useReveal'
-import { gsap } from '../lib/scroll'
+import { gsap, scrollToId } from '../lib/scroll'
 import { prefersReducedMotion } from '../lib/useReducedMotion'
-import { bar } from '../content/site'
+import { bar, booking } from '../content/site'
 import { media } from '../content/assets'
 import './bar.css'
 
@@ -108,6 +108,14 @@ export function Bar() {
             <Placeholder slot={media.barGuest} />
             <figcaption>{media.barGuest.label}</figcaption>
           </figure>
+        </div>
+
+        <div className="chapter-cta">
+          <p className="chapter-cta__text">Der Abend wartet.</p>
+          <button className="btn btn--gold" onClick={() => scrollToId('reservation')}>
+            {booking.cta}
+            <span className="btn__arrow">→</span>
+          </button>
         </div>
       </div>
     </section>

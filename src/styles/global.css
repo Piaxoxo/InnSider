@@ -212,6 +212,24 @@ select {
   color: var(--gold-bright);
 }
 
+/* A quiet invitation to the table, closing a chapter. */
+.chapter-cta {
+  margin-top: clamp(2.6rem, 7vh, 4.6rem);
+  padding-top: clamp(1.6rem, 4vh, 2.6rem);
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+}
+.chapter-cta__text {
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: var(--fs-h3);
+  color: var(--warm-white);
+}
+
 /* ── Unified photography grade ─────────────────────────────────────────────
    The delivered photos span very different colour temperatures. One shared
    warm grade ties the whole site into a single hand — the single cheapest

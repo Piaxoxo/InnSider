@@ -196,6 +196,36 @@
   border-bottom: 1px solid var(--line-strong);
 }
 
+/* ── Eingebettetes Reservierungstool ───────────────────────────────────── */
+.reservation__booking {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.reservation__booking-frame {
+  width: 100%;
+  height: clamp(560px, 74vh, 820px);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: rgba(10, 9, 8, 0.4);
+  display: block;
+}
+.reservation__booking-fallback {
+  font-family: var(--sans);
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+}
+.reservation__booking-fallback a {
+  color: var(--gold-bright);
+  border-bottom: 1px solid var(--line-strong);
+  padding-bottom: 1px;
+  transition: color 0.4s var(--ease-lux);
+}
+.reservation__booking-fallback a:hover {
+  color: var(--warm-white);
+}
+
 /* ── Aside ─────────────────────────────────────────────────────────────── */
 .reservation__aside {
   display: flex;
