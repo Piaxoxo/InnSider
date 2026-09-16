@@ -17,21 +17,6 @@ export const site = {
   tagline: 'Eine Vision wird Wirklichkeit.',
 } as const
 
-/**
- * Speisekarte (PDF) — die EINZIGE Stelle, an der die Karte verlinkt ist.
- *
- * Aktuell: die Datei liegt im Projekt unter public/speisekarte.pdf und wird
- * mit der Website ausgeliefert. Eine neue Karte heißt also: Datei tauschen,
- * committen, neu deployen.
- *
- * Ziel: eine feste, externe Adresse, unter der die Karte immer liegt — dann
- * wird hier einmal umgestellt und danach nie wieder Code angefasst. Zum
- * Aktualisieren wird nur noch die Datei unter derselben Adresse überschrieben.
- * Wichtig: die Adresse muss stabil bleiben (kein -1/-2 im Dateinamen, kein
- * wechselnder Jahr/Monat-Ordner) — sonst zeigt der Link ins Leere.
- */
-export const SPEISEKARTE_PDF_URL = 'speisekarte.pdf'
-
 export const contact = {
   address: {
     street: 'Wurmbstraße 36',
@@ -40,6 +25,10 @@ export const contact = {
     country: 'Österreich',
     district: 'Meidling',
   },
+  // tel:/mailto: werden mit target="_top" verlinkt. Steckt die Seite in einem
+  // fremden Rahmen (WordPress-Einbettung), verweigern Browser den Sprung zu
+  // einem externen Protokoll aus dem Unterrahmen heraus — der Klick tut dann
+  // gar nichts. Mit _top greift der Wechsel auf oberster Ebene.
   phone: '+43 670 182 9565',
   phoneHref: 'tel:+436701829565',
   email: 'office@innsider-restaurant.at',
@@ -162,43 +151,106 @@ export const menu = {
   intro: 'Jedes Gericht wird mit höchster Präzision zubereitet und vereint Geschmack, Textur und Präsentation zu vollkommener Harmonie. Von den Vorspeisen bis zu den Desserts erzählt jeder Teller eine Geschichte.',
   galleryNote: 'Aus unserer Küche',
   cardLabel: 'Die Karte',
-  // Echte Speisekarte 1:1 aus der PDF (Speisekarte1.pdf).
+  // Echte Speisekarte 1:1 von den beiden Kartenseiten. Schreibweisen,
+  // Reihenfolge, Preise und Allergene wie gedruckt — nichts ergänzt.
+  //
+  // `column` verteilt die Abteilungen auf die zwei Spalten der Karte. Das
+  // geschieht bewusst von Hand: „Hauptspeisen" ist für sich länger als alles
+  // Übrige zusammen, ein automatischer Umbruch ließe eine Spalte halb leer.
   sections: [
     {
-      title: 'Vorspeisen & Suppen',
+      title: 'Vorspeisen und Suppen',
+      column: 1,
       items: [
-        { name: 'Tagessuppe', note: 'wechselt wöchentlich', price: '5,80', allergens: '', plus: '' },
-        { name: 'Beef Tatar', note: 'Focaccia, Eiercreme, Kapernbeeren, Babyspinat und Grana', price: '19,20', allergens: 'A C G H L', plus: '' },
-        { name: 'Kaspressknödelsalat', note: 'Apfelmus, Kräutercreme, Radieschen und Walnuss', price: '10,80', allergens: 'A C G', plus: 'Als Hauptspeise € 14,90' },
+        { name: 'Vegetarische Tagessuppe', note: 'wechselt wöchentlich', price: '5,80', allergens: '', plus: '' },
+        { name: 'Hausgemachte Rindsuppe', note: 'Kaspressknödel und Schnittlauch', price: '5,80', allergens: 'A C G L', plus: '' },
+        { name: 'Beef Tatar', note: 'hausgemachtes Kurkumabrot, Eiercreme, Kapernbeeren, Babyspinat und Grana', price: '19,20', allergens: 'A C G H L', plus: '' },
+        { name: 'Ziegenkäse', note: 'Schnittlauch, rote Zwiebel, Kernöl und hausgemachtes Kurkumabrot', price: '10,80', allergens: 'A C G', plus: '' },
       ],
     },
     {
       title: 'Hauptspeisen',
+      column: 2,
       items: [
-        { name: 'Original indisches Butternut Chicken', note: 'Paratha-Brot und Salat', price: '17,20', allergens: 'A O', plus: '' },
-        { name: 'Feuriges Chili con Carne', note: 'Sauerrahm und Fladenbrot', price: '12,50', allergens: 'A E G', plus: '' },
-        { name: 'Deftiges Blunzngröstl', note: 'Erdäpfel, Junglauch, Spiegelei, Kren und Krautsalat', price: '14,50', allergens: 'A C G O', plus: '' },
-        { name: 'Innsider Burger', note: '200g österreichisches Rindfleisch im hausgemachten Bun, Hamburgersauce, Cheddar, Bacon, karamellisierte Zwiebel und Wedges', price: '18,40', allergens: 'A C G O', plus: '' },
-        { name: 'Veggie Burger', note: 'Erbsenprotein-Patty, Gazi Käse, Granatapfel, Kräutercreme, Babyspinat und Süßkartoffel-Pommes', price: '15,80', allergens: 'A C F G H', plus: '' },
-        { name: 'Gelbes Gemüsecurry', note: 'Basmatireis und Kokosmilch — vegan', price: '12,80', allergens: 'A F L O', plus: 'mit Hühnerbrust + 6,00 · mit Garnelen + 7,00' },
-        { name: 'Spinatknödel mit Bierkäse', note: 'Tomatenbutter mit Pinienkernen und Salat', price: '13,80', allergens: 'A C G H', plus: '' },
-        { name: 'Caesar Salad', note: 'Römersalat, Kirschtomaten, original Caesar Dressing und Weißbrotcroutons', price: '9,80', allergens: 'A C D G O', plus: 'mit Hühnerbrust + 6,00 · mit Garnelen + 7,00' },
+        { name: 'Original indisches Butternut Chicken', note: 'Paratha-Brot und Blattsalat', price: '17,20', allergens: 'A O', plus: '' },
+        { name: 'Geschmorte Ochsenbackerln', note: 'Selleriepüree und -spalten und Erdäpfelstroh', price: '20,80', allergens: 'L M O', plus: '' },
+        { name: 'Kalbsbutterschnitzel', note: 'Erdäpfelpüree, Natursaft und Röstzwiebel', price: '18,20', allergens: 'A C G M L', plus: '' },
+        { name: 'Innsider Burger', note: '200g österreichisches Rindfleisch im hausgemachten Bun, BBQ Sauce, Cheddar, Bacon, Coleslaw und Süßkartoffelpommes', price: '18,40', allergens: 'A C G O', plus: '' },
+        { name: 'Im Erdäpfelteig frittierte Blunznknödel', note: 'Sauerkraut und Safterl', price: '15,20', allergens: 'A C G M', plus: '' },
+        { name: 'Pikantes rotes Gemüsecurry (vegan)', note: 'Basmatireis und Kokosmilch', price: '12,80', allergens: 'A E F L O', plus: 'mit Hühnerbrust + 6,00 · mit gegrilltem Fisch + 7,00' },
+        { name: 'Mangold-Fetaknödel', note: 'Tomatensauce und Blattsalat', price: '13,80', allergens: 'A C G H', plus: '' },
+        { name: 'Spicy Chicken Wings', note: 'Süßkartoffelpuree und Jus', price: '14,80', allergens: 'A C F G', plus: '' },
+        { name: 'Hausgemachte Tagliatelle', note: 'Gorgonzola, Birne und Walnuß', price: '15,80', allergens: 'A C G', plus: '' },
+      ],
+    },
+    {
+      title: 'Salat',
+      column: 1,
+      items: [
+        { name: 'Caesar Salad', note: 'Römersalat, Kirschtomaten, original Caesar Dressing und Weißbrotcroutons', price: '9,80', allergens: 'A C G D O', plus: 'mit gegrillter Hühnerbrust + 6,00 · mit gegrilltem Fisch + 7,00' },
       ],
     },
     {
       title: 'Desserts',
+      column: 1,
       items: [
-        { name: 'Marmeladepalatschinken', note: 'Marillen- oder Erdbeermarmelade mit Schlag', price: '7,80', allergens: 'A C G', plus: '' },
-        { name: 'Eispalatschinken', note: 'Vanilleeis, Schokosauce, Schlagobers und karamellisierte Walnüsse', price: '9,80', allergens: 'A C G H', plus: '' },
-        { name: 'Hausgemachter Kuchen', note: 'aus unserer Vitrine', price: '4,90', allergens: '', plus: '' },
+        { name: 'Innsider Kaiserschmarrn', note: 'Zwetschkenröster und hausgemachte Zwetschkeneis', price: '12,50', allergens: 'A C G', plus: '' },
+        { name: 'Hausgemachter Kuchen oder Desserts', note: 'aus unserer Vitrine', price: '', allergens: '', plus: '' },
       ],
     },
   ],
+  // Auf der gedruckten Karte steht die Limonade mittig und für sich — hier
+  // bekommt sie denselben eigenen Auftritt.
+  feature: {
+    label: 'Hausgemacht',
+    name: 'Selbstgemachte Limonade',
+    note: 'Minze, Limette und Ingwer',
+    size: '0,5 l',
+    price: '5,30',
+  },
   priceNote: 'Preise beinhalten die gesetzlichen Abgaben.',
-  allergenNote: 'Allergene: A, C, D, E, F, G, H, L, O — Details gerne auf Anfrage.',
-  pdfLabel: 'Speisekarte als PDF',
-  pdfHref: SPEISEKARTE_PDF_URL,
+  allergenLabel: 'Allergene',
+  allergens: [
+    ['A', 'Glutenhaltiges Getreide'],
+    ['B', 'Krebstiere'],
+    ['C', 'Eier'],
+    ['D', 'Fisch'],
+    ['E', 'Erdnuss'],
+    ['F', 'Soja'],
+    ['G', 'Milch oder Laktose'],
+    ['H', 'Schalenfrüchte'],
+    ['L', 'Sellerie'],
+    ['M', 'Senf'],
+    ['N', 'Sesam'],
+    ['O', 'Sulfite'],
+    ['P', 'Lupinen'],
+    ['R', 'Weichtiere'],
+  ],
   foot: 'Die vollständige, wechselnde Karte liegt an Ihrem Tisch bereit.',
+} as const
+
+/**
+ * Die Wochenkarte (Mittagsteller).
+ *
+ * ACHTUNG — das hier wechselt jede Woche. Zeitraum, Suppe und die drei
+ * Hauptspeisen müssen wöchentlich nachgezogen werden, sonst steht auf der
+ * Website eine Woche, die vorbei ist.
+ */
+export const weekly = {
+  label: 'Wochenkarte',
+  title: 'Unsere Mittagsteller',
+  periodPrefix: 'Für die Woche von',
+  period: 'Montag 14. September bis Freitag 18. September',
+  hours: 'Von 11:30 bis 15:00',
+  price: '13,50',
+  starter: { name: 'Erbsen-Minzesuppe', note: '', allergens: 'G' },
+  joiner: 'und',
+  orLabel: 'oder',
+  mains: [
+    { name: 'Gebratenes Schweinskareesteak', note: 'Fisolen, Pfeffersauce und Braterdäpfel', allergens: 'G L' },
+    { name: 'Innsider Paela', note: 'Knoblauch, Paprika, Tomate und Babyspinat', allergens: 'A D G' },
+    { name: 'Erdäpfel-Kräuterlaibchen', note: 'Pilzrahm, Kräutercreme und Salat', allergens: 'A C G' },
+  ],
 } as const
 
 // ── Kapitel 5 — Bar (Top Drinks) — Originaltext ──────────────────────────────

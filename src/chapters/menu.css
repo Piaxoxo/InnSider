@@ -128,8 +128,13 @@
 /* ── Speisekarte (echte Karte, kategorisiert) ──────────────────────────── */
 .menu__card {
   margin-top: clamp(3rem, 8vh, 6rem);
-  column-count: 2;
-  column-gap: clamp(2.5rem, 6vw, 6rem);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 clamp(2.5rem, 6vw, 6rem);
+  align-items: start;
+}
+.menu__col {
+  min-width: 0;
 }
 .menu__section {
   break-inside: avoid;
@@ -202,9 +207,9 @@
 
 /* ── Foot: notes + PDF ─────────────────────────────────────────────────── */
 .menu__foot {
-  margin-top: clamp(2.5rem, 6vh, 4rem);
-  padding-top: clamp(1.6rem, 4vh, 2.4rem);
-  border-top: 1px solid var(--line);
+  /* Keine eigene Trennlinie: die Limonade darüber schließt bereits mit einer
+     ab — zwei Linien hintereinander sähen aus wie ein leerer Kasten. */
+  margin-top: clamp(1.6rem, 4vh, 2.4rem);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -217,27 +222,6 @@
   letter-spacing: 0.04em;
   color: var(--ink-faint);
 }
-.menu__pdf {
-  margin-top: 1rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.7em;
-  padding: 0.9em 1.6em;
-  border: 1px solid var(--line-strong);
-  border-radius: 999px;
-  font-family: var(--sans);
-  font-size: 0.74rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--warm-white);
-  transition: background 0.4s var(--ease-lux), color 0.4s var(--ease-lux);
-}
-.menu__pdf:hover {
-  background: var(--gold);
-  color: var(--black);
-  border-color: var(--gold);
-}
-
 @media (max-width: 900px) {
   .menu__head {
     grid-template-columns: 1fr;
@@ -246,7 +230,7 @@
     display: none;
   }
   .menu__card {
-    column-count: 1;
+    grid-template-columns: 1fr;
   }
   /* Keep an editorial feel on tablet: a 4-column grid, still uneven. */
   .menu__plates-grid {
@@ -280,5 +264,154 @@
   .menu__plate figcaption {
     transform: translateY(0);
     opacity: 1;
+  }
+}
+
+/* ── Wochenkarte ───────────────────────────────────────────────────────────
+   Auf der gedruckten Karte steht der Mittagsteller in einem eigenen Kasten.
+   Hier bekommt er denselben Rang: ein beleuchteter Aushang, der sich vom
+   Fließtext der großen Karte absetzt. */
+.menu__weekly {
+  position: relative;
+  margin-top: clamp(3rem, 8vh, 6rem);
+  padding: clamp(2rem, 5vw, 3.6rem) clamp(1.5rem, 5vw, 4rem);
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  background: linear-gradient(165deg, rgba(201, 169, 106, 0.09), rgba(10, 9, 8, 0.3) 60%);
+  text-align: center;
+  overflow: hidden;
+}
+.menu__weekly-glow {
+  position: absolute;
+  top: -30%;
+  left: 50%;
+  width: min(70%, 34rem);
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(224, 164, 88, 0.16), transparent 66%);
+  pointer-events: none;
+}
+.menu__weekly > *:not(.menu__weekly-glow) {
+  position: relative;
+  z-index: 1;
+}
+.menu__weekly-head .overline {
+  justify-content: center;
+}
+.menu__weekly-title {
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(1.8rem, 1.2rem + 2vw, 3rem);
+  line-height: 1.05;
+  color: var(--warm-white);
+  margin: 0.6rem 0 0.9rem;
+}
+.menu__weekly-when {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  line-height: 1.8;
+  color: var(--ink-faint);
+}
+
+.menu__weekly-body {
+  margin: clamp(1.8rem, 4vh, 2.8rem) auto 0;
+  max-width: 34rem;
+}
+.menu__weekly-dish {
+  margin: 0;
+}
+.menu__weekly-name {
+  display: block;
+  font-family: var(--serif);
+  font-size: clamp(1.15rem, 1rem + 0.7vw, 1.5rem);
+  color: var(--warm-white);
+  line-height: 1.3;
+}
+.menu__weekly-note {
+  display: block;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin-top: 0.15rem;
+}
+/* „und" / „oder" als leise Scharniere zwischen den Gängen. */
+.menu__weekly-joiner {
+  display: block;
+  margin: 0.85rem 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--gold);
+  opacity: 0.75;
+}
+.menu__weekly-price {
+  margin-top: clamp(1.6rem, 4vh, 2.4rem);
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.4rem);
+  color: var(--gold-bright);
+}
+
+/* ── Limonade — der einzelne Auftritt von der zweiten Kartenseite ────────── */
+.menu__feature {
+  margin-top: clamp(2.5rem, 6vh, 4rem);
+  padding: clamp(1.8rem, 4vw, 2.6rem) 1.5rem;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  text-align: center;
+}
+.menu__feature-name {
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.2rem);
+  color: var(--warm-white);
+  margin: 0.7rem 0 0.3rem;
+}
+.menu__feature-note {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+}
+.menu__feature-price {
+  margin-top: 0.9rem;
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+}
+
+/* ── Allergenlegende ───────────────────────────────────────────────────────
+   Vollständig wie auf der Karte, aber als ruhiges Raster statt als Textwand. */
+.menu__allergens {
+  margin-top: clamp(1.4rem, 3vh, 2rem);
+  width: 100%;
+}
+.menu__allergens-list {
+  list-style: none;
+  margin: 0.9rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0.4rem 1.6rem;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+  text-align: left;
+}
+.menu__allergen-code {
+  display: inline-block;
+  min-width: 1.1em;
+  color: var(--gold);
+}
+
+@media (max-width: 720px) {
+  .menu__weekly {
+    padding-left: clamp(1.1rem, 5vw, 2rem);
+    padding-right: clamp(1.1rem, 5vw, 2rem);
   }
 }

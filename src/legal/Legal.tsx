@@ -98,7 +98,9 @@ function Impressum() {
                           data-cursor="hover"
                           {...(row.href.startsWith('http')
                             ? { target: '_blank', rel: 'noreferrer' }
-                            : {})}
+                            : // tel:/mailto: müssen den obersten Rahmen
+                              // ansprechen — Begründung steht in site.ts.
+                              { target: '_top' })}
                         >
                           {row.value}
                         </a>

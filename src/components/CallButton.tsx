@@ -24,7 +24,12 @@ export function CallButton({ visible }: { visible: boolean }) {
         <span className="fab__ico" aria-hidden="true">✦</span>
         <span className="fab__label">{booking.ctaShort}</span>
       </button>
-      <a className="fab__btn" href={contact.phoneHref} aria-label={`Anrufen — ${contact.phone}`}>
+      <a
+        className="fab__btn"
+        href={contact.phoneHref}
+        target="_top"
+        aria-label={`Anrufen — ${contact.phone}`}
+      >
         <span className="fab__ico" aria-hidden="true">☎</span>
         <span className="fab__label">Anrufen</span>
       </a>

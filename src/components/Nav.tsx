@@ -112,8 +112,12 @@ export function Nav({ visible }: { visible: boolean }) {
               exit={{ opacity: 0 }}
               transition={{ delay: 0.5 }}
             >
-              <a href={contact.phoneHref}>{contact.phone}</a>
-              <a href={contact.emailHref}>{contact.email}</a>
+              <a href={contact.phoneHref} target="_top">
+                {contact.phone}
+              </a>
+              <a href={contact.emailHref} target="_top">
+                {contact.email}
+              </a>
               <a href={contact.instagramHref} target="_blank" rel="noreferrer">
                 {contact.instagram}
               </a>

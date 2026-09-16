@@ -66,16 +66,16 @@ export function Reservation() {
               <span className="reservation__block-title">{reservation.direct.heading}</span>
               <p className="reservation__direct-note">{reservation.direct.note}</p>
               <div className="reservation__direct-actions">
-                <a className="btn btn--gold" href={contact.phoneHref}>
+                <a className="btn btn--gold" href={contact.phoneHref} target="_top">
                   <span className="btn__ico" aria-hidden="true">☎</span>
                   {reservation.direct.callCta}
                 </a>
-                <a className="btn btn--ghost" href={contact.emailReserveHref}>
+                <a className="btn btn--ghost" href={contact.emailReserveHref} target="_top">
                   {reservation.direct.mailCta}
                   <span className="btn__arrow">→</span>
                 </a>
               </div>
-              <a className="reservation__direct-phone" href={contact.phoneHref}>
+              <a className="reservation__direct-phone" href={contact.phoneHref} target="_top">
                 {contact.phone}
               </a>
             </div>
@@ -91,9 +91,13 @@ export function Reservation() {
             <div className="reservation__block">
               <span className="reservation__block-title">Kontakt</span>
               <p>
-                <a href={contact.phoneHref}>{contact.phone}</a>
+                <a href={contact.phoneHref} target="_top">
+                  {contact.phone}
+                </a>
                 <br />
-                <a href={contact.emailHref}>{contact.email}</a>
+                <a href={contact.emailHref} target="_top">
+                  {contact.email}
+                </a>
               </p>
             </div>
             <div className="reservation__block">

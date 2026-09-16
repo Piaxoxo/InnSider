@@ -5,7 +5,7 @@ import { useReveal } from '../hooks/useReveal'
 import { gsap } from '../lib/scroll'
 import { openBooking } from '../lib/booking'
 import { prefersReducedMotion } from '../lib/useReducedMotion'
-import { menu, booking } from '../content/site'
+import { menu, weekly, booking } from '../content/site'
 import { media } from '../content/assets'
 import './menu.css'
 
@@ -24,8 +24,9 @@ const plates = [
 
 /**
  * Kapitel Vier — Gaumenfreuden.
- * Oben eine Galerie echter Küchenfotos, darunter die echte Speisekarte 1:1
- * (Kategorien, Preise, Allergene) plus PDF-Download. Bild und Gericht werden
+ * Oben eine Galerie echter Küchenfotos, darunter die Wochenkarte und die
+ * vollständige Speisekarte 1:1 (Kategorien, Preise, Allergene) — alles direkt
+ * auf der Seite lesbar, ohne Umweg über ein PDF. Bild und Gericht werden
  * bewusst nicht verknüpft, damit keine falschen Zuordnungen entstehen.
  */
 export function Menu() {
@@ -94,42 +95,108 @@ export function Menu() {
           </div>
         </div>
 
+        {/* Wochenkarte — der Mittagsteller dieser Woche, als eigener Aushang.
+            Wechselt wöchentlich (siehe `weekly` in site.ts). */}
+        <aside className="menu__weekly" aria-label={weekly.title}>
+          <span className="menu__weekly-glow" aria-hidden="true" />
+          <div className="menu__weekly-head">
+            <span className="overline">{weekly.label}</span>
+            <h3 className="menu__weekly-title">{weekly.title}</h3>
+            <p className="menu__weekly-when">
+              {weekly.periodPrefix} {weekly.period}
+              <br />
+              {weekly.hours}
+            </p>
+          </div>
+
+          <div className="menu__weekly-body">
+            <p className="menu__weekly-dish">
+              <span className="menu__weekly-name">
+                {weekly.starter.name}
+                {weekly.starter.allergens && (
+                  <span className="menu__row-allergens"> {weekly.starter.allergens}</span>
+                )}
+              </span>
+            </p>
+
+            <span className="menu__weekly-joiner">{weekly.joiner}</span>
+
+            {weekly.mains.map((m, i) => (
+              <div key={m.name}>
+                {i > 0 && <span className="menu__weekly-joiner">{weekly.orLabel}</span>}
+                <p className="menu__weekly-dish">
+                  <span className="menu__weekly-name">{m.name}</span>
+                  <span className="menu__weekly-note">
+                    {m.note}
+                    {m.allergens && <span className="menu__row-allergens"> {m.allergens}</span>}
+                  </span>
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <p className="menu__weekly-price">€ {weekly.price}</p>
+        </aside>
+
         {/* Real menu — categories, prices, allergens */}
         <div className="menu__card-head">
           <span className="meta">{menu.cardLabel}</span>
           <span className="rule" />
         </div>
         <div className="menu__card" ref={cardRef}>
-          {menu.sections.map((section) => (
-            <div className="menu__section" key={section.title}>
-              <h3 className="menu__section-title">{section.title}</h3>
-              <ul className="menu__list">
-                {section.items.map((d) => (
-                  <li className="menu__row" key={d.name}>
-                    <div className="menu__row-head">
-                      <span className="menu__row-name">{d.name}</span>
-                      <span className="menu__row-dots" aria-hidden="true" />
-                      <span className="menu__row-price">€ {d.price}</span>
-                    </div>
-                    <p className="menu__row-note">
-                      {d.note}
-                      {d.allergens && <span className="menu__row-allergens"> · {d.allergens}</span>}
-                    </p>
-                    {d.plus && <p className="menu__row-plus">{d.plus}</p>}
-                  </li>
+          {[1, 2].map((col) => (
+            <div className="menu__col" key={col}>
+              {menu.sections
+                .filter((section) => section.column === col)
+                .map((section) => (
+                  <div className="menu__section" key={section.title}>
+                    <h3 className="menu__section-title">{section.title}</h3>
+                    <ul className="menu__list">
+                      {section.items.map((d) => (
+                        <li className="menu__row" key={d.name}>
+                          <div className="menu__row-head">
+                            <span className="menu__row-name">{d.name}</span>
+                            <span className="menu__row-dots" aria-hidden="true" />
+                            {d.price && <span className="menu__row-price">€ {d.price}</span>}
+                          </div>
+                          <p className="menu__row-note">
+                            {d.note}
+                            {d.allergens && (
+                              <span className="menu__row-allergens"> · {d.allergens}</span>
+                            )}
+                          </p>
+                          {d.plus && <p className="menu__row-plus">{d.plus}</p>}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 ))}
-              </ul>
             </div>
           ))}
         </div>
 
+        {/* Auf der gedruckten Karte steht die Limonade mittig und für sich. */}
+        <div className="menu__feature">
+          <span className="meta">{menu.feature.label}</span>
+          <p className="menu__feature-name">{menu.feature.name}</p>
+          <p className="menu__feature-note">{menu.feature.note}</p>
+          <p className="menu__feature-price">
+            {menu.feature.size} <span aria-hidden="true">·</span> € {menu.feature.price}
+          </p>
+        </div>
+
         <div className="menu__foot">
           <p className="menu__note">{menu.priceNote}</p>
-          <p className="menu__note">{menu.allergenNote}</p>
-          <a className="menu__pdf" href={menu.pdfHref} target="_blank" rel="noreferrer">
-            <span>{menu.pdfLabel}</span>
-            <span aria-hidden="true">↓</span>
-          </a>
+          <div className="menu__allergens">
+            <span className="meta">{menu.allergenLabel}</span>
+            <ul className="menu__allergens-list">
+              {menu.allergens.map(([code, label]) => (
+                <li key={code}>
+                  <span className="menu__allergen-code">{code}</span> {label}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         {/* Hunger geweckt? Der kürzeste Weg an den Tisch. */}
