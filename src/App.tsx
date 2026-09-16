@@ -16,9 +16,9 @@ import { Gallery } from './chapters/Gallery'
 import { Events } from './chapters/Events'
 import { Reservation } from './chapters/Reservation'
 import { Legal } from './legal/Legal'
-import { useRoute } from './lib/useRoute'
+import { useRoute, deepLinkSection } from './lib/useRoute'
 import { useRouteTransition } from './lib/useRouteTransition'
-import { initSmoothScroll, startScroll, stopScroll, ScrollTrigger } from './lib/scroll'
+import { initSmoothScroll, startScroll, stopScroll, scrollToId, ScrollTrigger } from './lib/scroll'
 import { usePointerTracking } from './lib/pointer'
 
 const OVERTURE_KEY = 'innsider-overture'
@@ -61,9 +61,12 @@ export default function App() {
 
 /** The full nine-chapter cinematic scroll. */
 function HomeShell() {
-  // Skip the overture if it already played this session (returning from legal).
+  // Skip the overture if it already played this session (returning from legal),
+  // or when the URL asks for a specific chapter — someone arriving straight at
+  // #reservation wants the table, not the curtain.
   const seen = useRef(
-    typeof sessionStorage !== 'undefined' && sessionStorage.getItem(OVERTURE_KEY) === '1',
+    (typeof sessionStorage !== 'undefined' && sessionStorage.getItem(OVERTURE_KEY) === '1') ||
+      deepLinkSection() !== null,
   )
   const [ready, setReady] = useState(seen.current)
 
@@ -89,6 +92,33 @@ function HomeShell() {
       teardown()
     }
   }, [])
+
+  // Deep link (#menu, #reservation …): once the evening is on its feet, travel
+  // to the chapter the URL asked for. Waits for `ready` because the overture
+  // resets scroll to the top when it lifts, and for a frame after that so the
+  // chapter has been measured before Lenis aims at it.
+  const jumped = useRef(false)
+  useEffect(() => {
+    if (!ready || jumped.current) return
+    const target = deepLinkSection()
+    if (!target) return
+    jumped.current = true
+    const first = setTimeout(() => {
+      ScrollTrigger.refresh()
+      scrollToId(target)
+    }, 500)
+    // The chapters gain height as photos and pinned sections settle, so the
+    // first aim can fall short. Once the travel has finished, correct onto the
+    // now-final position — a short glide rather than a jump.
+    const correct = setTimeout(() => {
+      ScrollTrigger.refresh()
+      scrollToId(target)
+    }, 2600)
+    return () => {
+      clearTimeout(first)
+      clearTimeout(correct)
+    }
+  }, [ready])
 
   // When the loader finishes: release scroll, reveal chrome, re-measure.
   const handleLoaded = () => {

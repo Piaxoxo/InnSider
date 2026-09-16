@@ -1,0 +1,149 @@
+<!-- ═══════════════════════════════════════════════════════════════════════
+     InnSider — universeller Einbett-Code für WordPress
+     ═══════════════════════════════════════════════════════════════════════
+
+     EIN Code für ALLE Seiten. Überall identisch einfügen — der Code erkennt
+     selbst, auf welcher WordPress-Seite er steht, und öffnet das passende
+     Kapitel.
+
+     ─── So fügst du ihn ein ───────────────────────────────────────────────
+     1. WordPress-Seite öffnen (oder neu anlegen)
+     2. Block hinzufügen → nach "Individuelles HTML" suchen
+     3. Diesen kompletten Code hineinkopieren
+     4. Seite aktualisieren — fertig
+
+     Das Gleiche auf jeder weiteren Seite. Nichts anpassen, nichts ändern.
+
+     ─── Welche Seite zeigt was ────────────────────────────────────────────
+     Der Code schaut sich die Adresse der WordPress-Seite an:
+
+       /                       → die ganze Website von vorne
+       /impressum/             → Impressum
+       /datenschutz/           → Datenschutzerklärung
+       /agb/                   → AGB
+       /reservierung/          → direkt zur Tischreservierung
+       /speisekarte/           → direkt zur Karte
+       /events/                → direkt zu Feiern & Veranstaltungen
+       /bar/                   → direkt zur Bar
+       /galerie/               → direkt zu den Impressionen
+       /ueber-uns/             → direkt zur Geschichte von Alice
+
+     Es genügt, wenn das Wort im Seitentitel vorkommt — "unsere-speisekarte"
+     oder "tisch-reservieren" funktionieren genauso. Passt nichts davon,
+     startet die Website ganz normal von vorne.
+
+     Navigation, Kopfzeile, Fußzeile und alle Verlinkungen bringt die Website
+     selbst mit — dafür braucht es in WordPress kein Menü und keine Einstellung.
+     ═══════════════════════════════════════════════════════════════════════ -->
+
+<style>
+  /* Die Website füllt das Browserfenster komplett aus. Das WordPress-Theme
+     (Kopfzeile, Fußzeile, Seitenränder) wird dabei ausgeblendet, damit es
+     nicht doppelt erscheint. */
+  body.innsider-aktiv {
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: #060504 !important;
+  }
+  body.innsider-aktiv > *:not(.innsider-buehne):not(#wpadminbar) {
+    display: none !important;
+  }
+
+  /* Standardmäßig unsichtbar: ohne JavaScript soll hier keine schwarze
+     Fläche über der Seite liegen. Sichtbar wird die Bühne erst, wenn das
+     Skript sie aus den Theme-Containern herausgehoben hat. */
+  .innsider-buehne {
+    display: none;
+  }
+
+  body.innsider-aktiv .innsider-buehne {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 2147483000;
+    background: #060504;
+  }
+
+  /* Falls die WordPress-Adminleiste oben eingeblendet ist (nur für
+     eingeloggte Redakteure), rutscht die Website entsprechend nach unten. */
+  body.admin-bar .innsider-buehne { top: 32px; }
+  @media screen and (max-width: 782px) {
+    body.admin-bar .innsider-buehne { top: 46px; }
+  }
+
+  .innsider-buehne iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  /* Hinweis, falls JavaScript im Browser abgeschaltet ist. */
+  .innsider-ohne-js {
+    display: block;
+    padding: 3rem 1.5rem;
+    font-family: Georgia, "Times New Roman", serif;
+    color: #e8e0d2;
+    background: #060504;
+    text-align: center;
+    line-height: 1.7;
+  }
+  .innsider-ohne-js a { color: #c9a96a; }
+</style>
+
+<div class="innsider-buehne">
+  <iframe
+    id="innsider-rahmen"
+    title="InnSider — Restaurant & Bar, Wien Meidling"
+    allow="fullscreen; payment"
+    referrerpolicy="no-referrer-when-downgrade"
+  ></iframe>
+</div>
+
+<noscript>
+  <div class="innsider-ohne-js">
+    <p>Für die Darstellung dieser Seite wird JavaScript benötigt.</p>
+    <p><a href="https://inn-sider.vercel.app/">InnSider direkt öffnen</a></p>
+  </div>
+</noscript>
+
+<script>
+(function () {
+  /* ── Die Adresse der Website. Nur hier ändern, falls sie einmal
+        auf eine eigene Domain umzieht. ─────────────────────────────── */
+  var BASIS = 'https://inn-sider.vercel.app/';
+
+  /* ── Welches Stichwort in der Seitenadresse führt zu welchem Kapitel.
+        Neue Zeilen dürfen ergänzt werden — die erste Übereinstimmung
+        von oben nach unten gewinnt. ────────────────────────────────── */
+  var KAPITEL = [
+    [/impressum/,                       '#/impressum'],
+    [/datenschutz|privacy/,             '#/datenschutz'],
+    [/agb|gesch(ae|ä)ftsbedingungen/,   '#/agb'],
+    [/reservier|tisch|booking/,         '#reservation'],
+    [/speisekarte|karte|men(u|ü)/,      '#menu'],
+    [/event|feier|veranstaltung|hochzeit/, '#events'],
+    [/bar|drink|cocktail|wein/,         '#bar'],
+    [/galerie|gallery|impression|foto/, '#gallery'],
+    [/(ue|ü)ber-uns|about|story|geschichte/, '#dream'],
+    [/k(ue|ü)che|kitchen|chef/,         '#kitchen']
+  ];
+
+  var pfad = (window.location.pathname + window.location.search).toLowerCase();
+  var ziel = '';
+  for (var i = 0; i < KAPITEL.length; i++) {
+    if (KAPITEL[i][0].test(pfad)) { ziel = KAPITEL[i][1]; break; }
+  }
+
+  /* WordPress-Themes verschachteln den HTML-Block tief in eigene Container
+     (main, article, div.entry-content …). Damit die Bühne das Fenster
+     wirklich füllt und nicht mit ihrem Container ausgeblendet wird, wird
+     sie zuerst direkt an den Seitenkörper gehängt. */
+  var buehne = document.querySelector('.innsider-buehne');
+  document.body.appendChild(buehne);
+
+  document.body.classList.add('innsider-aktiv');
+  document.getElementById('innsider-rahmen').src = BASIS + ziel;
+})();
+</script>
