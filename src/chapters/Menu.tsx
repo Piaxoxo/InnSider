@@ -2,7 +2,8 @@ import { useEffect, useRef } from 'react'
 import { Heading } from '../components/Heading'
 import { Placeholder } from '../components/Placeholder'
 import { useReveal } from '../hooks/useReveal'
-import { gsap, scrollToId } from '../lib/scroll'
+import { gsap } from '../lib/scroll'
+import { openBooking } from '../lib/booking'
 import { prefersReducedMotion } from '../lib/useReducedMotion'
 import { menu, booking } from '../content/site'
 import { media } from '../content/assets'
@@ -134,7 +135,7 @@ export function Menu() {
         {/* Hunger geweckt? Der kürzeste Weg an den Tisch. */}
         <div className="chapter-cta">
           <p className="chapter-cta__text">Hunger bekommen?</p>
-          <button className="btn btn--gold" onClick={() => scrollToId('reservation')}>
+          <button className="btn btn--gold" onClick={openBooking}>
             {booking.cta}
             <span className="btn__arrow">→</span>
           </button>

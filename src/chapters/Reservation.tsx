@@ -2,11 +2,12 @@ import { Heading } from '../components/Heading'
 import { useReveal } from '../hooks/useReveal'
 import { reservation, contact, footer, site, testimonials, booking } from '../content/site'
 import { navigate } from '../lib/useRoute'
+import { openBooking } from '../lib/booking'
 import './reservation.css'
 
 /**
  * Kapitel Neun — Reservieren.
- * Das emotionale Finale: das hauseigene Reservierungstool direkt eingebettet,
+ * Das emotionale Finale: eine Einladung zum hauseigenen Reservierungstool,
  * daneben Telefon und E-Mail als persönliche Alternative.
  */
 export function Reservation() {
@@ -35,24 +36,29 @@ export function Reservation() {
         </div>
 
         <div className="reservation__panel" ref={formRef}>
-          {/* Das hauseigene Reservierungstool, direkt eingebettet — der Gast
-              bleibt auf der Seite. Der Direktlink darunter ist die Rückfallebene,
-              falls ein Browser die Einbettung blockiert. */}
-          <div className="reservation__booking" data-reveal-f>
-            <iframe
-              className="reservation__booking-frame"
-              src={booking.url}
-              title="Tisch reservieren — Innsider"
-              loading="lazy"
-              allow="payment"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-            <p className="reservation__booking-fallback">
-              {booking.fallbackNote}{' '}
-              <a href={booking.url} target="_blank" rel="noreferrer">
-                {booking.openLabel} ↗
-              </a>
-            </p>
+          {/* Die Einladung. Das Reservierungstool bringt sein eigenes Aussehen
+              mit und würde den Abend hier aufbrechen — es bleibt deshalb hinter
+              dieser Karte und öffnet sich erst auf Wunsch in eigenem Rahmen. */}
+          <div className="reservation__invite" data-reveal-f>
+            <span className="reservation__invite-glow" aria-hidden="true" />
+            <span className="ghost-numeral reservation__invite-num" aria-hidden="true">
+              09
+            </span>
+            <span className="overline">{booking.panelOverline}</span>
+            <h3 className="reservation__invite-title">{booking.panelTitle}</h3>
+            <p className="reservation__invite-note">{booking.panelNote}</p>
+            <button
+              type="button"
+              className="btn btn--gold reservation__invite-cta"
+              onClick={openBooking}
+              data-cursor="hover"
+            >
+              <span className="btn__ico" aria-hidden="true">
+                ✦
+              </span>
+              {booking.cta}
+            </button>
+            <span className="reservation__invite-hint">{booking.panelHint}</span>
           </div>
 
           <aside className="reservation__aside">

@@ -52,9 +52,10 @@ export const contact = {
 } as const
 
 /**
- * Das hauseigene Reservierungstool. Wird direkt auf der Seite eingebettet, damit
- * der Gast die Website nicht verlässt; der Direktlink bleibt als Rückfallebene
- * sichtbar, falls die Einbettung im Browser blockiert wird.
+ * Das hauseigene Reservierungstool. Es bringt sein eigenes Aussehen mit, deshalb
+ * steht es nicht offen im Kapitel, sondern öffnet sich auf Klick in einem
+ * eigenen, gestalteten Rahmen (BookingOverlay). Der Direktlink bleibt dort als
+ * Rückfallebene sichtbar, falls ein Browser die Einbettung blockiert.
  */
 export const booking = {
   url: 'https://innsider-reservierung.vercel.app',
@@ -62,6 +63,12 @@ export const booking = {
   ctaShort: 'Reservieren',
   openLabel: 'In neuem Tab öffnen',
   fallbackNote: 'Formular lädt nicht?',
+  // Die Einladung, die im Kapitel steht — das Werkzeug selbst bleibt dahinter.
+  panelOverline: 'Tischreservierung',
+  panelTitle: 'Online reservieren',
+  panelNote: 'Datum, Uhrzeit und Personenzahl auswählen.',
+  panelHint: 'Öffnet sich hier auf der Seite.',
+  closeLabel: 'Schließen',
 } as const
 
 export const nav = [

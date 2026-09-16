@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion'
 import { contact, booking } from '../content/site'
-import { scrollToId } from '../lib/scroll'
+import { openBooking } from '../lib/booking'
 import './call-button.css'
 
 /**
  * Floating actions, bottom-right: reserve and call. The two fastest paths to a
- * table, always within reach — reserving jumps to the embedded booking tool,
- * calling dials the house in one tap.
+ * table, always within reach — reserving opens the booking tool in its own
+ * lit frame, calling dials the house in one tap.
  */
 export function CallButton({ visible }: { visible: boolean }) {
   return (
@@ -18,7 +18,7 @@ export function CallButton({ visible }: { visible: boolean }) {
     >
       <button
         className="fab__btn fab__btn--primary"
-        onClick={() => scrollToId('reservation')}
+        onClick={openBooking}
         aria-label={booking.cta}
       >
         <span className="fab__ico" aria-hidden="true">✦</span>

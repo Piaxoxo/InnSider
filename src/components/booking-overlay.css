@@ -1,0 +1,161 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   The reservation tool, framed.
+
+   The booking app brings its own bright interface. Rather than let it sit
+   bare in the middle of a candlelit page, it opens in a panel: the room
+   dims, a brass-edged frame lifts, and the tool sits inside it like a card
+   handed across the table. The evening stays intact behind the glass.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.bookov {
+  position: fixed;
+  inset: 0;
+  z-index: 80; /* above nav (40) and cursor (60), below the loader (90) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(0.75rem, 3vh, 2.5rem) clamp(0.75rem, 4vw, 2.5rem);
+}
+
+/* The room dims — warm, not neutral, so it still feels like candlelight. */
+.bookov__scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(90% 70% at 50% 40%, rgba(28, 20, 10, 0.72), transparent 70%),
+    rgba(6, 5, 4, 0.88);
+  backdrop-filter: blur(10px) saturate(0.9);
+  -webkit-backdrop-filter: blur(10px) saturate(0.9);
+}
+
+.bookov__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(560px, 100%);
+  max-height: min(880px, 100%);
+  height: 100%;
+  border: 1px solid var(--line-strong);
+  border-radius: 5px;
+  background: linear-gradient(168deg, var(--charcoal-2), var(--black) 62%);
+  box-shadow:
+    0 0 0 1px rgba(6, 5, 4, 0.6),
+    0 40px 120px rgba(0, 0, 0, 0.7),
+    0 0 90px rgba(201, 169, 106, 0.09);
+  overflow: hidden;
+}
+
+/* A thread of brass along the top edge — the panel is lit, not just placed. */
+.bookov__panel::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold) 50%, transparent);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.bookov__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: clamp(0.95rem, 2.4vw, 1.35rem) clamp(1rem, 3vw, 1.6rem);
+  border-bottom: 1px solid var(--line);
+  flex: 0 0 auto;
+}
+
+.bookov__titles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+  min-width: 0;
+}
+
+.bookov__mark {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.8;
+}
+
+.bookov__title {
+  font-family: var(--serif);
+  font-size: clamp(1.15rem, 1rem + 0.8vw, 1.5rem);
+  line-height: 1.1;
+  color: var(--warm-white);
+}
+
+.bookov__close {
+  flex: 0 0 auto;
+  width: 2.35rem;
+  height: 2.35rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition:
+    color 0.45s var(--ease-lux),
+    border-color 0.45s var(--ease-lux),
+    background-color 0.45s var(--ease-lux);
+}
+.bookov__close:hover,
+.bookov__close:focus-visible {
+  color: var(--warm-white);
+  border-color: var(--line-strong);
+  background: rgba(201, 169, 106, 0.1);
+}
+
+/* The tool itself. A dark bed underneath, so the moment before it paints
+   reads as part of the panel rather than as a white flash. */
+.bookov__stage {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  background: var(--black);
+  /* Ein schmaler dunkler Passepartout: das helle Werkzeug liegt dadurch IM
+     Rahmen, statt bis an dessen Kante zu stoßen. */
+  padding: clamp(0.35rem, 1.2vw, 0.6rem);
+}
+
+.bookov__frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 3px;
+}
+
+.bookov__foot {
+  flex: 0 0 auto;
+  padding: 0.85rem clamp(1rem, 3vw, 1.6rem);
+  border-top: 1px solid var(--line);
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+  text-align: center;
+}
+.bookov__foot a {
+  color: var(--gold-bright);
+  border-bottom: 1px solid var(--line-strong);
+  padding-bottom: 1px;
+  transition: color 0.4s var(--ease-lux);
+}
+.bookov__foot a:hover {
+  color: var(--warm-white);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bookov__scrim {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}

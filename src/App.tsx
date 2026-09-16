@@ -4,6 +4,7 @@ import { Loader } from './components/Loader'
 import { Nav } from './components/Nav'
 import { Cursor } from './components/Cursor'
 import { CallButton } from './components/CallButton'
+import { BookingOverlay } from './components/BookingOverlay'
 import { PageTransition } from './components/PageTransition'
 import { Hero } from './chapters/Hero'
 import { Dream } from './chapters/Dream'
@@ -141,6 +142,7 @@ function HomeShell() {
       <Cursor />
       {!seen.current && <Loader onDone={handleLoaded} />}
       <Nav visible={ready} />
+      <BookingOverlay />
       <CallButton visible={ready} />
 
       <main id="main">

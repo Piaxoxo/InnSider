@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { gsap, ScrollTrigger, scrollToId } from '../lib/scroll'
+import { openBooking } from '../lib/booking'
 import { prefersReducedMotion } from '../lib/useReducedMotion'
 import { pointer } from '../lib/pointer'
 import { hero, contact } from '../content/site'
@@ -110,7 +111,7 @@ export function Hero({ ready }: { ready: boolean }) {
         </p>
 
         <div className="hero__ctas" data-depth="4">
-          <button className="btn btn--gold" data-hero-cta data-hero-in onClick={() => scrollToId('reservation')}>
+          <button className="btn btn--gold" data-hero-cta data-hero-in onClick={openBooking}>
             {hero.primaryCta}
             <span className="btn__arrow">→</span>
           </button>

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { nav, site, contact } from '../content/site'
 import { scrollToId } from '../lib/scroll'
+import { openBooking } from '../lib/booking'
 import './nav.css'
 
 /**
@@ -61,7 +62,7 @@ export function Nav({ visible }: { visible: boolean }) {
         </div>
 
         <div className="nav__right">
-          <button className="nav__reserve" onClick={() => go('reservation')}>
+          <button className="nav__reserve" onClick={openBooking}>
             Reservieren
           </button>
           <button

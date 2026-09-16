@@ -96,134 +96,81 @@
   border-top: 1px solid var(--line);
 }
 
-.reservation__form {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(1.4rem, 3vw, 2.4rem);
-}
-.reservation__field {
+/* ── Die Einladung ─────────────────────────────────────────────────────────
+   An dieser Stelle stand das Reservierungstool selbst. Es bringt sein eigenes
+   Aussehen mit und hat den Abend optisch aufgerissen. Jetzt steht hier eine
+   Karte im Haus-Ton; das Werkzeug öffnet sich erst auf Klick, in eigenem
+   Rahmen (BookingOverlay). */
+.reservation__invite {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
-}
-.reservation__field--wide {
-  grid-column: 1 / -1;
-}
-.reservation__field label {
-  font-family: var(--sans);
-  font-size: 0.66rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
-.reservation__field input,
-.reservation__field select {
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid var(--line);
-  padding: 0.7rem 0;
-  font-family: var(--serif);
-  font-size: 1.15rem;
-  color: var(--warm-white);
-  transition: border-color 0.4s var(--ease-lux);
-}
-.reservation__field input:focus,
-.reservation__field select:focus {
-  outline: none;
-  border-color: var(--gold);
-}
-.reservation__field select option {
-  background: var(--charcoal);
-  color: var(--warm-white);
-}
-/* Make native date/select controls legible on dark. */
-.reservation__field input[type='date'] {
-  color-scheme: dark;
-}
-
-.reservation__submit {
-  grid-column: 1 / -1;
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  margin-top: 0.5rem;
-}
-.reservation__reassure {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 0.92rem;
-  color: var(--ink-faint);
-}
-.reservation__error {
-  grid-column: 1 / -1;
-  margin-top: 0.4rem;
-  font-size: 0.9rem;
-  color: var(--ink-soft);
-}
-.reservation__error p {
-  color: #d9a06a;
-  margin-bottom: 1rem;
-  max-width: 46ch;
-}
-.reservation__error-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-}
-
-/* ── Confirmation ──────────────────────────────────────────────────────── */
-.reservation__confirm {
-  padding: 2rem 0;
-}
-.reservation__confirm-mark {
-  font-size: 2rem;
-  color: var(--gold);
-}
-.reservation__confirm h3 {
-  font-family: var(--display);
-  font-weight: 300;
-  font-size: var(--fs-h2);
-  color: var(--warm-white);
-  margin: 1rem 0;
-}
-.reservation__confirm p {
-  color: var(--ink-soft);
-  max-width: 46ch;
-}
-.reservation__confirm a {
-  color: var(--gold-bright);
-  border-bottom: 1px solid var(--line-strong);
-}
-
-/* ── Eingebettetes Reservierungstool ───────────────────────────────────── */
-.reservation__booking {
-  display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
-}
-.reservation__booking-frame {
-  width: 100%;
-  height: clamp(560px, 74vh, 820px);
-  border: 1px solid var(--line);
+  /* Auf Augenhöhe mit der Kontaktspalte daneben: die Karte füllt die Höhe und
+     setzt ihren Inhalt in die Mitte, statt klein oben zu kleben. */
+  align-self: stretch;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0.55rem;
+  padding: clamp(2rem, 5vw, 3.4rem) clamp(1.5rem, 4vw, 3rem);
+  border: 1px solid var(--line-strong);
   border-radius: 4px;
-  background: rgba(10, 9, 8, 0.4);
-  display: block;
+  background: linear-gradient(158deg, rgba(201, 169, 106, 0.1), rgba(10, 9, 8, 0.28) 62%);
+  overflow: hidden;
 }
-.reservation__booking-fallback {
-  font-family: var(--sans);
-  font-size: 0.76rem;
-  letter-spacing: 0.06em;
-  color: var(--ink-faint);
+
+/* Kerzenschein hinter der Karte — derselbe Lichtpunkt wie im Kapitelkopf. */
+.reservation__invite-glow {
+  position: absolute;
+  top: 18%;
+  left: -14%;
+  width: 78%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(224, 164, 88, 0.2), transparent 66%);
+  pointer-events: none;
 }
-.reservation__booking-fallback a {
-  color: var(--gold-bright);
-  border-bottom: 1px solid var(--line-strong);
-  padding-bottom: 1px;
-  transition: color 0.4s var(--ease-lux);
+
+.reservation__invite > *:not(.reservation__invite-glow):not(.reservation__invite-num) {
+  position: relative;
+  z-index: 1;
 }
-.reservation__booking-fallback a:hover {
+
+/* Kapitelziffer als Wasserzeichen — dieselbe Sprache wie in „Gaumenfreuden".
+   Sie füllt die Karte, ohne Inhalt zu erfinden. */
+.reservation__invite-num {
+  right: clamp(-3.5rem, -7vw, -1.5rem);
+  bottom: clamp(-3rem, -6vw, -1.5rem);
+  font-size: clamp(7rem, 15vw, 15rem);
+}
+
+.reservation__invite-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 1.3rem + 2.4vw, 3.4rem);
+  font-weight: 400;
+  line-height: 1.08;
   color: var(--warm-white);
+  margin: 0.15rem 0 0;
+}
+
+.reservation__invite-note {
+  color: var(--ink-soft);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  margin: 0 0 1.1rem;
+  max-width: 32ch;
+}
+
+.reservation__invite-cta {
+  align-self: flex-start;
+}
+
+.reservation__invite-hint {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-top: 0.9rem;
 }
 
 /* ── Aside ─────────────────────────────────────────────────────────────── */
@@ -425,11 +372,6 @@
 
 @media (max-width: 900px) {
   .reservation__panel {
-    grid-template-columns: 1fr;
-  }
-}
-@media (max-width: 560px) {
-  .reservation__form {
     grid-template-columns: 1fr;
   }
 }
