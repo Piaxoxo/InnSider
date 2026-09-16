@@ -295,3 +295,23 @@
     gap: 2rem;
   }
 }
+
+/* ── Das Glas ──────────────────────────────────────────────────────────────
+   Eine ruhige, hohe Spalte zwischen den Karten und den Cocktailfotos. Absicht
+   ist der Kontrast: ringsum liegt Fotografie, hier steht ein Objekt, das
+   tatsächlich im Moment gerechnet wird. */
+.bar__vessel {
+  margin: clamp(3rem, 9vh, 7rem) auto 0;
+  width: min(100%, 32rem);
+  height: clamp(24rem, 60vh, 40rem);
+}
+.glass-host {
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 700px) {
+  .bar__vessel {
+    height: clamp(20rem, 52vh, 28rem);
+  }
+}

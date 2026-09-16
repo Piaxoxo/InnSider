@@ -1,0 +1,66 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   The glass on the bar. A tall, quiet column beside the drinks copy — the
+   canvas is transparent, so the chapter's own light still reads behind it.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.glass {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: clamp(22rem, 52vh, 34rem);
+}
+
+.glass__canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  /* A candle sitting behind the glass, so it is never cut out against black. */
+  background: radial-gradient(
+    58% 46% at 50% 44%,
+    rgba(224, 164, 88, 0.14),
+    transparent 70%
+  );
+}
+
+/* The name of whatever it currently is, set like a label under an exhibit. */
+.glass__name {
+  position: absolute;
+  left: 50%;
+  bottom: 0.4rem;
+  transform: translateX(-50%);
+  font-family: var(--sans);
+  font-size: 0.66rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.75;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* The still fallback: no WebGL, reduced motion, or a device we did not ask.
+   A drawn coupe rather than an empty hole. */
+.glass__still {
+  position: relative;
+  width: 100%;
+  min-height: clamp(18rem, 42vh, 28rem);
+  display: grid;
+  place-items: center;
+}
+.glass__still::before {
+  content: '';
+  width: min(58%, 13rem);
+  aspect-ratio: 1 / 1.5;
+  border: 1px solid var(--line-strong);
+  border-top-width: 0;
+  border-radius: 0 0 46% 46%;
+  background: linear-gradient(180deg, rgba(224, 164, 88, 0.16), rgba(201, 169, 106, 0.04));
+}
+.glass__still::after {
+  content: '';
+  position: absolute;
+  bottom: clamp(2rem, 6vh, 3.5rem);
+  width: 1px;
+  height: clamp(3rem, 9vh, 5rem);
+  background: linear-gradient(180deg, var(--line-strong), transparent);
+}

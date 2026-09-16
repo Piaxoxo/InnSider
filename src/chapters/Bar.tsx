@@ -8,6 +8,7 @@ import { prefersReducedMotion } from '../lib/useReducedMotion'
 import { bar, booking } from '../content/site'
 import { media } from '../content/assets'
 import './bar.css'
+import { BarGlass } from '../components/BarGlass'
 
 /**
  * Chapter Five — The Bar.
@@ -97,6 +98,15 @@ export function Bar() {
               <span className="bar__card-mood">{d.mood}</span>
             </article>
           ))}
+        </div>
+
+        {/* Signature des Kapitels: ein einzelnes Glas, das sich im Scrollen
+            wandelt — Weinglas, Coupe, Tumbler — und sich dabei füllt. Es ist
+            das Einzige hier, was in Echtzeit besser aussieht als auf einem
+            Foto: Brechung und ein wanderndes Glanzlicht lassen sich in einem
+            Standbild nicht zeigen. */}
+        <div className="bar__vessel">
+          <BarGlass />
         </div>
 
         {/* Cocktails in the glass — the spritz and a golden-hour guest. */}
