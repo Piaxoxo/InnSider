@@ -3,6 +3,7 @@ import type { MediaSlot } from '../content/assets'
 import { gsap } from '../lib/scroll'
 import { isTouch, prefersReducedMotion } from '../lib/useReducedMotion'
 import './placeholder.css'
+import { derivePhotoSources, SMALL_UP_TO } from '../lib/picture'
 
 /**
  * Premium media slot. Renders the real asset once `slot.src` is delivered;
@@ -118,14 +119,31 @@ export function Placeholder({
             onError={() => setFailed(true)}
           />
         ) : (
-          <img
-            className="ph__media"
-            src={resolvedSrc!}
-            alt={slot.label}
-            loading={eager ? 'eager' : 'lazy'}
-            decoding="async"
-            onError={() => setFailed(true)}
-          />
+          /* AVIF, dann WebP, dann das unangetastete JPEG als Boden. Die
+             Umschaltung läuft über eine Medienabfrage statt über
+             Breitenangaben — siehe lib/picture.ts. */
+          <picture>
+            {(() => {
+              const v = derivePhotoSources(resolvedSrc!)
+              if (!v) return null
+              return (
+                <>
+                  <source type="image/avif" media={SMALL_UP_TO} srcSet={v.smAvif} />
+                  <source type="image/webp" media={SMALL_UP_TO} srcSet={v.smWebp} />
+                  <source type="image/avif" srcSet={v.lgAvif} />
+                  <source type="image/webp" srcSet={v.lgWebp} />
+                </>
+              )
+            })()}
+            <img
+              className="ph__media"
+              src={resolvedSrc!}
+              alt={slot.label}
+              loading={eager ? 'eager' : 'lazy'}
+              decoding="async"
+              onError={() => setFailed(true)}
+            />
+          </picture>
         )
       ) : (
         <div className="ph__stub">

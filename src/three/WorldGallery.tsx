@@ -27,7 +27,12 @@ const loader = new THREE.TextureLoader()
 const LOAD_DIST = GAP * 4.2
 const DISPOSE_DIST = GAP * 5.4
 
-const FINALE_URL = memories.find((m) => m.url.includes('interior-bar-wide'))?.url ?? memories[0].url
+const FINALE = memories.find((m) => m.url.includes('interior-bar-wide')) ?? memories[0]
+/* Die Tafeln stehen nie formatfüllend im Bild — die 1000px-Variante genügt und
+   ist rund 80 % kleiner als das JPEG. WebP statt AVIF, weil der TextureLoader
+   keinen Rückfall auf ein anderes Format kennt und WebP ausnahmslos überall
+   gelesen wird. */
+const FINALE_URL = FINALE.sources?.smWebp ?? FINALE.url
 const FINALE_H = 7
 const FINALE_W = 12.6
 const FINALE_Z = -total * GAP - 12
@@ -86,11 +91,19 @@ function PhotoSlot(props: PhotoCommon) {
     const dist = Math.abs(state.camera.position.z - z)
     if (!tex && !loading.current && dist < LOAD_DIST) {
       loading.current = true
-      loader.load(props.memory.url, (t) => {
+      const accept = (t: THREE.Texture) => {
         t.colorSpace = THREE.SRGBColorSpace
         t.anisotropy = 4
         setTex(t)
         loading.current = false
+      }
+      const light = props.memory.sources?.smWebp
+      loader.load(light ?? props.memory.url, accept, undefined, () => {
+        // Sollte die leichte Variante fehlen, bleibt das Original.
+        if (light) loader.load(props.memory.url, accept, undefined, () => {
+          loading.current = false
+        })
+        else loading.current = false
       })
     } else if (tex && dist > DISPOSE_DIST) {
       tex.dispose()

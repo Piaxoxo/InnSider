@@ -364,3 +364,10 @@ select {
 .skip-link:focus {
   top: 1rem;
 }
+
+/* <picture> ist nur ein Behälter für die Formatauswahl — es darf im Layout
+   nicht mitzählen, sonst verrutschen Raster und Flexboxen, in denen vorher
+   das <img> direkt saß. */
+picture {
+  display: contents;
+}

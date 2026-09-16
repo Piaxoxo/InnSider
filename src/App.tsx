@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, lazy, Suspense } from 'react'
-import { Atmosphere } from './three/Atmosphere'
+import { AtmosphereGate } from './three/AtmosphereGate'
 import { Loader } from './components/Loader'
 import { Nav } from './components/Nav'
 import { Cursor } from './components/Cursor'
@@ -138,7 +138,7 @@ function HomeShell() {
         Zum Inhalt springen
       </a>
 
-      <Atmosphere />
+      <AtmosphereGate />
       <Cursor />
       {!seen.current && <Loader onDone={handleLoaded} />}
       <Nav visible={ready} />
@@ -176,7 +176,7 @@ function LegalShell({ route }: { route: 'impressum' | 'agb' }) {
 
   return (
     <>
-      <Atmosphere showOrb={false} />
+      <AtmosphereGate showOrb={false} />
       <Cursor />
       <main id="main">
         <Legal route={route} />

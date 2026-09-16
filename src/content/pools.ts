@@ -15,26 +15,61 @@
  * Any filename works; number them (01, 02, …) to control order.
  */
 
+import type { PhotoSources } from '../lib/picture'
+
 export interface PoolImage {
   src: string
   name: string
+  /** Optimierte Zwillinge aus `<pool>/opt/` — siehe lib/picture.ts. */
+  sources: PhotoSources | null
 }
 
-function toPool(mods: Record<string, unknown>): PoolImage[] {
+/**
+ * Gebündelte Dateien bekommen von Vite einen Hash in den Namen, ihre Zwillinge
+ * lassen sich also nicht aus dem Pfad ableiten. Deshalb wird der Unterordner
+ * `opt/` getrennt eingelesen und über den Dateinamen zugeordnet.
+ */
+function toVariants(mods: Record<string, unknown>): Map<string, string> {
+  const map = new Map<string, string>()
+  for (const [path, url] of Object.entries(mods)) {
+    // MIT Endung als Schlüssel: `moment-01-sm.avif` und `moment-01-sm.webp`
+    // unterscheiden sich nur darin.
+    map.set(path.split('/').pop() || '', url as string)
+  }
+  return map
+}
+
+function toPool(mods: Record<string, unknown>, variants: Map<string, string>): PoolImage[] {
   return Object.entries(mods)
     .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
-    .map(([path, src]) => ({
-      src: src as string,
-      name: (path.split('/').pop() || '').replace(/\.[^.]+$/, ''),
-    }))
+    .map(([path, src]) => {
+      const name = (path.split('/').pop() || '').replace(/\.[^.]+$/, '')
+      const pick = (suffix: string) => variants.get(`${name}-${suffix}`)
+      const smAvif = pick('sm.avif')
+      const smWebp = pick('sm.webp')
+      const lgAvif = pick('lg.avif')
+      const lgWebp = pick('lg.webp')
+      return {
+        src: src as string,
+        name,
+        sources:
+          smAvif && smWebp && lgAvif && lgWebp ? { smAvif, smWebp, lgAvif, lgWebp } : null,
+      }
+    })
 }
 
 export const pools = {
   rooms: toPool(
     import.meta.glob('../media/rooms/*.{jpg,jpeg,png,webp,avif}', { eager: true, import: 'default' }),
+    toVariants(
+      import.meta.glob('../media/rooms/opt/*.{webp,avif}', { eager: true, import: 'default' }),
+    ),
   ),
   moments: toPool(
     import.meta.glob('../media/moments/*.{jpg,jpeg,png,webp,avif}', { eager: true, import: 'default' }),
+    toVariants(
+      import.meta.glob('../media/moments/opt/*.{webp,avif}', { eager: true, import: 'default' }),
+    ),
   ),
 }
 

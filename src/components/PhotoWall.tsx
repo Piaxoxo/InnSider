@@ -3,6 +3,7 @@ import type { PoolImage } from '../content/pools'
 import { gsap } from '../lib/scroll'
 import { isTouch, prefersReducedMotion } from '../lib/useReducedMotion'
 import './photowall.css'
+import { SMALL_UP_TO } from '../lib/picture'
 
 export interface WallCaption {
   title: string
@@ -93,7 +94,17 @@ export function PhotoWall({
         const cap = captions && captions.length ? captions[i % captions.length] : undefined
         return (
           <figure className="wall__frame" key={img.src} data-cursor="hover">
-            <img src={img.src} alt={cap?.title || 'InnSider'} loading="lazy" decoding="async" />
+            <picture>
+              {img.sources && (
+                <>
+                  <source type="image/avif" media={SMALL_UP_TO} srcSet={img.sources.smAvif} />
+                  <source type="image/webp" media={SMALL_UP_TO} srcSet={img.sources.smWebp} />
+                  <source type="image/avif" srcSet={img.sources.lgAvif} />
+                  <source type="image/webp" srcSet={img.sources.lgWebp} />
+                </>
+              )}
+              <img src={img.src} alt={cap?.title || 'InnSider'} loading="lazy" decoding="async" />
+            </picture>
             {cap && (
               <figcaption>
                 <span className="wall__title">{cap.title}</span>

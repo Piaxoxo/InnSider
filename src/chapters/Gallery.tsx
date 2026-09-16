@@ -1,15 +1,20 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, lazy, Suspense } from 'react'
 import { gsap, ScrollTrigger, startScroll, stopScroll } from '../lib/scroll'
 import { prefersReducedMotion, isTouch } from '../lib/useReducedMotion'
 import { Heading } from '../components/Heading'
 import { PhotoWall } from '../components/PhotoWall'
-import { WorldGallery } from '../three/WorldGallery'
+// Die 3-D-Galerie zieht three.js mit sich. Sie steht in Kapitel sieben, also
+// weit unterhalb des ersten Bildschirms — sie wird erst geladen, wenn sie
+// wirklich gerendert wird, und hält so den Start frei.
+const WorldGallery = lazy(() =>
+  import('../three/WorldGallery').then((m) => ({ default: m.WorldGallery })),
+)
 import { useReveal } from '../hooks/useReveal'
 import { gallery } from '../content/site'
 import { memories, type Memory } from '../content/memories'
 import './gallery.css'
 
-const wallImages = memories.map((m) => ({ src: m.url, name: m.caption }))
+const wallImages = memories.map((m) => ({ src: m.url, name: m.caption, sources: m.sources }))
 const wallCaptions = memories.map((m) => ({ title: m.caption, story: m.category }))
 
 /**
@@ -82,13 +87,15 @@ export function Gallery() {
       >
         <div className="worldg__sticky">
           <div className="worldg__canvas">
-            <WorldGallery
-              progressRef={progress.current}
-              lowPerf={lowPerf}
-              catRef={catRef}
-              onHover={setHovered}
-              onSelect={openFocus}
-            />
+            <Suspense fallback={null}>
+              <WorldGallery
+                progressRef={progress.current}
+                lowPerf={lowPerf}
+                catRef={catRef}
+                onHover={setHovered}
+                onSelect={openFocus}
+              />
+            </Suspense>
           </div>
 
           <div className="worldg__overlay" ref={overlay}>
@@ -120,7 +127,15 @@ export function Gallery() {
               ✕
             </button>
             <figure className="worldg__focus-figure" onClick={(e) => e.stopPropagation()}>
-              <img src={focused.url} alt={focused.caption} />
+              <picture>
+                {focused.sources && (
+                  <>
+                    <source type="image/avif" srcSet={focused.sources.lgAvif} />
+                    <source type="image/webp" srcSet={focused.sources.lgWebp} />
+                  </>
+                )}
+                <img src={focused.url} alt={focused.caption} />
+              </picture>
               <figcaption>
                 <span className="worldg__focus-cat">{focused.category}</span>
                 <span className="worldg__focus-text">{focused.caption}</span>
