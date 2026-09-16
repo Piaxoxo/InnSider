@@ -17,6 +17,21 @@ export const site = {
   tagline: 'Eine Vision wird Wirklichkeit.',
 } as const
 
+/**
+ * Speisekarte (PDF) — die EINZIGE Stelle, an der die Karte verlinkt ist.
+ *
+ * Aktuell: die Datei liegt im Projekt unter public/speisekarte.pdf und wird
+ * mit der Website ausgeliefert. Eine neue Karte heißt also: Datei tauschen,
+ * committen, neu deployen.
+ *
+ * Ziel: eine feste, externe Adresse, unter der die Karte immer liegt — dann
+ * wird hier einmal umgestellt und danach nie wieder Code angefasst. Zum
+ * Aktualisieren wird nur noch die Datei unter derselben Adresse überschrieben.
+ * Wichtig: die Adresse muss stabil bleiben (kein -1/-2 im Dateinamen, kein
+ * wechselnder Jahr/Monat-Ordner) — sonst zeigt der Link ins Leere.
+ */
+export const SPEISEKARTE_PDF_URL = 'speisekarte.pdf'
+
 export const contact = {
   address: {
     street: 'Wurmbstraße 36',
@@ -175,7 +190,7 @@ export const menu = {
   priceNote: 'Preise beinhalten die gesetzlichen Abgaben.',
   allergenNote: 'Allergene: A, C, D, E, F, G, H, L, O — Details gerne auf Anfrage.',
   pdfLabel: 'Speisekarte als PDF',
-  pdfHref: 'speisekarte.pdf',
+  pdfHref: SPEISEKARTE_PDF_URL,
   foot: 'Die vollständige, wechselnde Karte liegt an Ihrem Tisch bereit.',
 } as const
 
