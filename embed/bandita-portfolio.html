@@ -1,0 +1,273 @@
+<!-- ═══════════════════════════════════════════════════════════════════════
+     InnSider — Einbau für das BANDITA-Portfolio
+     ═══════════════════════════════════════════════════════════════════════
+
+     Anders als der WordPress-Code beim Kunden: der hier ersetzt die Seite
+     nicht, sondern sitzt als Block IN eurem Layout. Kopf- und Fußzeile des
+     Portfolios bleiben, wo sie sind.
+
+     ─── Einfügen ──────────────────────────────────────────────────────────
+     Den kompletten Code in einen HTML-Block auf der Projektseite kopieren.
+     Sonst nichts.
+
+     ─── Drei Entscheidungen, die drinstecken ──────────────────────────────
+
+     1. Es lädt erst auf Klick.
+        Die Website bringt WebGL und rund eine halbe Megabyte Code mit. Auf
+        einer Portfolioseite mit mehreren Projekten will das niemand bei
+        jedem Besuch bezahlen — vorher steht ein Standbild mit Abspielknopf.
+        (Wer es sofort live will: siehe SOFORT weiter unten.)
+
+     2. Es wird herunterskaliert, statt schmal zu rendern.
+        Ein Rahmen von 900 px Breite würde sonst die Handy-Fassung der
+        Website zeigen — dieselbe Seite, aber nicht die, die ihr gebaut
+        habt. Der Rahmen rechnet deshalb intern mit 1440 px und verkleinert
+        das Ergebnis. Auf schmalen Geräten schaltet er bewusst auf die
+        Handy-Fassung um, weil die dort die ehrlichere ist.
+
+     3. Der Rahmen sieht aus wie ein Browserfenster.
+        Damit im Portfolio klar ist: das ist eine Website, kein Bild.
+     ═══════════════════════════════════════════════════════════════════════ -->
+
+<style>
+  .case {
+    --case-bg: #0c0b0a;
+    --case-line: rgba(255, 255, 255, 0.12);
+    --case-ink: rgba(255, 255, 255, 0.58);
+    --case-accent: #c9a96a;
+
+    margin: 0;
+    width: 100%;
+    font-family: ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  /* Das Browserfenster */
+  .case__frame {
+    position: relative;
+    border: 1px solid var(--case-line);
+    border-radius: 10px;
+    background: var(--case-bg);
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+  }
+
+  .case__chrome {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 0.9rem;
+    border-bottom: 1px solid var(--case-line);
+    background: rgba(255, 255, 255, 0.03);
+  }
+  .case__dots {
+    display: flex;
+    gap: 0.4rem;
+    flex: 0 0 auto;
+  }
+  .case__dots i {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.16);
+  }
+  .case__url {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05);
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    color: var(--case-ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Die Bühne. Das Seitenverhältnis bestimmt die Höhe — nichts wird
+     gerechnet, nichts springt beim Laden. */
+  .case__stage {
+    position: relative;
+    aspect-ratio: 1440 / 900;
+    background: #060504;
+    overflow: hidden;
+  }
+
+  /* Die Website rendert intern breit und wird als Ganzes verkleinert. */
+  .case__scaler {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: top left;
+  }
+  .case__scaler iframe {
+    display: block;
+    border: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Das Standbild davor */
+  .case__poster {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    background: #060504;
+    cursor: pointer;
+    color: #fff;
+  }
+  .case__poster img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.55;
+    filter: saturate(0.9) contrast(1.05) brightness(0.85);
+  }
+  .case__poster::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(60% 50% at 50% 50%, rgba(201, 169, 106, 0.16), transparent 70%),
+      linear-gradient(0deg, rgba(6, 5, 4, 0.7), rgba(6, 5, 4, 0.15));
+  }
+  .case__play {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7em;
+    padding: 0.9em 1.6em;
+    border: 1px solid rgba(201, 169, 106, 0.55);
+    border-radius: 999px;
+    background: rgba(6, 5, 4, 0.5);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    font-size: 0.74rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #f2ece1;
+    transition: background-color 0.4s ease, border-color 0.4s ease;
+  }
+  .case__poster:hover .case__play {
+    background: rgba(201, 169, 106, 0.18);
+    border-color: var(--case-accent);
+  }
+
+  /* Bildunterschrift */
+  .case__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.6rem 1.5rem;
+    margin-top: 0.9rem;
+    font-size: 0.78rem;
+    color: var(--case-ink);
+  }
+  .case__foot a {
+    color: var(--case-accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(201, 169, 106, 0.4);
+  }
+  .case__foot a:hover {
+    color: #fff;
+  }
+
+  /* Schmale Geräte: hochkant, und die Website zeigt dort ihre Handy-Fassung. */
+  @media (max-width: 700px) {
+    .case__stage {
+      aspect-ratio: 430 / 720;
+    }
+  }
+</style>
+
+<figure class="case">
+  <div class="case__frame">
+    <div class="case__chrome" aria-hidden="true">
+      <span class="case__dots"><i></i><i></i><i></i></span>
+      <span class="case__url">innsider-restaurant.at</span>
+    </div>
+
+    <div class="case__stage" id="case-stage">
+      <button class="case__poster" type="button" id="case-start" aria-label="Website laden und ansehen">
+        <img
+          src="https://inn-sider.vercel.app/media/interior-bar-wide-lg.avif"
+          alt="InnSider — Restaurant und Bar in Wien Meidling"
+          loading="lazy"
+          decoding="async"
+        />
+        <span class="case__play">▶ Live ansehen</span>
+      </button>
+    </div>
+  </div>
+
+  <figcaption class="case__foot">
+    <span>InnSider — Restaurant &amp; Bar, Wien</span>
+    <a href="https://inn-sider.vercel.app/" target="_blank" rel="noreferrer">
+      In neuem Tab öffnen ↗
+    </a>
+  </figcaption>
+</figure>
+
+<script>
+(function () {
+  /* ── Adresse der Website. Nur hier ändern, falls sie umzieht. ────────── */
+  var URL_LIVE = 'https://inn-sider.vercel.app/';
+
+  /* ── SOFORT: auf true setzen, dann lädt die Website ohne Klick. Kostet
+        jeden Portfoliobesucher rund eine halbe Megabyte. ──────────────── */
+  var SOFORT = false;
+
+  /* ── Mit welcher Breite die Website intern rendert. 1440 zeigt die
+        Desktop-Fassung; die Zahlen müssen zum Seitenverhältnis der Bühne
+        im CSS passen. ────────────────────────────────────────────────── */
+  var DESKTOP = { w: 1440, h: 900 };
+  var HANDY = { w: 430, h: 720 };
+
+  var stage = document.getElementById('case-stage');
+  var start = document.getElementById('case-start');
+  var scaler = null;
+
+  function logisch() {
+    return window.matchMedia('(max-width: 700px)').matches ? HANDY : DESKTOP;
+  }
+
+  function passen() {
+    if (!scaler) return;
+    var l = logisch();
+    var box = stage.getBoundingClientRect();
+    scaler.style.width = l.w + 'px';
+    scaler.style.height = l.h + 'px';
+    scaler.style.transform = 'scale(' + box.width / l.w + ')';
+  }
+
+  function laden() {
+    if (scaler) return;
+    var l = logisch();
+    scaler = document.createElement('div');
+    scaler.className = 'case__scaler';
+
+    var frame = document.createElement('iframe');
+    frame.src = URL_LIVE;
+    frame.title = 'InnSider — Restaurant & Bar, Wien';
+    frame.setAttribute('allow', 'fullscreen');
+    frame.setAttribute('referrerpolicy', 'no-referrer-when-downgrade');
+    scaler.appendChild(frame);
+
+    stage.appendChild(scaler);
+    passen();
+    if (start) start.remove();
+  }
+
+  if (start) start.addEventListener('click', laden);
+  window.addEventListener('resize', passen);
+  if (SOFORT) laden();
+})();
+</script>
