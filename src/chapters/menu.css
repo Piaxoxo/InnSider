@@ -354,13 +354,26 @@
   color: var(--gold-bright);
 }
 
-/* ── Limonade — der einzelne Auftritt von der zweiten Kartenseite ────────── */
-.menu__feature {
+/* ── Die beiden Hausgemachten von der zweiten Kartenseite ────────────────── */
+.menu__features {
   margin-top: clamp(2.5rem, 6vh, 4rem);
   padding: clamp(1.8rem, 4vw, 2.6rem) 1.5rem;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: clamp(1.8rem, 5vw, 3.5rem);
+  align-items: start;
+}
+.menu__feature {
   text-align: center;
+}
+/* Ein Haarstrich zwischen den beiden, aber nur solange sie nebeneinander
+   stehen — untereinander trennt schon der Abstand. */
+@media (min-width: 720px) {
+  .menu__feature + .menu__feature {
+    border-left: 1px solid var(--line);
+  }
 }
 .menu__feature-name {
   font-family: var(--display);
@@ -414,4 +427,34 @@
     padding-left: clamp(1.1rem, 5vw, 2rem);
     padding-right: clamp(1.1rem, 5vw, 2rem);
   }
+}
+
+/* Ist die ausgehängte Woche vorbei, steht hier statt der Gerichte ein
+   Hinweis — kurz, ohne Versprechen, mit der Nummer daneben. */
+.menu__weekly-body--stale {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+}
+.menu__weekly-note-stale {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.3rem);
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 34ch;
+  margin: 0;
+}
+.menu__weekly-phone {
+  font-family: var(--sans);
+  font-size: 0.86rem;
+  letter-spacing: 0.14em;
+  color: var(--gold-bright);
+  border-bottom: 1px solid var(--line-strong);
+  padding-bottom: 2px;
+  transition: color 0.4s var(--ease-lux);
+}
+.menu__weekly-phone:hover {
+  color: var(--warm-white);
 }

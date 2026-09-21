@@ -199,15 +199,24 @@ export const menu = {
       ],
     },
   ],
-  // Auf der gedruckten Karte steht die Limonade mittig und für sich — hier
-  // bekommt sie denselben eigenen Auftritt.
-  feature: {
-    label: 'Hausgemacht',
-    name: 'Selbstgemachte Limonade',
-    note: 'Minze, Limette und Ingwer',
-    size: '0,5 l',
-    price: '5,30',
-  },
+  // Auf der gedruckten Karte stehen Limonade und Traubensaft mittig und für
+  // sich — hier bekommen sie denselben eigenen Auftritt.
+  features: [
+    {
+      label: 'Hausgemacht',
+      name: 'Selbstgemachte Limonade',
+      note: 'Minze, Limette und Ingwer',
+      size: '0,5 l',
+      price: '5,30',
+    },
+    {
+      label: 'Aus dem eigenen Weingarten',
+      name: 'Roter Traubensaft',
+      note: '',
+      size: '¼',
+      price: '4,20',
+    },
+  ],
   priceNote: 'Preise beinhalten die gesetzlichen Abgaben.',
   allergenLabel: 'Allergene',
   allergens: [
@@ -240,16 +249,24 @@ export const weekly = {
   label: 'Wochenkarte',
   title: 'Unsere Mittagsteller',
   periodPrefix: 'Für die Woche von',
-  period: 'Montag 14. September bis Freitag 18. September',
+  period: 'Montag 21. September bis Freitag 25. September',
+  /**
+   * Der letzte Tag, an dem diese Teller gelten (ISO, Wiener Zeit).
+   * Danach zeigt das Kapitel nicht mehr die Gerichte, sondern den Hinweis
+   * darunter: eine vergangene Woche auf der Website ist schlechter als gar
+   * keine.
+   */
+  validUntil: '2026-09-25',
+  staleNote: 'Die Teller dieser Woche geben wir Ihnen gerne am Telefon bekannt.',
   hours: 'Von 11:30 bis 15:00',
   price: '13,50',
-  starter: { name: 'Erbsen-Minzesuppe', note: '', allergens: 'G' },
+  starter: { name: 'Kürbissuppe vom Hokkaido', note: '', allergens: 'G' },
   joiner: 'und',
   orLabel: 'oder',
   mains: [
-    { name: 'Gebratenes Schweinskareesteak', note: 'Fisolen, Pfeffersauce und Braterdäpfel', allergens: 'G L' },
-    { name: 'Innsider Paela', note: 'Knoblauch, Paprika, Tomate und Babyspinat', allergens: 'A D G' },
-    { name: 'Erdäpfel-Kräuterlaibchen', note: 'Pilzrahm, Kräutercreme und Salat', allergens: 'A C G' },
+    { name: 'Ofenerdäpfel', note: 'Chili con Carne, Sauerrahm und Gurkensalat', allergens: 'G' },
+    { name: 'Gegrillter Rotbarsch', note: 'Wurzelgemüse, Krenschaum und Petersilerdäpfel', allergens: 'D G L' },
+    { name: 'Zitronen-Risotto', note: 'Gorgonzola und Rote Rübe', allergens: 'A G' },
   ],
 } as const
 

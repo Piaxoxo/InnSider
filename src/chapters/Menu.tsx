@@ -5,7 +5,7 @@ import { useReveal } from '../hooks/useReveal'
 import { gsap } from '../lib/scroll'
 import { openBooking } from '../lib/booking'
 import { prefersReducedMotion } from '../lib/useReducedMotion'
-import { menu, weekly, booking } from '../content/site'
+import { menu, weekly, booking, contact } from '../content/site'
 import { media } from '../content/assets'
 import './menu.css'
 
@@ -29,8 +29,26 @@ const plates = [
  * auf der Seite lesbar, ohne Umweg über ein PDF. Bild und Gericht werden
  * bewusst nicht verknüpft, damit keine falschen Zuordnungen entstehen.
  */
+/**
+ * Läuft die ausgehängte Woche noch?
+ *
+ * Verglichen wird nur das Datum, nicht die Uhrzeit, und in der Zeitzone des
+ * Gastes — auf den Tag genau reicht hier völlig, und es kommt ohne Bibliothek
+ * aus. Am letzten Gültigkeitstag hängt die Karte noch.
+ */
+function weekIsOver(): boolean {
+  const today = new Date()
+  const iso = [
+    today.getFullYear(),
+    String(today.getMonth() + 1).padStart(2, '0'),
+    String(today.getDate()).padStart(2, '0'),
+  ].join('-')
+  return iso > weekly.validUntil
+}
+
 export function Menu() {
   const root = useRef<HTMLElement>(null)
+  const expired = weekIsOver()
   const headRef = useReveal<HTMLDivElement>({ selector: '[data-reveal]', y: 28 })
   const galleryRef = useReveal<HTMLDivElement>({ selector: '.menu__plate', y: 32, stagger: 0.07 })
   const cardRef = useReveal<HTMLDivElement>({ selector: '.menu__section', y: 30, stagger: 0.1 })
@@ -96,19 +114,33 @@ export function Menu() {
         </div>
 
         {/* Wochenkarte — der Mittagsteller dieser Woche, als eigener Aushang.
-            Wechselt wöchentlich (siehe `weekly` in site.ts). */}
+            Wechselt wöchentlich (siehe `weekly` in site.ts). Ist die Woche
+            vorbei, verschwinden die Gerichte: eine vergangene Woche auf der
+            Website führt Gäste in die Irre, ein Hinweis nicht. */}
         <aside className="menu__weekly" aria-label={weekly.title}>
           <span className="menu__weekly-glow" aria-hidden="true" />
           <div className="menu__weekly-head">
             <span className="overline">{weekly.label}</span>
             <h3 className="menu__weekly-title">{weekly.title}</h3>
             <p className="menu__weekly-when">
-              {weekly.periodPrefix} {weekly.period}
-              <br />
+              {!expired && (
+                <>
+                  {weekly.periodPrefix} {weekly.period}
+                  <br />
+                </>
+              )}
               {weekly.hours}
             </p>
           </div>
 
+          {expired ? (
+            <div className="menu__weekly-body menu__weekly-body--stale">
+              <p className="menu__weekly-note-stale">{weekly.staleNote}</p>
+              <a className="menu__weekly-phone" href={contact.phoneHref} target="_top">
+                {contact.phone}
+              </a>
+            </div>
+          ) : (
           <div className="menu__weekly-body">
             <p className="menu__weekly-dish">
               <span className="menu__weekly-name">
@@ -134,6 +166,7 @@ export function Menu() {
               </div>
             ))}
           </div>
+          )}
 
           <p className="menu__weekly-price">€ {weekly.price}</p>
         </aside>
@@ -175,14 +208,18 @@ export function Menu() {
           ))}
         </div>
 
-        {/* Auf der gedruckten Karte steht die Limonade mittig und für sich. */}
-        <div className="menu__feature">
-          <span className="meta">{menu.feature.label}</span>
-          <p className="menu__feature-name">{menu.feature.name}</p>
-          <p className="menu__feature-note">{menu.feature.note}</p>
-          <p className="menu__feature-price">
-            {menu.feature.size} <span aria-hidden="true">·</span> € {menu.feature.price}
-          </p>
+        {/* Auf der gedruckten Karte stehen diese beiden mittig und für sich. */}
+        <div className="menu__features">
+          {menu.features.map((f) => (
+            <div className="menu__feature" key={f.name}>
+              <span className="meta">{f.label}</span>
+              <p className="menu__feature-name">{f.name}</p>
+              {f.note && <p className="menu__feature-note">{f.note}</p>}
+              <p className="menu__feature-price">
+                {f.size} <span aria-hidden="true">·</span> € {f.price}
+              </p>
+            </div>
+          ))}
         </div>
 
         <div className="menu__foot">
