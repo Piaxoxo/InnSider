@@ -200,18 +200,18 @@ export const menu = {
     },
   ],
   // Auf der gedruckten Karte stehen Limonade und Traubensaft mittig und für
-  // sich — hier bekommen sie denselben eigenen Auftritt.
+  // sich — hier bekommen sie denselben eigenen Auftritt. Namen wörtlich wie
+  // gedruckt: „Hausgemacht" als Überschrift war meine Zutat, nicht ihre.
   features: [
     {
-      label: 'Hausgemacht',
       name: 'Selbstgemachte Limonade',
       note: 'Minze, Limette und Ingwer',
       size: '0,5 l',
       price: '5,30',
     },
     {
-      label: 'Aus dem eigenen Weingarten',
-      name: 'Roter Traubensaft',
+      // Auf der Karte ist das eine Zeile — sie bleibt eine.
+      name: 'Roter Traubensaft aus dem eigenen Weingarten',
       note: '',
       size: '¼',
       price: '4,20',

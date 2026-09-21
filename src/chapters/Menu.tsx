@@ -212,7 +212,6 @@ export function Menu() {
         <div className="menu__features">
           {menu.features.map((f) => (
             <div className="menu__feature" key={f.name}>
-              <span className="meta">{f.label}</span>
               <p className="menu__feature-name">{f.name}</p>
               {f.note && <p className="menu__feature-note">{f.note}</p>}
               <p className="menu__feature-price">
