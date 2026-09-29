@@ -145,10 +145,18 @@ export function Menu() {
             <p className="menu__weekly-dish">
               <span className="menu__weekly-name">
                 {weekly.starter.name}
-                {weekly.starter.allergens && (
+                {!weekly.starter.note && weekly.starter.allergens && (
                   <span className="menu__row-allergens"> {weekly.starter.allergens}</span>
                 )}
               </span>
+              {weekly.starter.note && (
+                <span className="menu__weekly-note">
+                  {weekly.starter.note}
+                  {weekly.starter.allergens && (
+                    <span className="menu__row-allergens"> {weekly.starter.allergens}</span>
+                  )}
+                </span>
+              )}
             </p>
 
             <span className="menu__weekly-joiner">{weekly.joiner}</span>

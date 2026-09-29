@@ -172,15 +172,15 @@ export const menu = {
       title: 'Hauptspeisen',
       column: 2,
       items: [
-        { name: 'Original indisches Butternut Chicken', note: 'Paratha-Brot und Blattsalat', price: '17,20', allergens: 'A O', plus: '' },
-        { name: 'Geschmorte Ochsenbackerln', note: 'Selleriepüree und -spalten und Erdäpfelstroh', price: '20,80', allergens: 'L M O', plus: '' },
+        { name: 'Original indisches Butternut Chicken', note: 'Biryanireis und Blattsalat', price: '17,20', allergens: 'A O', plus: '' },
+        { name: 'Geschmorte Rindsrouladen', note: 'Serviettenknödel, Apfelrotkraut und Maroni', price: '20,80', allergens: 'A C G L M', plus: '' },
         { name: 'Kalbsbutterschnitzel', note: 'Erdäpfelpüree, Natursaft und Röstzwiebel', price: '18,20', allergens: 'A C G M L', plus: '' },
         { name: 'Innsider Burger', note: '200g österreichisches Rindfleisch im hausgemachten Bun, BBQ Sauce, Cheddar, Bacon, Coleslaw und Süßkartoffelpommes', price: '18,40', allergens: 'A C G O', plus: '' },
         { name: 'Im Erdäpfelteig frittierte Blunznknödel', note: 'Sauerkraut und Safterl', price: '15,20', allergens: 'A C G M', plus: '' },
-        { name: 'Pikantes rotes Gemüsecurry (vegan)', note: 'Basmatireis und Kokosmilch', price: '12,80', allergens: 'A E F L O', plus: 'mit Hühnerbrust + 6,00 · mit gegrilltem Fisch + 7,00' },
+        { name: 'Pikantes rotes Gemüsecurry (vegan)', note: 'Biryanireis und Kokosmilch', price: '12,80', allergens: 'A E F L O', plus: 'mit Hühnerbrust + 6,00 · mit gegrilltem Fisch + 7,00' },
         { name: 'Mangold-Fetaknödel', note: 'Tomatensauce und Blattsalat', price: '13,80', allergens: 'A C G H', plus: '' },
-        { name: 'Spicy Chicken Wings', note: 'Süßkartoffelpuree und Jus', price: '14,80', allergens: 'A C F G', plus: '' },
-        { name: 'Hausgemachte Tagliatelle', note: 'Gorgonzola, Birne und Walnuß', price: '15,80', allergens: 'A C G', plus: '' },
+        { name: 'Feuriges Chili con Carne', note: 'Sauerrahm und hausgemachtes Fladenbrot', price: '12,50', allergens: 'A E G', plus: '' },
+        { name: 'Kürbisrisotto', note: 'Babyspinat, Feta und Walnuß', price: '15,80', allergens: 'A G', plus: '' },
       ],
     },
     {
@@ -249,24 +249,24 @@ export const weekly = {
   label: 'Wochenkarte',
   title: 'Unsere Mittagsteller',
   periodPrefix: 'Für die Woche von',
-  period: 'Montag 21. September bis Freitag 25. September',
+  period: 'Montag 28. September bis Freitag 2. Oktober',
   /**
    * Der letzte Tag, an dem diese Teller gelten (ISO, Wiener Zeit).
    * Danach zeigt das Kapitel nicht mehr die Gerichte, sondern den Hinweis
    * darunter: eine vergangene Woche auf der Website ist schlechter als gar
    * keine.
    */
-  validUntil: '2026-09-25',
+  validUntil: '2026-10-02',
   staleNote: 'Die Teller dieser Woche geben wir Ihnen gerne am Telefon bekannt.',
   hours: 'Von 11:30 bis 15:00',
   price: '13,50',
-  starter: { name: 'Kürbissuppe vom Hokkaido', note: '', allergens: 'G' },
+  starter: { name: 'Kohlrabisuppe', note: 'Kräuteröl', allergens: 'G' },
   joiner: 'und',
   orLabel: 'oder',
   mains: [
-    { name: 'Ofenerdäpfel', note: 'Chili con Carne, Sauerrahm und Gurkensalat', allergens: 'G' },
-    { name: 'Gegrillter Rotbarsch', note: 'Wurzelgemüse, Krenschaum und Petersilerdäpfel', allergens: 'D G L' },
-    { name: 'Zitronen-Risotto', note: 'Gorgonzola und Rote Rübe', allergens: 'A G' },
+    { name: 'Hühnerbrust', note: 'mit Tomate und Mozzarella gratiniert, Ratatouille und Polenta', allergens: 'A G' },
+    { name: 'Gebackener Seehecht', note: 'Erdäpfel-Vogerlsalat und Sauce Tartare', allergens: 'A C D G L' },
+    { name: 'Tagliatelle mit Tomatensauce', note: 'Babyspinat, Parmesan und Salat', allergens: 'A C G' },
   ],
 } as const
 
