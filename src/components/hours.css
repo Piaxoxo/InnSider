@@ -1,0 +1,147 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Das Band unter dem Auftakt.
+
+   Bewusst leise: eine schmale Zeile zwischen zwei Haarstrichen, kein Kasten.
+   Der Auftakt soll weiter der Auftakt bleiben — das hier ist die Antwort auf
+   eine Frage, nicht der nächste Auftritt.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.hours {
+  position: relative;
+  z-index: var(--z-content);
+  padding: clamp(1.1rem, 2.6vh, 1.8rem) var(--pad-x);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  /* Eigener dunkler Grund. Das Band liegt über der Atmosphäre, und die ist an
+     dieser Stelle hell — ohne Rückendeckung verschwinden die kleinen Labels
+     im Partikelfeld. */
+  background:
+    linear-gradient(180deg, rgba(201, 169, 106, 0.06), transparent 70%),
+    rgba(6, 5, 4, 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.hours__inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: max-content 1fr max-content;
+  align-items: center;
+  gap: clamp(1.4rem, 5vw, 4rem);
+}
+
+.hours__label {
+  white-space: nowrap;
+  color: var(--gold);
+}
+
+.hours__groups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem clamp(1.6rem, 4vw, 3rem);
+}
+
+.hours__group {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7em;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.hours__days {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}
+
+.hours__time {
+  font-family: var(--serif);
+  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.2rem);
+  color: var(--warm-white);
+  font-variant-numeric: tabular-nums;
+}
+
+.hours__side {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.9rem, 2.5vw, 1.8rem);
+  justify-content: flex-end;
+}
+
+.hours__kinds {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+/* Offen oder zu — ein Punkt und zwei Wörter, mehr braucht es nicht. */
+.hours__state {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+.hours__dot {
+  width: 0.46rem;
+  height: 0.46rem;
+  border-radius: 50%;
+  background: var(--stone-dim);
+}
+
+.hours__state.is-open {
+  color: var(--gold-bright);
+}
+.hours__state.is-open .hours__dot {
+  background: var(--amber);
+  box-shadow: 0 0 0 3px rgba(224, 164, 88, 0.16);
+  animation: hours-pulse 3.4s var(--ease-in-out) infinite;
+}
+
+@keyframes hours-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px rgba(224, 164, 88, 0.14);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(224, 164, 88, 0.05);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hours__state.is-open .hours__dot {
+    animation: none;
+  }
+}
+
+/* Schmal: untereinander, die Zeiten zuerst. */
+@media (max-width: 900px) {
+  .hours__inner {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+    text-align: center;
+  }
+  .hours__groups {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .hours__group {
+    justify-content: center;
+  }
+  .hours__side {
+    flex-direction: column;
+    gap: 0.6rem;
+    justify-content: center;
+  }
+}

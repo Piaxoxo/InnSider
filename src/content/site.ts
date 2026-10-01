@@ -60,6 +60,39 @@ export const booking = {
   closeLabel: 'Schließen',
 } as const
 
+/**
+ * Öffnungszeiten.
+ *
+ * Übernommen aus dem Google-Unternehmensprofil (Stand 1. Oktober 2026) — das
+ * ist die einzige Quelle, die mir vorliegt. Ändern sich die Zeiten, ist das
+ * hier die eine Stelle: Band unter dem Auftakt, Kapitel „Reservieren", die
+ * strukturierten Daten in index.html und der Fallback ohne JavaScript lesen
+ * alle von hier.
+ *
+ * `week` ist nach Date.getDay() indiziert — 0 ist Sonntag. Zeiten in Minuten
+ * seit Mitternacht, damit der Vergleich ohne Datumsbibliothek auskommt.
+ */
+export const hours = {
+  label: 'Öffnungszeiten',
+  week: [
+    { open: '08:00', close: '12:00' }, // Sonntag
+    { open: '07:30', close: '20:00' }, // Montag
+    { open: '07:30', close: '20:00' },
+    { open: '07:30', close: '20:00' },
+    { open: '07:30', close: '20:00' },
+    { open: '07:30', close: '20:00' }, // Freitag
+    { open: '08:00', close: '12:00' }, // Samstag
+  ],
+  // Wie es der Gast lesen soll — zusammengefasst statt sieben Zeilen.
+  groups: [
+    { days: 'Montag – Freitag', time: '07:30 – 20:00' },
+    { days: 'Samstag & Sonntag', time: '08:00 – 12:00' },
+  ],
+  openLabel: 'Jetzt geöffnet',
+  closedLabel: 'Gerade geschlossen',
+  kinds: 'Frühstück · Mittagstisch · Abend',
+} as const
+
 export const nav = [
   { id: 'hero', label: 'Willkommen', index: '01' },
   { id: 'dream', label: 'Die Vision', index: '02' },
@@ -344,7 +377,7 @@ export const reservation = {
   },
   reassurance: 'Wir antworten persönlich auf jede Anfrage.',
   // Genaue Öffnungszeiten liegen uns nicht vor → ehrlicher Hinweis statt Fantasie.
-  hoursNote: 'Frühstück · Mittagstisch · Abend. Aktuelle Öffnungszeiten und Reservierungen gerne telefonisch oder per E-Mail.',
+  hoursNote: 'Reservierungen gerne telefonisch oder per E-Mail.',
   // Weitere Wege zu reservieren — direkt, ohne Formular.
   direct: {
     heading: 'Lieber direkt?',

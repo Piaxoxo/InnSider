@@ -4,6 +4,7 @@ import { Loader } from './components/Loader'
 import { Nav } from './components/Nav'
 import { Cursor } from './components/Cursor'
 import { CallButton } from './components/CallButton'
+import { Hours } from './components/Hours'
 import { BookingOverlay } from './components/BookingOverlay'
 import { PageTransition } from './components/PageTransition'
 import { Hero } from './chapters/Hero'
@@ -147,6 +148,9 @@ function HomeShell() {
 
       <main id="main">
         <Hero ready={ready} />
+        {/* Nach dem Partikelglas die erste Frage, die ein Gast an ein Lokal
+            hat — noch vor der Geschichte. */}
+        <Hours />
         <Dream />
         <Bridge />
         <Kitchen />

@@ -1,6 +1,6 @@
 import { Heading } from '../components/Heading'
 import { useReveal } from '../hooks/useReveal'
-import { reservation, contact, footer, site, testimonials, booking } from '../content/site'
+import { reservation, contact, footer, site, testimonials, booking, hours } from '../content/site'
 import { navigate } from '../lib/useRoute'
 import { openBooking } from '../lib/booking'
 import './reservation.css'
@@ -101,8 +101,16 @@ export function Reservation() {
               </p>
             </div>
             <div className="reservation__block">
-              <span className="reservation__block-title">Öffnungszeiten</span>
-              <p>{reservation.hoursNote}</p>
+              <span className="reservation__block-title">{hours.label}</span>
+              <p>
+                {hours.groups.map((g) => (
+                  <span key={g.days}>
+                    {g.days} · {g.time}
+                    <br />
+                  </span>
+                ))}
+              </p>
+              <p className="reservation__hours-note">{reservation.hoursNote}</p>
             </div>
           </aside>
         </div>

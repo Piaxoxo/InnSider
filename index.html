@@ -54,7 +54,21 @@
           "addressLocality": "Wien",
           "addressCountry": "AT"
         },
-        "founder": { "@type": "Person", "name": "Alice Kern" }
+        "founder": { "@type": "Person", "name": "Alice Kern" },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "07:30",
+            "closes": "20:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Saturday", "Sunday"],
+            "opens": "08:00",
+            "closes": "12:00"
+          }
+        ]
       }
     </script>
 
@@ -99,6 +113,7 @@
         max-width: 34ch;
       }
       .boot__nap { font-style: normal; margin: 0; }
+      .boot__hours { margin: 0; color: #f2ece1; }
       .boot__meta, .boot__by { margin: 0; font-size: 0.82rem; }
       .boot__by { color: rgba(242, 236, 225, 0.38); }
     </style>
@@ -124,6 +139,9 @@
       <div class="boot">
         <p class="boot__mark">Inn | Sider</p>
         <p class="boot__line">Mehr als ein Restaurant – ein Ort zum Erleben und Erinnern.</p>
+        <p class="boot__hours">
+          Montag – Freitag 07:30 – 20:00 · Samstag &amp; Sonntag 08:00 – 12:00
+        </p>
         <address class="boot__nap">
           Wurmbstraße 36, 1120 Wien, Österreich<br />
           <a href="tel:+436701829565">+43 670 182 9565</a> ·

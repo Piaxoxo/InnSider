@@ -375,3 +375,9 @@
     grid-template-columns: 1fr;
   }
 }
+
+.reservation__hours-note {
+  margin-top: 0.7rem;
+  font-size: 0.86rem;
+  color: var(--ink-faint);
+}
