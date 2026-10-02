@@ -68,15 +68,15 @@ export function Hours() {
 
         <div className="hours__groups">
           {hours.groups.map((g) => (
-            <p className="hours__group" key={g.days}>
+            <div className="hours__group" key={g.days}>
               <span className="hours__days">{g.days}</span>
               <span className="hours__time">{g.time}</span>
-            </p>
+              <span className="hours__kinds">{g.kinds}</span>
+            </div>
           ))}
         </div>
 
         <div className="hours__side">
-          <span className="hours__kinds">{hours.kinds}</span>
           {open !== null && (
             <span className={`hours__state ${open ? 'is-open' : ''}`}>
               <span className="hours__dot" aria-hidden="true" />

@@ -39,15 +39,15 @@
 .hours__groups {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.3rem clamp(1.6rem, 4vw, 3rem);
+  gap: 0.9rem clamp(2rem, 5vw, 4rem);
 }
 
+/* Jede Gruppe ein kleiner Block: Tage, Zeit, und was es dann gibt. */
 .hours__group {
   display: flex;
-  align-items: baseline;
-  gap: 0.7em;
+  flex-direction: column;
+  gap: 0.12rem;
   margin: 0;
-  white-space: nowrap;
 }
 
 .hours__days {
@@ -74,9 +74,9 @@
 .hours__kinds {
   font-family: var(--serif);
   font-style: italic;
-  font-size: 0.95rem;
+  font-size: 0.88rem;
+  line-height: 1.4;
   color: var(--ink-soft);
-  white-space: nowrap;
 }
 
 /* Offen oder zu — ein Punkt und zwei Wörter, mehr braucht es nicht. */

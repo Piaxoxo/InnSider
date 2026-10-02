@@ -84,13 +84,17 @@ export const hours = {
     { open: '08:00', close: '12:00' }, // Samstag
   ],
   // Wie es der Gast lesen soll — zusammengefasst statt sieben Zeilen.
+  //
+  // `kinds` hängt bewusst an der jeweiligen Gruppe und steht nicht pauschal
+  // darüber: am Wochenende ist um 12:00 Schluss, da gibt es weder Mittagstisch
+  // noch Abend. Eine Sammelzeile über allen Tagen wäre an zwei von sieben
+  // Tagen schlicht falsch.
   groups: [
-    { days: 'Montag – Freitag', time: '07:30 – 20:00' },
-    { days: 'Samstag & Sonntag', time: '08:00 – 12:00' },
+    { days: 'Montag – Freitag', time: '07:30 – 20:00', kinds: 'Frühstück · Mittagstisch · Abend' },
+    { days: 'Samstag & Sonntag', time: '08:00 – 12:00', kinds: 'Frühstück' },
   ],
   openLabel: 'Jetzt geöffnet',
   closedLabel: 'Gerade geschlossen',
-  kinds: 'Frühstück · Mittagstisch · Abend',
 } as const
 
 export const nav = [
