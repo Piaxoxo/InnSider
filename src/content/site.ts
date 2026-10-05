@@ -31,11 +31,15 @@ export const contact = {
   // gar nichts. Mit _top greift der Wechsel auf oberster Ebene.
   phone: '+43 670 182 9565',
   phoneHref: 'tel:+436701829565',
+  // Zwei Adressen mit zwei Aufgaben. `email` ist die allgemeine Anschrift des
+  // Hauses — sie steht im Impressum, in der Datenschutzerklärung und im
+  // Kontaktblock, und dort muss sie auch stehen bleiben. Alles, was eine
+  // Reservierung oder Event-Anfrage ist, geht an `emailReserve`.
   email: 'office@innsider-restaurant.at',
   emailHref: 'mailto:office@innsider-restaurant.at',
-  // A reservation-ready mailto: opens the mail app with a subject prefilled.
+  emailReserve: 'reservierung@innsider-restaurant.at',
   emailReserveHref:
-    'mailto:office@innsider-restaurant.at?subject=Reservierungsanfrage%20%E2%80%93%20Innsider&body=Guten%20Tag%2C%0A%0Aich%20m%C3%B6chte%20gerne%20reservieren.%0A%0AName%3A%0AWunschdatum%20%26%20Uhrzeit%3A%0APersonen%3A%0AAnlass%20(optional)%3A%0A%0AVielen%20Dank!',
+    'mailto:reservierung@innsider-restaurant.at?subject=Reservierungsanfrage%20%E2%80%93%20Innsider&body=Guten%20Tag%2C%0A%0Aich%20m%C3%B6chte%20gerne%20reservieren.%0A%0AName%3A%0AWunschdatum%20%26%20Uhrzeit%3A%0APersonen%3A%0AAnlass%20(optional)%3A%0A%0AVielen%20Dank!',
   instagram: '@innsider.vienna',
   instagramHref: 'https://www.instagram.com/innsider.vienna/',
 } as const
@@ -95,6 +99,9 @@ export const hours = {
   ],
   openLabel: 'Jetzt geöffnet',
   closedLabel: 'Gerade geschlossen',
+  // Das Haus hat länger offen als die Küche — wer um halb acht noch warm
+  // essen will, soll das vorher wissen und nicht an der Tür erfahren.
+  kitchenNote: 'Küche bis 19:00',
 } as const
 
 export const nav = [
@@ -286,24 +293,31 @@ export const weekly = {
   label: 'Wochenkarte',
   title: 'Unsere Mittagsteller',
   periodPrefix: 'Für die Woche von',
-  period: 'Montag 28. September bis Freitag 2. Oktober',
+  period: 'Montag 5. Oktober bis Freitag 9. Oktober',
   /**
    * Der letzte Tag, an dem diese Teller gelten (ISO, Wiener Zeit).
    * Danach zeigt das Kapitel nicht mehr die Gerichte, sondern den Hinweis
    * darunter: eine vergangene Woche auf der Website ist schlechter als gar
    * keine.
    */
-  validUntil: '2026-10-02',
+  validUntil: '2026-10-09',
   staleNote: 'Die Teller dieser Woche geben wir Ihnen gerne am Telefon bekannt.',
+  /**
+   * Was in der abgelaufenen Woche an die Stelle der Teller tritt. Der Preis
+   * verschwindet dann mit ihnen — eine Zahl ohne Gericht sagt nichts. Statt
+   * dessen die beiden Dinge, die immer gelten: die Karte und die Getränke.
+   */
+  staleCardCta: 'Zur ganzen Speisekarte',
+  staleDrinksCta: 'Zu den Getränken',
   hours: 'Von 11:30 bis 15:00',
   price: '13,50',
-  starter: { name: 'Kohlrabisuppe', note: 'Kräuteröl', allergens: 'G' },
+  starter: { name: 'Gemüsecremesuppe', note: 'Kräutercroutons', allergens: 'A C G' },
   joiner: 'und',
   orLabel: 'oder',
   mains: [
-    { name: 'Hühnerbrust', note: 'mit Tomate und Mozzarella gratiniert, Ratatouille und Polenta', allergens: 'A G' },
-    { name: 'Gebackener Seehecht', note: 'Erdäpfel-Vogerlsalat und Sauce Tartare', allergens: 'A C D G L' },
-    { name: 'Tagliatelle mit Tomatensauce', note: 'Babyspinat, Parmesan und Salat', allergens: 'A C G' },
+    { name: 'Beef Stroganoff vom Stier', note: 'mit hausgemachten Nockerln', allergens: 'A C G' },
+    { name: 'Innsider Fischeintopf', note: 'Erdäpfel, Fenchel, Tomate und hausgemachtes Baguette', allergens: 'A C D G F' },
+    { name: 'Erdäpfel-Broccoli-Tomatenflan', note: 'gemischter Salat', allergens: 'A C G' },
   ],
 } as const
 
@@ -363,6 +377,14 @@ export const events = {
     { title: 'Der ganze Raum', body: 'Für Abende, die den ganzen Raum verdienen – ganz nach Ihren Vorstellungen.' },
   ],
   cta: 'Event anfragen',
+  form: {
+    send: 'Anfrage senden',
+    placeholder: 'Worum geht es? Uhrzeit, Ablauf, Wünsche — alles, was uns hilft.',
+    toNote: 'Geht an reservierung@innsider-restaurant.at',
+    doneTitle: 'Ihre Anfrage ist fertig.',
+    doneNote:
+      'Wir haben sie an Ihr E-Mail-Programm übergeben — bitte dort noch absenden. Lieber direkt sprechen?',
+  },
 } as const
 
 // ── Kapitel 9 — Reservieren ──────────────────────────────────────────────────

@@ -3,12 +3,13 @@ import { Heading } from '../components/Heading'
 import { Placeholder } from '../components/Placeholder'
 import { PhotoWall } from '../components/PhotoWall'
 import { useReveal } from '../hooks/useReveal'
-import { gsap, scrollToId } from '../lib/scroll'
+import { gsap } from '../lib/scroll'
 import { prefersReducedMotion } from '../lib/useReducedMotion'
 import { events } from '../content/site'
 import { media } from '../content/assets'
 import { pools } from '../content/pools'
 import './events.css'
+import { openEnquiry } from '../lib/enquiry'
 
 /**
  * Chapter Eight — Occasions.
@@ -127,7 +128,7 @@ export function Events() {
 
         <div className="events__cta">
           <p className="events__cta-text">Erzählen Sie uns von Ihrem Anlass.</p>
-          <button className="btn btn--gold" onClick={() => scrollToId('reservation')}>
+          <button className="btn btn--gold" onClick={openEnquiry}>
             {events.cta}
             <span className="btn__arrow">→</span>
           </button>

@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { Heading } from '../components/Heading'
 import { Placeholder } from '../components/Placeholder'
 import { useReveal } from '../hooks/useReveal'
-import { gsap } from '../lib/scroll'
+import { gsap, scrollToId } from '../lib/scroll'
 import { openBooking } from '../lib/booking'
 import { prefersReducedMotion } from '../lib/useReducedMotion'
 import { menu, weekly, booking, contact } from '../content/site'
@@ -139,6 +139,15 @@ export function Menu() {
               <a className="menu__weekly-phone" href={contact.phoneHref} target="_top">
                 {contact.phone}
               </a>
+              <p className="menu__weekly-ways">
+                <button type="button" onClick={() => scrollToId('menu-karte')}>
+                  {weekly.staleCardCta}
+                </button>
+                <span aria-hidden="true">·</span>
+                <button type="button" onClick={() => scrollToId('menu-getraenke')}>
+                  {weekly.staleDrinksCta}
+                </button>
+              </p>
             </div>
           ) : (
           <div className="menu__weekly-body">
@@ -176,11 +185,11 @@ export function Menu() {
           </div>
           )}
 
-          <p className="menu__weekly-price">€ {weekly.price}</p>
+          {!expired && <p className="menu__weekly-price">€ {weekly.price}</p>}
         </aside>
 
         {/* Real menu — categories, prices, allergens */}
-        <div className="menu__card-head">
+        <div className="menu__card-head" id="menu-karte">
           <span className="meta">{menu.cardLabel}</span>
           <span className="rule" />
         </div>
@@ -217,7 +226,7 @@ export function Menu() {
         </div>
 
         {/* Auf der gedruckten Karte stehen diese beiden mittig und für sich. */}
-        <div className="menu__features">
+        <div className="menu__features" id="menu-getraenke">
           {menu.features.map((f) => (
             <div className="menu__feature" key={f.name}>
               <p className="menu__feature-name">{f.name}</p>

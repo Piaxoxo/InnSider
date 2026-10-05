@@ -77,6 +77,7 @@ export function Hours() {
         </div>
 
         <div className="hours__side">
+          <span className="hours__kitchen">{hours.kitchenNote}</span>
           {open !== null && (
             <span className={`hours__state ${open ? 'is-open' : ''}`}>
               <span className="hours__dot" aria-hidden="true" />

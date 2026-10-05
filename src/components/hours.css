@@ -71,6 +71,14 @@
   justify-content: flex-end;
 }
 
+.hours__kitchen {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
 .hours__kinds {
   font-family: var(--serif);
   font-style: italic;

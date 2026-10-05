@@ -110,7 +110,9 @@ export function Reservation() {
                   </span>
                 ))}
               </p>
-              <p className="reservation__hours-note">{reservation.hoursNote}</p>
+              <p className="reservation__hours-note">
+                {hours.kitchenNote}. {reservation.hoursNote}
+              </p>
             </div>
           </aside>
         </div>

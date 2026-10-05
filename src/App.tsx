@@ -6,6 +6,7 @@ import { Cursor } from './components/Cursor'
 import { CallButton } from './components/CallButton'
 import { Hours } from './components/Hours'
 import { BookingOverlay } from './components/BookingOverlay'
+import { EventEnquiry } from './components/EventEnquiry'
 import { PageTransition } from './components/PageTransition'
 import { Hero } from './chapters/Hero'
 import { Dream } from './chapters/Dream'
@@ -144,6 +145,7 @@ function HomeShell() {
       {!seen.current && <Loader onDone={handleLoaded} />}
       <Nav visible={ready} />
       <BookingOverlay />
+      <EventEnquiry />
       <CallButton visible={ready} />
 
       <main id="main">
