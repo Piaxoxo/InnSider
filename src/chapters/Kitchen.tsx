@@ -100,11 +100,13 @@ export function Kitchen() {
           {/* Steam rising off the plate */}
           <span className="kitchen__steam" aria-hidden="true" />
         </div>
-        {/* The craft, in motion: gnocchi rolled and cut by hand in our kitchen. */}
+        {/* Das Handwerk in Bewegung: Nockerl, von Hand gerollt und abgestochen.
+            Vorher lagen hier 2,6 Sekunden aus demselben Dreh — zu kurz, um
+            etwas zu erkennen. Jetzt die ganze Bewegung: Rolle, Schnitt, Reihe. */}
         <CraftVideo
           className="kitchen__craft"
-          src="media/film/kitchen-pasta.mp4"
-          poster="media/film/kitchen-pasta.jpg"
+          src="media/film/kitchen-nockerl.mp4"
+          poster="media/film/kitchen-nockerl.jpg"
           caption="Handgemacht — jeden Tag frisch."
         />
       </div>
