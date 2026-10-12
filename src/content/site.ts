@@ -79,13 +79,13 @@ export const booking = {
 export const hours = {
   label: 'Öffnungszeiten',
   week: [
-    { open: '08:00', close: '12:00' }, // Sonntag
+    { open: '07:30', close: '11:00' }, // Sonntag
     { open: '07:30', close: '20:00' }, // Montag
     { open: '07:30', close: '20:00' },
     { open: '07:30', close: '20:00' },
     { open: '07:30', close: '20:00' },
     { open: '07:30', close: '20:00' }, // Freitag
-    { open: '08:00', close: '12:00' }, // Samstag
+    { open: '07:30', close: '11:00' }, // Samstag
   ],
   // Wie es der Gast lesen soll — zusammengefasst statt sieben Zeilen.
   //
@@ -95,13 +95,15 @@ export const hours = {
   // Tagen schlicht falsch.
   groups: [
     { days: 'Montag – Freitag', time: '07:30 – 20:00', kinds: 'Frühstück · Mittagstisch · Abend' },
-    { days: 'Samstag & Sonntag', time: '08:00 – 12:00', kinds: 'Frühstück' },
+    { days: 'Samstag & Sonntag', time: '07:30 – 11:00', kinds: 'Frühstück' },
   ],
   openLabel: 'Jetzt geöffnet',
   closedLabel: 'Gerade geschlossen',
-  // Das Haus hat länger offen als die Küche — wer um halb acht noch warm
-  // essen will, soll das vorher wissen und nicht an der Tür erfahren.
-  kitchenNote: 'Küche bis 19:00',
+  // Das Haus hat werktags länger offen als die Küche — wer um halb acht noch
+  // warm essen will, soll das vorher wissen und nicht an der Tür erfahren.
+  // Die Tagesangabe muss mit: am Wochenende ist um 11:00 ohnehin Schluss,
+  // „Küche bis 19:00" wäre dort schlicht falsch.
+  kitchenNote: 'Küche Mo – Fr bis 19:00',
 } as const
 
 export const nav = [
