@@ -293,14 +293,14 @@ export const weekly = {
   label: 'Wochenkarte',
   title: 'Unsere Mittagsteller',
   periodPrefix: 'Für die Woche von',
-  period: 'Montag 5. Oktober bis Freitag 9. Oktober',
+  period: 'Montag 12. Oktober bis Freitag 16. Oktober',
   /**
    * Der letzte Tag, an dem diese Teller gelten (ISO, Wiener Zeit).
    * Danach zeigt das Kapitel nicht mehr die Gerichte, sondern den Hinweis
    * darunter: eine vergangene Woche auf der Website ist schlechter als gar
    * keine.
    */
-  validUntil: '2026-10-09',
+  validUntil: '2026-10-16',
   staleNote: 'Die Teller dieser Woche geben wir Ihnen gerne am Telefon bekannt.',
   /**
    * Was in der abgelaufenen Woche an die Stelle der Teller tritt. Der Preis
@@ -311,13 +311,13 @@ export const weekly = {
   staleDrinksCta: 'Zu den Getränken',
   hours: 'Von 11:30 bis 15:00',
   price: '13,50',
-  starter: { name: 'Gemüsecremesuppe', note: 'Kräutercroutons', allergens: 'A C G' },
+  starter: { name: 'Zwiebelsuppe', note: 'Petersilie', allergens: 'A L' },
   joiner: 'und',
   orLabel: 'oder',
   mains: [
-    { name: 'Beef Stroganoff vom Stier', note: 'mit hausgemachten Nockerln', allergens: 'A C G' },
-    { name: 'Innsider Fischeintopf', note: 'Erdäpfel, Fenchel, Tomate und hausgemachtes Baguette', allergens: 'A C D G F' },
-    { name: 'Erdäpfel-Broccoli-Tomatenflan', note: 'gemischter Salat', allergens: 'A C G' },
+    { name: 'Gegrillter Puten-Gemüsespieß', note: 'Süßkartoffelpüree und Apfelchutney', allergens: 'A G O' },
+    { name: 'Innsider Paela', note: 'marinierte Gurke, Paprika, Tomate und Babyspinat', allergens: 'D G O' },
+    { name: 'Bulgur, Kürbis-Zucchini Gemüse', note: 'Feta und Minzjoghurt', allergens: 'G' },
   ],
 } as const
 
