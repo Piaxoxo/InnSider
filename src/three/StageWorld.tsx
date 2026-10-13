@@ -4,6 +4,7 @@ import * as THREE from 'three'
 import { scrollState } from '../lib/scroll'
 import { pointer } from '../lib/pointer'
 import { scenes, camCurve, targetCurve, sampleFog, CORRIDOR } from './stage'
+import { chapterProgress } from '../lib/chapterProgress'
 
 const damp = THREE.MathUtils.damp
 
@@ -63,8 +64,13 @@ function Veil({ z, x, y, color, tex }: { z: number; x: number; y: number; color:
     const m = ref.current
     if (!m) return
     // Wash peaks as the camera reaches the veil, then clears once it's passed.
+    //
+    // Deutlich schwächer als früher. Bei 0.5 und normaler Mischung legte sich
+    // ein mittelheller Schleier über das halbe Bild — das Grau, das die ganze
+    // Seite milchig gemacht hat. Die Schleier sollen den Raum einfärben, nicht
+    // aufhellen.
     const d = state.camera.position.z - z
-    const a = Math.exp(-(d * d) / 260) * 0.5
+    const a = Math.exp(-(d * d) / 260) * 0.16
     const mat = m.material as THREE.MeshBasicMaterial
     mat.opacity = a
     m.visible = a > 0.004
@@ -81,7 +87,10 @@ function Veil({ z, x, y, color, tex }: { z: number; x: number; y: number; color:
         depthWrite={false}
         depthTest={false}
         side={THREE.DoubleSide}
-        blending={THREE.NormalBlending}
+        // Additiv statt normal: so fügen die Schleier Licht hinzu, wo sie hell
+        // sind, und lassen das Schwarz schwarz. Normal gemischt zogen sie die
+        // dunklen Stellen auf ihren eigenen Mittelton hoch.
+        blending={THREE.AdditiveBlending}
       />
     </mesh>
   )
@@ -135,10 +144,20 @@ export function StageDepth({ count = 520 }: { count?: number }) {
     g.setAttribute('position', new THREE.BufferAttribute(positions, 3))
     return g
   }, [count])
+  // Die Motenfarbe folgt dem Kapitel, statt fest warm zu sein. Vorher lag über
+  // jedem Kapitel derselbe warme Flor — deshalb konnte die Bar nie blau
+  // werden, egal was in ihrer Palette stand.
   const color = useMemo(() => new THREE.Color(0.85, 0.72, 0.5), [])
+  const mat = useRef<THREE.PointsMaterial>(null)
+  useFrame(() => {
+    if (!mat.current) return
+    sampleFog(THREE.MathUtils.clamp(chapterProgress(), 0, 1), mat.current.color)
+  })
+
   return (
     <points geometry={geo}>
       <pointsMaterial
+        ref={mat}
         size={0.7}
         map={tex}
         color={color}

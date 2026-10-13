@@ -80,53 +80,75 @@ export const atmosphereFrag = /* glsl */ `
     lightPos.y += cos(t * 0.05) * 0.03;
     float d = distance(p, lightPos);
 
-    // Base wash + soft top warmth (dialled back so text stays readable).
-    vec3 col = uBase * 0.82;
-    float topWarm = smoothstep(1.0, -0.25, uv.y);
-    col = mix(col, uBase * 1.15 + uAccent * 0.1, topWarm * 0.38);
+    // ── Der Grund ──────────────────────────────────────────────────────
+    // Fast schwarz. Luxus im Dunkeln entsteht nicht dadurch, dass alles
+    // gleichmäßig schummrig ist, sondern dadurch, dass es irgendwo wirklich
+    // schwarz ist und irgendwo wirklich leuchtet. Vorher begann dieser Wert
+    // bei 0.82 — daher der milchige Schleier über dem ganzen Bild.
+    vec3 col = uBase * 0.22;
+    float topWarm = smoothstep(1.0, -0.1, uv.y);
+    col = mix(col, uBase * 0.5 + uAccent * 0.08, topWarm * 0.12);
 
-    // Rising, domain-warped fog — parallaxes upward with time + scroll.
+    // ── Der Rauch ──────────────────────────────────────────────────────
+    // Bleibt am Boden und in der Nähe des Lichts, statt sich über die ganze
+    // Fläche zu legen. Rauch, den niemand anleuchtet, sieht man nicht.
     vec2 fogUv = vec2(p.x * 1.15, uv.y * 1.5 - t * 0.03 - depth * 0.4);
     float fog = warp(fogUv * 2.1, t);
-    fog = smoothstep(0.28, 1.0, fog);
-    float floorMask = smoothstep(0.05, 0.8, uv.y);
-    col = mix(col, col + uAccent * 0.45, fog * (1.0 - floorMask) * 0.4);
+    fog = smoothstep(0.34, 1.0, fog);
+    float floorMask = smoothstep(0.0, 0.62, uv.y);
+    float lit = smoothstep(1.1, 0.1, d);
+    col += uAccent * fog * (1.0 - floorMask) * lit * 0.26;
 
-    // Two-layer glow: tight near-core + soft far halo. Deliberately restrained —
-    // the room should feel candlelit, never washed out.
-    float core = 0.14 / (d * d + 0.045);
-    float halo = 0.10 / (d + 0.16);
-    col += uGlow * (core * 0.2 + halo * 0.24);
+    // ── Die Quelle ─────────────────────────────────────────────────────
+    // Enger Kern mit steilem Abfall, dazu ein weiter Hof. Das ist der
+    // Unterschied zwischen „es ist hell" und „dort steht eine Kerze".
+    float core = 0.16 / (d * d + 0.012);
+    float halo = 0.12 / (d * d * 2.2 + 0.26);
+    // Harte Begrenzung des Ausläufers. Ohne sie reicht der Schein des Kerns
+    // bis in jede Ecke und legt genau den Grauschleier über das Bild, den die
+    // Vignette vorher mühsam wieder abziehen musste.
+    float reach = smoothstep(1.25, 0.05, d);
+    col += uGlow * (core * 0.3 + halo * 0.22) * reach;
 
-    // Refined god-rays radiating from the light.
+    // Lichtbahnen aus der Quelle.
     vec2 dir = normalize(p - lightPos + 1e-4);
     float ang = atan(dir.y, dir.x);
     float rays = 0.5 + 0.5 * sin(ang * 14.0 + t * 0.25);
     rays *= 0.6 + 0.4 * sin(ang * 5.0 - t * 0.15);
-    rays *= smoothstep(1.0, 0.0, d);
-    col += uGlow * rays * 0.045;
+    rays *= smoothstep(1.2, 0.05, d);
+    col += uGlow * rays * 0.05;
 
-    // Cool rim accent toward the far edges — the "edel" contrast.
-    vec3 coolTint = vec3(0.36, 0.45, 0.62);
-    float rim = smoothstep(0.55, 1.25, length(p));
-    col = mix(col, col + coolTint * 0.10, rim * (0.4 + 0.3 * fog));
+    // Kühler Rand als Gegenspieler zum warmen Kern — die Tiefe im Bild.
+    vec3 coolTint = vec3(0.3, 0.42, 0.66);
+    float rim = smoothstep(0.5, 1.3, length(p));
+    col += coolTint * rim * 0.055;
 
-    // Distant ember sparkle.
+    // Funkenflug.
     float spark = warp(p * 9.0 + t * 0.1, t);
-    spark = pow(smoothstep(0.86, 1.0, spark), 3.0);
-    col += uGlow * spark * 0.6;
+    spark = pow(smoothstep(0.84, 1.0, spark), 3.0);
+    col += uGlow * spark * 0.9;
 
-    // Vignette — deepen the shadows, draw the eye in (darker for readability).
-    float vig = smoothstep(1.3, 0.25, length(p));
-    col *= mix(0.3, 0.92, vig);
+    // ── Die Vignette ───────────────────────────────────────────────────
+    // Läuft bis fast auf Null aus. Vorher blieben außen 30 % stehen, und
+    // genau deshalb hatte das Bild nirgends einen echten Schwarzwert.
+    float vig = smoothstep(1.45, 0.2, length(p));
+    col *= mix(0.03, 1.0, vig);
 
-    // Film grain (subtle, animated).
+    // Korn.
     float grain = hash(uv * uResolution + t) - 0.5;
-    col += grain * 0.022;
+    col += grain * 0.02;
 
-    // Filmic tone curve + gentle lift.
-    col = col / (col + vec3(0.82));
-    col = pow(col, vec3(0.9));
+    // Filmische Kurve. Der kleinere Nenner hält die Lichter, das Gamma über
+    // eins senkt die Mitten — zusammen ergibt das Zeichnung statt Schleier.
+    col = col / (col + vec3(0.5));
+    col = pow(col, vec3(1.08));
+
+    // Sättigung zurückholen. Die Kurve oben komprimiert jeden Kanal für sich,
+    // und weil der hellste Kanal am stärksten gestaucht wird, laufen helle
+    // Flächen Richtung Grau. Genau das hat der Bar ihr Blau und der Küche ihr
+    // Orange genommen. Hier kommt beides zurück, ohne die Kurve aufzugeben.
+    float lum = dot(col, vec3(0.2126, 0.7152, 0.0722));
+    col = max(mix(vec3(lum), col, 1.5), vec3(0.0));
 
     gl_FragColor = vec4(col, 1.0);
   }

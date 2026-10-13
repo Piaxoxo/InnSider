@@ -51,7 +51,12 @@ export function Atmosphere({ showOrb = true }: { showOrb?: boolean }) {
           {/* Bloom turns the light, dust, veils and orb into glowing embers —
               the single biggest lift toward a "webgl world" look. */}
           <EffectComposer multisampling={0}>
-            <Bloom mipmapBlur intensity={touch ? 0.5 : 0.85} luminanceThreshold={0.5} luminanceSmoothing={0.25} radius={0.75} />
+            {/* Schwelle hoch, Radius runter. Bei 0.5 lag sie unter der
+                Helligkeit der normalen Lichtfläche — das Bloom hat dann nicht
+                die Quelle zum Leuchten gebracht, sondern das halbe Bild
+                verwischt. Jetzt greift es nur noch dort, wo wirklich eine
+                Flamme oder ein Funke ist. */}
+            <Bloom mipmapBlur intensity={touch ? 0.55 : 0.75} luminanceThreshold={0.72} luminanceSmoothing={0.2} radius={0.5} />
             <Vignette offset={0.2} darkness={0.88} eskil={false} />
           </EffectComposer>
         </Suspense>

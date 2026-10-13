@@ -5,6 +5,7 @@ import { atmosphereVert, atmosphereFrag } from './atmosphereShader'
 import { grades } from '../content/palette'
 import { scrollState } from '../lib/scroll'
 import { pointer, easePointer } from '../lib/pointer'
+import { chapterProgress } from '../lib/chapterProgress'
 
 /**
  * The fullscreen atmosphere plane. Renders in clip space (vertex shader
@@ -54,7 +55,8 @@ export function AtmosphereField({ reduced }: { reduced: boolean }) {
 
     // Map global progress across the grade stops and lerp between neighbours.
     const n = grades.length
-    const pos = THREE.MathUtils.clamp(scrollState.progress, 0, 1) * (n - 1)
+    // Nach Kapitel, nicht nach Seitenhöhe — siehe lib/chapterProgress.ts.
+    const pos = THREE.MathUtils.clamp(chapterProgress(), 0, 1) * (n - 1)
     const i = Math.min(Math.floor(pos), n - 2)
     const f = pos - i
     const a = grades[i]

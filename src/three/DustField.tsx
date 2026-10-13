@@ -3,6 +3,8 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { pointer } from '../lib/pointer'
 import { scrollState } from '../lib/scroll'
+import { sampleFog } from './stage'
+import { chapterProgress } from '../lib/chapterProgress'
 
 /**
  * Ambient dust motes drifting in the light — the fine particulate that sells
@@ -31,6 +33,8 @@ export function DustField({ count = 320, reduced }: { count?: number; reduced: b
       uPointer: { value: new THREE.Vector2() },
       uReduced: { value: reduced ? 1 : 0 },
       uSize: { value: Math.min(window.devicePixelRatio, 2) * 26 },
+      // Wird jedes Bild auf die Farbe des aktuellen Kapitels gezogen.
+      uTint: { value: new THREE.Color(0.85, 0.72, 0.5) },
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
@@ -43,6 +47,9 @@ export function DustField({ count = 320, reduced }: { count?: number; reduced: b
     u.uTime.value += delta * (reduced ? 0.15 : 1)
     u.uPointer.value.set(pointer.x, pointer.y)
     u.uReduced.value = reduced ? 1 : 0
+    // Die Farbe folgt dem Kapitel — sonst liegt über jedem Abschnitt derselbe
+    // warme Flor, und die Bar kann nicht blau werden.
+    sampleFog(THREE.MathUtils.clamp(chapterProgress(), 0, 1), u.uTint.value)
     // Motes thin out as the night deepens (scroll progresses).
     p.position.y = scrollState.progress * 1.2
     ;(p.material as THREE.ShaderMaterial).opacity = 1
@@ -78,6 +85,7 @@ const dustVert = /* glsl */ `
   uniform float uSize;
   uniform vec2  uPointer;
   uniform float uReduced;
+  uniform vec3  uTint;
   varying float vSeed;
   varying float vTwinkle;
 
@@ -105,6 +113,8 @@ const dustVert = /* glsl */ `
 
 const dustFrag = /* glsl */ `
   precision highp float;
+
+  uniform vec3 uTint;
   varying float vSeed;
   varying float vTwinkle;
 
@@ -114,7 +124,7 @@ const dustFrag = /* glsl */ `
     float alpha = smoothstep(0.5, 0.0, d);
     alpha *= 0.12 + 0.5 * vTwinkle;
     // Warm brass tint, slightly varied per mote.
-    vec3 col = mix(vec3(0.79, 0.66, 0.42), vec3(0.88, 0.78, 0.6), vSeed);
+    vec3 col = mix(uTint * 0.9, uTint * 1.15, vSeed);
     gl_FragColor = vec4(col, alpha);
   }
 `
