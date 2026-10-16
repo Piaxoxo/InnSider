@@ -6,6 +6,7 @@ import { gsap, scrollToId } from '../lib/scroll'
 import { openBooking } from '../lib/booking'
 import { prefersReducedMotion } from '../lib/useReducedMotion'
 import { menu, weekly, booking, contact } from '../content/site'
+import { useCurrentSheet } from '../lib/weeklyPlan'
 import { media } from '../content/assets'
 import './menu.css'
 
@@ -29,26 +30,12 @@ const plates = [
  * auf der Seite lesbar, ohne Umweg über ein PDF. Bild und Gericht werden
  * bewusst nicht verknüpft, damit keine falschen Zuordnungen entstehen.
  */
-/**
- * Läuft die ausgehängte Woche noch?
- *
- * Verglichen wird nur das Datum, nicht die Uhrzeit, und in der Zeitzone des
- * Gastes — auf den Tag genau reicht hier völlig, und es kommt ohne Bibliothek
- * aus. Am letzten Gültigkeitstag hängt die Karte noch.
- */
-function weekIsOver(): boolean {
-  const today = new Date()
-  const iso = [
-    today.getFullYear(),
-    String(today.getMonth() + 1).padStart(2, '0'),
-    String(today.getDate()).padStart(2, '0'),
-  ].join('-')
-  return iso > weekly.validUntil
-}
-
 export function Menu() {
   const root = useRef<HTMLElement>(null)
-  const expired = weekIsOver()
+  // Welche Woche gerade hängt, entscheidet der Plan in site.ts — siehe
+  // lib/weeklyPlan.ts. Hängt keine, tritt der Hinweis an ihre Stelle.
+  const sheet = useCurrentSheet()
+  const expired = !sheet
   const headRef = useReveal<HTMLDivElement>({ selector: '[data-reveal]', y: 28 })
   const galleryRef = useReveal<HTMLDivElement>({ selector: '.menu__plate', y: 32, stagger: 0.07 })
   const cardRef = useReveal<HTMLDivElement>({ selector: '.menu__section', y: 30, stagger: 0.1 })
@@ -123,9 +110,9 @@ export function Menu() {
             <span className="overline">{weekly.label}</span>
             <h3 className="menu__weekly-title">{weekly.title}</h3>
             <p className="menu__weekly-when">
-              {!expired && (
+              {sheet && (
                 <>
-                  {weekly.periodPrefix} {weekly.period}
+                  {weekly.periodPrefix} {sheet.period}
                   <br />
                 </>
               )}
@@ -153,16 +140,16 @@ export function Menu() {
           <div className="menu__weekly-body">
             <p className="menu__weekly-dish">
               <span className="menu__weekly-name">
-                {weekly.starter.name}
-                {!weekly.starter.note && weekly.starter.allergens && (
-                  <span className="menu__row-allergens"> {weekly.starter.allergens}</span>
+                {sheet.starter.name}
+                {!sheet.starter.note && sheet.starter.allergens && (
+                  <span className="menu__row-allergens"> {sheet.starter.allergens}</span>
                 )}
               </span>
-              {weekly.starter.note && (
+              {sheet.starter.note && (
                 <span className="menu__weekly-note">
-                  {weekly.starter.note}
-                  {weekly.starter.allergens && (
-                    <span className="menu__row-allergens"> {weekly.starter.allergens}</span>
+                  {sheet.starter.note}
+                  {sheet.starter.allergens && (
+                    <span className="menu__row-allergens"> {sheet.starter.allergens}</span>
                   )}
                 </span>
               )}
@@ -170,7 +157,7 @@ export function Menu() {
 
             <span className="menu__weekly-joiner">{weekly.joiner}</span>
 
-            {weekly.mains.map((m, i) => (
+            {sheet.mains.map((m, i) => (
               <div key={m.name}>
                 {i > 0 && <span className="menu__weekly-joiner">{weekly.orLabel}</span>}
                 <p className="menu__weekly-dish">

@@ -295,31 +295,54 @@ export const weekly = {
   label: 'Wochenkarte',
   title: 'Unsere Mittagsteller',
   periodPrefix: 'Für die Woche von',
-  period: 'Montag 12. Oktober bis Freitag 16. Oktober',
-  /**
-   * Der letzte Tag, an dem diese Teller gelten (ISO, Wiener Zeit).
-   * Danach zeigt das Kapitel nicht mehr die Gerichte, sondern den Hinweis
-   * darunter: eine vergangene Woche auf der Website ist schlechter als gar
-   * keine.
-   */
-  validUntil: '2026-10-16',
-  staleNote: 'Die Teller dieser Woche geben wir Ihnen gerne am Telefon bekannt.',
-  /**
-   * Was in der abgelaufenen Woche an die Stelle der Teller tritt. Der Preis
-   * verschwindet dann mit ihnen — eine Zahl ohne Gericht sagt nichts. Statt
-   * dessen die beiden Dinge, die immer gelten: die Karte und die Getränke.
-   */
-  staleCardCta: 'Zur ganzen Speisekarte',
-  staleDrinksCta: 'Zu den Getränken',
   hours: 'Von 11:30 bis 15:00',
   price: '13,50',
-  starter: { name: 'Zwiebelsuppe', note: 'Petersilie', allergens: 'A L' },
+  staleNote: 'Die Teller dieser Woche geben wir Ihnen gerne am Telefon bekannt.',
+  staleCardCta: 'Zur ganzen Speisekarte',
+  staleDrinksCta: 'Zu den Getränken',
   joiner: 'und',
   orLabel: 'oder',
-  mains: [
-    { name: 'Gegrillter Puten-Gemüsespieß', note: 'Süßkartoffelpüree und Apfelchutney', allergens: 'A G O' },
-    { name: 'Innsider Paela', note: 'marinierte Gurke, Paprika, Tomate und Babyspinat', allergens: 'D G O' },
-    { name: 'Bulgur, Kürbis-Zucchini Gemüse', note: 'Feta und Minzjoghurt', allergens: 'G' },
+
+  /**
+   * Die Aushänge, zeitlich gestaffelt.
+   *
+   * Jeder trägt sein eigenes Fenster: `from` ist der Moment, ab dem er hängt
+   * (Datum und Uhrzeit), `until` der letzte Tag, an dem er gilt. Es gewinnt
+   * immer der jüngste Aushang, dessen `from` schon vorbei ist — so löst die
+   * neue Woche die alte punktgenau ab, statt sie zu überschreiben.
+   *
+   * Der Wechsel liegt bewusst auf 15:00: bis dahin läuft der Mittagstisch,
+   * und wer um halb zwei auf die Karte schaut, will wissen, was es heute
+   * gibt, nicht was es nächste Woche geben wird.
+   *
+   * Passt keiner — Wochenende, oder die nächste Karte ist noch nicht da —
+   * zeigt das Kapitel den Hinweis darüber statt veralteter Teller.
+   *
+   * Beide Zeiten werden in Wiener Zeit gelesen (lib/vienna.ts).
+   */
+  plan: [
+    {
+      period: 'Montag 12. Oktober bis Freitag 16. Oktober',
+      from: '2026-10-12T00:00',
+      until: '2026-10-16',
+      starter: { name: 'Zwiebelsuppe', note: 'Petersilie', allergens: 'A L' },
+      mains: [
+        { name: 'Gegrillter Puten-Gemüsespieß', note: 'Süßkartoffelpüree und Apfelchutney', allergens: 'A G O' },
+        { name: 'Innsider Paela', note: 'marinierte Gurke, Paprika, Tomate und Babyspinat', allergens: 'D G O' },
+        { name: 'Bulgur, Kürbis-Zucchini Gemüse', note: 'Feta und Minzjoghurt', allergens: 'G' },
+      ],
+    },
+    {
+      period: 'Montag 19. Oktober bis Freitag 23. Oktober',
+      from: '2026-10-16T15:00',
+      until: '2026-10-23',
+      starter: { name: 'Karotten-Ingwer-Kokossuppe', note: '', allergens: 'G L' },
+      mains: [
+        { name: 'Szegediner Rindsgulasch', note: 'Sauerrahm und Serviettenknödel', allergens: 'A C G L' },
+        { name: 'Gegrilltes Rotbarschfilet', note: 'Wurzelgemüse, Petersilerdäpfel und Krenschaum', allergens: 'D G L O' },
+        { name: 'Tagliatelle mit Kürbissauce', note: 'Parmesan-Kürbischip und Rucola', allergens: 'A C G' },
+      ],
+    },
   ],
 } as const
 

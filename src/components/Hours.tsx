@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { hours } from '../content/site'
+import { viennaNow } from '../lib/vienna'
 import './hours.css'
 
 /**
@@ -17,29 +18,6 @@ import './hours.css'
 const MIN = (hhmm: string) => {
   const [h, m] = hhmm.split(':').map(Number)
   return h * 60 + m
-}
-
-/** Wochentag und Minute seit Mitternacht, in Wien. */
-function viennaNow(): { day: number; minutes: number } | null {
-  try {
-    const parts = new Intl.DateTimeFormat('en-US', {
-      timeZone: 'Europe/Vienna',
-      weekday: 'short',
-      hour: '2-digit',
-      minute: '2-digit',
-      // h23 statt hour12:false — sonst liefern manche Engines um Mitternacht 24.
-      hourCycle: 'h23',
-    }).formatToParts(new Date())
-
-    const get = (t: string) => parts.find((p) => p.type === t)?.value ?? ''
-    const days: Record<string, number> = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 }
-    const day = days[get('weekday')]
-    if (day === undefined) return null
-    return { day, minutes: Number(get('hour')) * 60 + Number(get('minute')) }
-  } catch {
-    // Ohne verlässliche Zeitzone lieber gar keine Aussage als eine falsche.
-    return null
-  }
 }
 
 function isOpenNow(): boolean | null {
