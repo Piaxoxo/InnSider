@@ -319,17 +319,6 @@ export const weekly = {
    */
   plan: [
     {
-      period: 'Montag 12. Oktober bis Freitag 16. Oktober',
-      from: '2026-10-12T00:00',
-      until: '2026-10-16',
-      starter: { name: 'Zwiebelsuppe', note: 'Petersilie', allergens: 'A L' },
-      mains: [
-        { name: 'Gegrillter Puten-Gemüsespieß', note: 'Süßkartoffelpüree und Apfelchutney', allergens: 'A G O' },
-        { name: 'Innsider Paela', note: 'marinierte Gurke, Paprika, Tomate und Babyspinat', allergens: 'D G O' },
-        { name: 'Bulgur, Kürbis-Zucchini Gemüse', note: 'Feta und Minzjoghurt', allergens: 'G' },
-      ],
-    },
-    {
       period: 'Montag 19. Oktober bis Freitag 23. Oktober',
       from: '2026-10-16T15:00',
       until: '2026-10-23',
@@ -338,6 +327,18 @@ export const weekly = {
         { name: 'Szegediner Rindsgulasch', note: 'Sauerrahm und Serviettenknödel', allergens: 'A C G L' },
         { name: 'Gegrilltes Rotbarschfilet', note: 'Wurzelgemüse, Petersilerdäpfel und Krenschaum', allergens: 'D G L O' },
         { name: 'Tagliatelle mit Kürbissauce', note: 'Parmesan-Kürbischip und Rucola', allergens: 'A C G' },
+      ],
+    },
+    {
+      // Beginnt am Dienstag: der 26. Oktober ist Nationalfeiertag.
+      period: 'Dienstag 27. Oktober bis Freitag 30. Oktober',
+      from: '2026-10-23T15:00',
+      until: '2026-10-30',
+      starter: { name: 'Erdäpfelcremesuppe', note: 'Croutons', allergens: 'A C G' },
+      mains: [
+        { name: 'Gebratenes Schweinskarreesteak', note: 'Spiegelei, Broccoli und Rösi', allergens: 'A C G' },
+        { name: 'Pochierter Schellfisch', note: 'Spinat-Kürbisrisotto und Tomatenchutney', allergens: 'D G L O' },
+        { name: 'Überbackene Polenta', note: 'Ratatouille und Melanzanicreme', allergens: 'A C G' },
       ],
     },
   ],
