@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { weekly } from '../content/site'
+import { weekly, type WeeklySheet } from '../content/site'
 import { viennaNow } from './vienna'
 
 /**
@@ -15,7 +15,7 @@ import { viennaNow } from './vienna'
  * Gerät des Gastes.
  */
 
-export type WeeklySheet = (typeof weekly.plan)[number]
+export type { WeeklySheet }
 
 /** Null, wenn keine Karte gilt — Wochenende, oder die nächste fehlt noch. */
 export function currentSheet(): WeeklySheet | null {

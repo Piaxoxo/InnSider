@@ -288,6 +288,76 @@ export const menu = {
  * Hauptspeisen müssen wöchentlich nachgezogen werden, sonst steht auf der
  * Website eine Woche, die vorbei ist.
  */
+/**
+ * Ein Gericht auf dem Aushang.
+ *
+ * `note` ist die Beilagenzeile und darf leer sein — manche Blätter haben
+ * keine, dann stehen die Allergene direkt hinter dem Namen. Die Form steht
+ * hier bewusst ausgeschrieben statt aus den Daten abgeleitet: sonst hält
+ * TypeScript den Fall für unmöglich, sobald zufällig in allen hinterlegten
+ * Wochen eine Beilage steht, und streicht die Darstellung dafür weg.
+ */
+export interface WeeklyDish {
+  name: string
+  note: string
+  allergens: string
+}
+
+/** Ein Aushang mit seinem Zeitfenster. */
+export interface WeeklySheet {
+  period: string
+  /** YYYY-MM-DDTHH:MM, Wiener Zeit — ab dann hängt er. */
+  from: string
+  /** YYYY-MM-DD, Wiener Zeit — letzter Tag, an dem er gilt. */
+  until: string
+  starter: WeeklyDish
+  mains: readonly WeeklyDish[]
+}
+
+/**
+ * Die Aushänge, zeitlich gestaffelt.
+ *
+ * Jeder trägt sein eigenes Fenster: `from` ist der Moment, ab dem er hängt
+ * (Datum und Uhrzeit), `until` der letzte Tag, an dem er gilt. Es gewinnt
+ * immer der jüngste Aushang, dessen `from` schon vorbei ist — so löst die
+ * neue Woche die alte punktgenau ab, statt sie zu überschreiben.
+ *
+ * Der Wechsel liegt bewusst auf 15:00: bis dahin läuft der Mittagstisch,
+ * und wer um halb zwei auf die Karte schaut, will wissen, was es heute
+ * gibt, nicht was es nächste Woche geben wird.
+ *
+ * Passt keiner — Wochenende, oder die nächste Karte ist noch nicht da —
+ * zeigt das Kapitel den Hinweis darüber statt veralteter Teller.
+ *
+ * Beide Zeiten werden in Wiener Zeit gelesen (lib/vienna.ts).
+ */
+const plan: readonly WeeklySheet[] = [
+  {
+    // Beginnt am Dienstag: der 26. Oktober ist Nationalfeiertag.
+    period: 'Dienstag 27. Oktober bis Freitag 30. Oktober',
+    from: '2026-10-23T15:00',
+    until: '2026-10-30',
+    starter: { name: 'Erdäpfelcremesuppe', note: 'Croutons', allergens: 'A C G' },
+    mains: [
+      { name: 'Gebratenes Schweinskarreesteak', note: 'Spiegelei, Broccoli und Rösi', allergens: 'A C G' },
+      { name: 'Pochierter Schellfisch', note: 'Spinat-Kürbisrisotto und Tomatenchutney', allergens: 'D G L O' },
+      { name: 'Überbackene Polenta', note: 'Ratatouille und Melanzanicreme', allergens: 'A C G' },
+    ],
+  },
+  {
+    period: 'Montag 2. November bis Freitag 6. November',
+    from: '2026-10-30T15:00',
+    until: '2026-11-06',
+    starter: { name: 'Gemüsecremesuppe', note: 'Kräuteröl', allergens: 'G L' },
+    mains: [
+      { name: 'Faschierter Braten', note: 'Erdäpfelpüree und Karotten', allergens: 'A C G' },
+      { name: 'Gebackenes Seelachsfilet', note: 'Sauce Tartare und Erdäpfel-Vogerlsalat', allergens: 'A C D G' },
+      // Die Anführungszeichen stehen so auf dem Blatt — sie gehören zum Namen.
+      { name: '„Innsider Mezze“', note: 'Melanzani, Falafel, Humus, Fattusch und Fladenbrot', allergens: 'A C G H N' },
+    ],
+  },
+]
+
 export const weekly = {
   label: 'Wochenkarte',
   title: 'Unsere Mittagsteller',
@@ -300,48 +370,8 @@ export const weekly = {
   joiner: 'und',
   orLabel: 'oder',
 
-  /**
-   * Die Aushänge, zeitlich gestaffelt.
-   *
-   * Jeder trägt sein eigenes Fenster: `from` ist der Moment, ab dem er hängt
-   * (Datum und Uhrzeit), `until` der letzte Tag, an dem er gilt. Es gewinnt
-   * immer der jüngste Aushang, dessen `from` schon vorbei ist — so löst die
-   * neue Woche die alte punktgenau ab, statt sie zu überschreiben.
-   *
-   * Der Wechsel liegt bewusst auf 15:00: bis dahin läuft der Mittagstisch,
-   * und wer um halb zwei auf die Karte schaut, will wissen, was es heute
-   * gibt, nicht was es nächste Woche geben wird.
-   *
-   * Passt keiner — Wochenende, oder die nächste Karte ist noch nicht da —
-   * zeigt das Kapitel den Hinweis darüber statt veralteter Teller.
-   *
-   * Beide Zeiten werden in Wiener Zeit gelesen (lib/vienna.ts).
-   */
-  plan: [
-    {
-      period: 'Montag 19. Oktober bis Freitag 23. Oktober',
-      from: '2026-10-16T15:00',
-      until: '2026-10-23',
-      starter: { name: 'Karotten-Ingwer-Kokossuppe', note: '', allergens: 'G L' },
-      mains: [
-        { name: 'Szegediner Rindsgulasch', note: 'Sauerrahm und Serviettenknödel', allergens: 'A C G L' },
-        { name: 'Gegrilltes Rotbarschfilet', note: 'Wurzelgemüse, Petersilerdäpfel und Krenschaum', allergens: 'D G L O' },
-        { name: 'Tagliatelle mit Kürbissauce', note: 'Parmesan-Kürbischip und Rucola', allergens: 'A C G' },
-      ],
-    },
-    {
-      // Beginnt am Dienstag: der 26. Oktober ist Nationalfeiertag.
-      period: 'Dienstag 27. Oktober bis Freitag 30. Oktober',
-      from: '2026-10-23T15:00',
-      until: '2026-10-30',
-      starter: { name: 'Erdäpfelcremesuppe', note: 'Croutons', allergens: 'A C G' },
-      mains: [
-        { name: 'Gebratenes Schweinskarreesteak', note: 'Spiegelei, Broccoli und Rösi', allergens: 'A C G' },
-        { name: 'Pochierter Schellfisch', note: 'Spinat-Kürbisrisotto und Tomatenchutney', allergens: 'D G L O' },
-        { name: 'Überbackene Polenta', note: 'Ratatouille und Melanzanicreme', allergens: 'A C G' },
-      ],
-    },
-  ],
+  plan,
+
 } as const
 
 // ── Kapitel 5 — Bar (Top Drinks) — Originaltext ──────────────────────────────
