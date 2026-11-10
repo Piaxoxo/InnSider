@@ -333,27 +333,20 @@ export interface WeeklySheet {
  */
 const plan: readonly WeeklySheet[] = [
   {
-    // Beginnt am Dienstag: der 26. Oktober ist Nationalfeiertag.
-    period: 'Dienstag 27. Oktober bis Freitag 30. Oktober',
-    from: '2026-10-23T15:00',
-    until: '2026-10-30',
-    starter: { name: 'Erdäpfelcremesuppe', note: 'Croutons', allergens: 'A C G' },
+    period: 'Montag 9. November bis Freitag 13. November',
+    from: '2026-11-06T15:00',
+    until: '2026-11-13',
+    // Keine Beilagenzeile auf dem Blatt — die Allergene stehen direkt hinter
+    // dem Namen. Genau der Fall, den die Typen letzte Woche fast weggeräumt
+    // hätten.
+    starter: { name: 'Zucchinicremesuppe mit Dille', note: '', allergens: 'G' },
     mains: [
-      { name: 'Gebratenes Schweinskarreesteak', note: 'Spiegelei, Broccoli und Rösi', allergens: 'A C G' },
-      { name: 'Pochierter Schellfisch', note: 'Spinat-Kürbisrisotto und Tomatenchutney', allergens: 'D G L O' },
-      { name: 'Überbackene Polenta', note: 'Ratatouille und Melanzanicreme', allergens: 'A C G' },
-    ],
-  },
-  {
-    period: 'Montag 2. November bis Freitag 6. November',
-    from: '2026-10-30T15:00',
-    until: '2026-11-06',
-    starter: { name: 'Gemüsecremesuppe', note: 'Kräuteröl', allergens: 'G L' },
-    mains: [
-      { name: 'Faschierter Braten', note: 'Erdäpfelpüree und Karotten', allergens: 'A C G' },
-      { name: 'Gebackenes Seelachsfilet', note: 'Sauce Tartare und Erdäpfel-Vogerlsalat', allergens: 'A C D G' },
-      // Die Anführungszeichen stehen so auf dem Blatt — sie gehören zum Namen.
-      { name: '„Innsider Mezze“', note: 'Melanzani, Falafel, Humus, Fattusch und Fladenbrot', allergens: 'A C G H N' },
+      // Die Anführungszeichen gehören zu den Namen und stehen so auf dem
+      // Blatt. Nur das versehentliche Leerzeichen hinter dem öffnenden
+      // Zeichen ist weg — am Wortlaut ändert das nichts.
+      { name: 'Schweinebauch „Asia Style“', note: 'gebratener Eierreis, Chinakohl und Sprossen', allergens: 'A C F' },
+      { name: '„Grüner Fischeintopf“', note: 'Lauch, Erbsenschoten, Fenchel und Knoblauchcroutons', allergens: 'A C D G' },
+      { name: 'Karfiolsteak', note: 'Rote Rübenknödel, Kren und Salat', allergens: 'A C G' },
     ],
   },
 ]
