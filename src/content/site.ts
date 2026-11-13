@@ -336,17 +336,24 @@ const plan: readonly WeeklySheet[] = [
     period: 'Montag 9. November bis Freitag 13. November',
     from: '2026-11-06T15:00',
     until: '2026-11-13',
-    // Keine Beilagenzeile auf dem Blatt — die Allergene stehen direkt hinter
-    // dem Namen. Genau der Fall, den die Typen letzte Woche fast weggeräumt
-    // hätten.
     starter: { name: 'Zucchinicremesuppe mit Dille', note: '', allergens: 'G' },
     mains: [
-      // Die Anführungszeichen gehören zu den Namen und stehen so auf dem
-      // Blatt. Nur das versehentliche Leerzeichen hinter dem öffnenden
-      // Zeichen ist weg — am Wortlaut ändert das nichts.
       { name: 'Schweinebauch „Asia Style“', note: 'gebratener Eierreis, Chinakohl und Sprossen', allergens: 'A C F' },
       { name: '„Grüner Fischeintopf“', note: 'Lauch, Erbsenschoten, Fenchel und Knoblauchcroutons', allergens: 'A C D G' },
       { name: 'Karfiolsteak', note: 'Rote Rübenknödel, Kren und Salat', allergens: 'A C G' },
+    ],
+  },
+  {
+    period: 'Montag 16. November bis Freitag 20. November',
+    from: '2026-11-13T15:00',
+    until: '2026-11-20',
+    // Wieder ohne Beilagenzeile: die Allergene stehen hinter dem Namen.
+    starter: { name: 'Lauchcremesuppe mit Croutons', note: '', allergens: 'G' },
+    mains: [
+      { name: 'Gebratene Hühnerbrust', note: 'Ratatouille und Trüffelpolenta', allergens: 'A G' },
+      // „Paela“ steht so auf den Blättern, Woche für Woche — Hausschreibweise.
+      { name: '„Innsider Paela“', note: 'Tomate, Paprika, Knoblauch und Salat', allergens: 'A D G' },
+      { name: 'Tagliatelle', note: 'Tomaten-Estragonsauce, Babyspinat und Parmesan', allergens: 'A C G' },
     ],
   },
 ]
