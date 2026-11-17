@@ -224,12 +224,16 @@ export const menu = {
         { name: 'Innsider Burger', note: '200g österreichisches Rindfleisch im hausgemachten Bun, BBQ Sauce, Cheddar, Bacon, Coleslaw und Süßkartoffelpommes', price: '18,40', allergens: 'A C G O', plus: '' },
         { name: 'Im Erdäpfelteig frittierte Blunznknödel', note: 'Sauerkraut und Safterl', price: '15,20', allergens: 'A C G M', plus: '' },
         { name: 'Pikantes rotes Gemüsecurry (vegan)', note: 'Biryanireis und Kokosmilch', price: '12,80', allergens: 'A E F L O', plus: 'mit Hühnerbrust + 6,00 · mit gegrilltem Fisch + 7,00' },
-        { name: 'Mangold-Fetaknödel', note: 'Tomatensauce und Blattsalat', price: '13,80', allergens: 'A C G H', plus: '' },
+        { name: 'Rote Rübenknödel', note: 'Krensauce, fermentierter Grünkohl und Salat', price: '13,80', allergens: 'A C G H', plus: '' },
         { name: 'Feuriges Chili con Carne', note: 'Sauerrahm und hausgemachtes Fladenbrot', price: '12,50', allergens: 'A E G', plus: '' },
         { name: 'Kürbisrisotto', note: 'Babyspinat, Feta und Walnuß', price: '15,80', allergens: 'A G', plus: '' },
       ],
     },
     {
+      // Der Salat steht nicht auf den Seiten der Speisekarte, sondern auf dem
+      // Wochenblatt — dort erscheint er Woche für Woche unverändert, zuletzt
+      // auf dem von KW 47. Wer die Karte abgleicht, sucht ihn also im
+      // falschen Dokument und darf ihn nicht für ausgelistet halten.
       title: 'Salat',
       column: 1,
       items: [
