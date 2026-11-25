@@ -337,27 +337,25 @@ export interface WeeklySheet {
  */
 const plan: readonly WeeklySheet[] = [
   {
-    period: 'Montag 9. November bis Freitag 13. November',
-    from: '2026-11-06T15:00',
-    until: '2026-11-13',
-    starter: { name: 'Zucchinicremesuppe mit Dille', note: '', allergens: 'G' },
-    mains: [
-      { name: 'Schweinebauch „Asia Style“', note: 'gebratener Eierreis, Chinakohl und Sprossen', allergens: 'A C F' },
-      { name: '„Grüner Fischeintopf“', note: 'Lauch, Erbsenschoten, Fenchel und Knoblauchcroutons', allergens: 'A C D G' },
-      { name: 'Karfiolsteak', note: 'Rote Rübenknödel, Kren und Salat', allergens: 'A C G' },
-    ],
-  },
-  {
     period: 'Montag 16. November bis Freitag 20. November',
     from: '2026-11-13T15:00',
     until: '2026-11-20',
-    // Wieder ohne Beilagenzeile: die Allergene stehen hinter dem Namen.
     starter: { name: 'Lauchcremesuppe mit Croutons', note: '', allergens: 'G' },
     mains: [
       { name: 'Gebratene Hühnerbrust', note: 'Ratatouille und Trüffelpolenta', allergens: 'A G' },
-      // „Paela“ steht so auf den Blättern, Woche für Woche — Hausschreibweise.
       { name: '„Innsider Paela“', note: 'Tomate, Paprika, Knoblauch und Salat', allergens: 'A D G' },
       { name: 'Tagliatelle', note: 'Tomaten-Estragonsauce, Babyspinat und Parmesan', allergens: 'A C G' },
+    ],
+  },
+  {
+    period: 'Montag 23. November bis Freitag 27. November',
+    from: '2026-11-20T15:00',
+    until: '2026-11-27',
+    starter: { name: 'Mais-Chilisuppe', note: '', allergens: 'G' },
+    mains: [
+      { name: 'Gebratenes Jungschweinkaree', note: 'Speckfisolen und Braterdäpfel', allergens: 'L' },
+      { name: 'Gegrilltes Rotbarschfilet', note: 'Kohlrabigemüse und Kräuterreis', allergens: 'A D G' },
+      { name: 'Gegrillte Melanzani', note: 'Feta, Currybulgur und Salat', allergens: 'A G O' },
     ],
   },
 ]
