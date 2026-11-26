@@ -104,7 +104,7 @@ export function Menu() {
             Wechselt wöchentlich (siehe `weekly` in site.ts). Ist die Woche
             vorbei, verschwinden die Gerichte: eine vergangene Woche auf der
             Website führt Gäste in die Irre, ein Hinweis nicht. */}
-        <aside className="menu__weekly" aria-label={weekly.title}>
+        <aside className="menu__weekly" id="menu-wochenkarte" aria-label={weekly.title}>
           <span className="menu__weekly-glow" aria-hidden="true" />
           <div className="menu__weekly-head">
             <span className="overline">{weekly.label}</span>

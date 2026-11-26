@@ -62,6 +62,13 @@ export function Nav({ visible }: { visible: boolean }) {
         </div>
 
         <div className="nav__right">
+          {/* Die Karte war bisher nur über den Kapitelindex zu erreichen, zwei
+              Griffe tief und unter „Gaumenfreuden" — einem Wort, das niemand
+              sucht, der wissen will, was es zu essen gibt. Hier steht sie
+              neben dem Reservieren und bleibt überall auf der Seite greifbar. */}
+          <button className="nav__menu" onClick={() => go('menu-wochenkarte')}>
+            Speisekarte
+          </button>
           <button className="nav__reserve" onClick={openBooking}>
             Reservieren
           </button>

@@ -125,7 +125,10 @@ export const hero = {
   headline: ['Jeder unvergessliche', 'Abend', 'beginnt irgendwo.'],
   sub: 'Willkommen im InnSider — wo Atmosphäre, Gastfreundschaft und außergewöhnliche Küche zu bleibenden Erinnerungen werden.',
   primaryCta: 'Tisch reservieren',
-  secondaryCta: 'Entdecken',
+  // Hieß „Entdecken" und führte zu Kapitel Zwei — genau dorthin, wo der
+  // Scroll-Hinweis gleich darunter ohnehin hinführt. Zwei Knöpfe für denselben
+  // Weg, und keiner für den, nach dem Gäste zuerst fragen.
+  secondaryCta: 'Speisekarte',
   scrollHint: 'Der Abend beginnt',
 } as const
 

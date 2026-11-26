@@ -115,7 +115,16 @@ export function Hero({ ready }: { ready: boolean }) {
             {hero.primaryCta}
             <span className="btn__arrow">→</span>
           </button>
-          <button className="btn btn--ghost" data-hero-cta data-hero-in onClick={() => scrollToId('dream')}>
+          {/* Ziel ist die Wochenkarte, nicht der Kapitelanfang: dort stehen die
+              Teller von heute, und die ganze Karte schließt direkt darunter an.
+              Wer auf „Speisekarte" drückt, will Essen sehen, nicht erst die
+              Galerie. */}
+          <button
+            className="btn btn--ghost"
+            data-hero-cta
+            data-hero-in
+            onClick={() => scrollToId('menu-wochenkarte')}
+          >
             {hero.secondaryCta}
           </button>
         </div>

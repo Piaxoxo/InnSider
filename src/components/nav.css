@@ -70,6 +70,10 @@
   align-items: center;
   gap: clamp(1rem, 2vw, 2rem);
 }
+/* Speisekarte und Reservieren tragen dieselbe Schrift und denselben
+   Goldstrich beim Hovern — zwei gleichrangige Wege, nicht ein Knopf und sein
+   Anhängsel. Nur die Farbe trennt sie: das Reservieren bleibt das helle Wort. */
+.nav__menu,
 .nav__reserve {
   font-family: var(--sans);
   font-size: 0.72rem;
@@ -79,6 +83,16 @@
   position: relative;
   padding-bottom: 4px;
 }
+.nav__menu {
+  color: var(--warm-white);
+  opacity: 0.72;
+  transition: opacity 0.4s var(--ease-lux);
+}
+.nav__menu:hover {
+  opacity: 1;
+}
+
+.nav__menu::after,
 .nav__reserve::after {
   content: '';
   position: absolute;
@@ -91,6 +105,7 @@
   transform-origin: right;
   transition: transform 0.5s var(--ease-lux);
 }
+.nav__menu:hover::after,
 .nav__reserve:hover::after {
   transform: scaleX(1);
   transform-origin: left;
@@ -201,5 +216,29 @@
   }
   .nav {
     grid-template-columns: 1fr auto;
+  }
+  /* Zwei Wörter und der Burger teilen sich hier die Zeile mit der Wortmarke.
+     In Großbuchstaben mit weiter Sperrung stößt „Speisekarte" sonst direkt an
+     das Logo — gemessen 0 px Luft auf 390 px, Überlauf auf 320 px. Also engere
+     Sperrung und kleinerer Grad, statt eines der beiden Wörter zu opfern:
+     Essen und Reservieren sind die zwei Fragen, mit denen Gäste herkommen. */
+  .nav__menu,
+  .nav__reserve {
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+  }
+  .nav__right {
+    gap: 0.9rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .nav__menu,
+  .nav__reserve {
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+  }
+  .nav__right {
+    gap: 0.7rem;
   }
 }
