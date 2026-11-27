@@ -5,8 +5,7 @@ import { useReveal } from '../hooks/useReveal'
 import { gsap, scrollToId } from '../lib/scroll'
 import { openBooking } from '../lib/booking'
 import { prefersReducedMotion } from '../lib/useReducedMotion'
-import { menu, weekly, booking, contact, type WeeklySheet } from '../content/site'
-import { viennaNow } from '../lib/vienna'
+import { menu, weekly, booking, contact } from '../content/site'
 import { useCurrentSheet } from '../lib/weeklyPlan'
 import { useMenuFeed } from '../lib/useMenuFeed'
 import { media } from '../content/assets'
@@ -33,20 +32,16 @@ const plates = [
  * bewusst nicht verknüpft, damit keine falschen Zuordnungen entstehen.
  */
 /**
- * Gilt der Aushang der Quelle überhaupt heute?
+ * Ein Preis, so wie er gesetzt wird.
  *
- * Die Quelle kennt kein Zeitfenster; `from` und `until` werden beim Lesen aus
- * ihrem `stand` und dem Wochentext abgeleitet (lib/menuFeed.ts). Geprüft wird
- * hier derselbe Weg wie beim eigenen Plan: eine Quelle, die vergessen wurde,
- * soll keine abgelaufene Woche aushängen, nur weil sie antwortet.
+ * Das Eurozeichen gehört zur Vorlage der Karte, nicht zum Inhalt — und steht
+ * deshalb nur vor einer Zahl. Schickt die App „€ 18,40", gäbe es sonst
+ * „€ € 18,40"; schickt sie „auf Anfrage", stünde „€ auf Anfrage". Am Preis
+ * selbst wird nie etwas geändert, nur daran, ob die Seite noch ein Zeichen
+ * dazustellt.
  */
-function sheetInForce(sheet: WeeklySheet | null): WeeklySheet | null {
-  if (!sheet) return null
-  const now = viennaNow()
-  if (!now) return null
-  if (now.stamp < sheet.from) return null
-  if (now.date > sheet.until) return null
-  return sheet
+function money(price: string): string {
+  return /^\d/.test(price) ? `€ ${price}` : price
 }
 
 export function Menu() {
@@ -55,13 +50,12 @@ export function Menu() {
   // lib/weeklyPlan.ts. Hängt keine, tritt der Hinweis an ihre Stelle.
   const planned = useCurrentSheet()
 
-  // Dazu die fremde Quelle, falls eine eingetragen ist. Sie tritt vor den
-  // eigenen Stand, aber nur dort, wo sie etwas Geprüftes liefert: fällt sie
-  // aus oder schickt sie Unsinn, bleibt der Aushang aus site.ts stehen. Die
-  // Zeitfenster gelten für beide gleich, damit auch eine stehengebliebene
-  // Quelle keine vergangene Woche aushängt.
+  // Dazu die App, falls eine Adresse eingetragen ist. Was sie schickt, gilt —
+  // wörtlich und ohne Nachrechnen, auch die Woche: dafür ist die App
+  // zuständig. Nur wenn sie nichts schickt oder nicht erreichbar ist, bleibt
+  // der eingetragene Stand aus site.ts stehen, damit die Karte nie leer ist.
   const feed = useMenuFeed()
-  const sheet = sheetInForce(feed.weekly) ?? planned
+  const sheet = feed.weekly ?? planned
   const expired = !sheet
   const sections = feed.sections ?? menu.sections
   const headRef = useReveal<HTMLDivElement>({ selector: '[data-reveal]', y: 28 })
@@ -200,7 +194,7 @@ export function Menu() {
           </div>
           )}
 
-          {!expired && <p className="menu__weekly-price">€ {sheet.price ?? weekly.price}</p>}
+          {!expired && <p className="menu__weekly-price">{money(sheet.price ?? weekly.price)}</p>}
         </aside>
 
         {/* Real menu — categories, prices, allergens */}
@@ -222,7 +216,7 @@ export function Menu() {
                           <div className="menu__row-head">
                             <span className="menu__row-name">{d.name}</span>
                             <span className="menu__row-dots" aria-hidden="true" />
-                            {d.price && <span className="menu__row-price">€ {d.price}</span>}
+                            {d.price && <span className="menu__row-price">{money(d.price)}</span>}
                           </div>
                           <p className="menu__row-note">
                             {d.note}

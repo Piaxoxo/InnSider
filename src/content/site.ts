@@ -328,13 +328,15 @@ export interface WeeklyDish {
   allergens: string
 }
 
-/** Ein Aushang mit seinem Zeitfenster. */
-export interface WeeklySheet {
+/**
+ * Ein Aushang, so wie er auf der Seite steht.
+ *
+ * Ohne Zeitfenster: das brauchen nur die eigenen, der Reihe nach hinterlegten
+ * Blätter. Kommt der Aushang aus der App, ist die App dafür zuständig, die
+ * laufende Woche zu schicken — die Seite rechnet ihr nicht hinein.
+ */
+export interface WeeklyCard {
   period: string
-  /** YYYY-MM-DDTHH:MM, Wiener Zeit — ab dann hängt er. */
-  from: string
-  /** YYYY-MM-DD, Wiener Zeit — letzter Tag, an dem er gilt. */
-  until: string
   starter: WeeklyDish
   mains: readonly WeeklyDish[]
   /**
@@ -348,6 +350,14 @@ export interface WeeklySheet {
    */
   hours?: string
   price?: string
+}
+
+/** Ein eigenes Blatt: wie oben, plus das Fenster, in dem es gilt. */
+export interface WeeklySheet extends WeeklyCard {
+  /** YYYY-MM-DDTHH:MM, Wiener Zeit — ab dann hängt es. */
+  from: string
+  /** YYYY-MM-DD, Wiener Zeit — letzter Tag, an dem es gilt. */
+  until: string
 }
 
 /**
