@@ -17,14 +17,20 @@ import { readFeed, type FeedResult } from './menuFeed'
  * tritt es an ihre Stelle.
  */
 
+/** Die Reservierungs-App des Hauses. Sie führt die Karte. */
+const APP_FEED = 'https://innsider-reservierung.vercel.app/api/web'
+
 /**
  * Wo die Karte liegt.
  *
- * Eine Stelle, und sie steht in der Umgebung, nicht im Code: die Adresse
- * gehört zum Betrieb, nicht zum Programm. Ohne Eintrag wird gar nicht geholt
- * — die Seite läuft dann genau wie vorher.
+ * Standardmäßig die App. Keine geheime Adresse, kein Zugangsschlüssel — ein
+ * öffentlicher Endpunkt desselben Hauses, der im Programm stehen darf.
+ *
+ * `VITE_MENU_FEED` übersteuert sie: eine andere Adresse zum Ausprobieren, oder
+ * eine leere Angabe, um das Holen ganz abzuschalten. Dann zeigt die Seite den
+ * Stand aus `site.ts` — der Weg zurück, falls mit der App etwas ist.
  */
-export const FEED_URL: string = import.meta.env.VITE_MENU_FEED ?? ''
+export const FEED_URL: string = import.meta.env.VITE_MENU_FEED ?? APP_FEED
 
 /** Länger als das darf es nicht dauern; danach bleibt der eigene Stand. */
 const TIMEOUT_MS = 4000
