@@ -58,6 +58,13 @@ export function Menu() {
   const sheet = feed.weekly ?? planned
   const expired = !sheet
   const sections = feed.sections ?? menu.sections
+
+  // Bringt die App die Getränke als eigene Abteilung mit, stehen sie in der
+  // Karte — dann darf das Band darunter nicht dasselbe ein zweites Mal
+  // anzeigen. Es war der Sonderauftritt für zwei Zeilen, die auf dem
+  // gedruckten Blatt mittig und für sich standen; führt die App sie als
+  // gewöhnliche Abteilung, gehören sie in die Karte wie alles andere.
+  const drinksInCard = sections.some((sec) => /getr(ä|ae)nke/i.test(sec.title))
   const headRef = useReveal<HTMLDivElement>({ selector: '[data-reveal]', y: 28 })
   const galleryRef = useReveal<HTMLDivElement>({ selector: '.menu__plate', y: 32, stagger: 0.07 })
   const cardRef = useReveal<HTMLDivElement>({ selector: '.menu__section', y: 30, stagger: 0.1 })
@@ -208,7 +215,11 @@ export function Menu() {
               {sections
                 .filter((section) => section.column === col)
                 .map((section) => (
-                  <div className="menu__section" key={section.title}>
+                  <div
+                    className="menu__section"
+                    id={/getr(ä|ae)nke/i.test(section.title) ? 'menu-getraenke' : undefined}
+                    key={section.title}
+                  >
                     <h3 className="menu__section-title">{section.title}</h3>
                     <ul className="menu__list">
                       {section.items.map((d) => (
@@ -234,7 +245,8 @@ export function Menu() {
           ))}
         </div>
 
-        {/* Auf der gedruckten Karte stehen diese beiden mittig und für sich. */}
+        {/* Auf der gedruckten Karte stehen diese mittig und für sich. */}
+        {!drinksInCard && (
         <div className="menu__features" id="menu-getraenke">
           {menu.features.map((f) => (
             <div className="menu__feature" key={f.name}>
@@ -246,6 +258,7 @@ export function Menu() {
             </div>
           ))}
         </div>
+        )}
 
         <div className="menu__foot">
           <p className="menu__note">{menu.priceNote}</p>
