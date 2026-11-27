@@ -193,6 +193,53 @@ export const kitchen = {
 } as const
 
 // ── Kapitel 4 — Gaumenfreuden (Menü) — nur verifizierte Gerichte ─────────────
+const sections: readonly MenuSection[] = [
+  {
+    title: 'Vorspeisen und Suppen',
+    column: 1,
+    items: [
+      { name: 'Vegetarische Tagessuppe', note: 'wechselt wöchentlich', price: '5,80', allergens: '', plus: '' },
+      { name: 'Hausgemachte Rindsuppe', note: 'Kaspressknödel und Schnittlauch', price: '5,80', allergens: 'A C G L', plus: '' },
+      { name: 'Beef Tatar', note: 'hausgemachtes Kurkumabrot, Eiercreme, Kapernbeeren, Babyspinat und Grana', price: '19,20', allergens: 'A C G H L', plus: '' },
+      { name: 'Ziegenkäse', note: 'Schnittlauch, rote Zwiebel, Kernöl und hausgemachtes Kurkumabrot', price: '10,80', allergens: 'A C G', plus: '' },
+    ],
+  },
+  {
+    title: 'Hauptspeisen',
+    column: 2,
+    items: [
+      { name: 'Original indisches Butternut Chicken', note: 'Biryanireis und Blattsalat', price: '17,20', allergens: 'A O', plus: '' },
+      { name: 'Geschmorte Rindsrouladen', note: 'Serviettenknödel, Apfelrotkraut und Maroni', price: '20,80', allergens: 'A C G L M', plus: '' },
+      { name: 'Kalbsbutterschnitzel', note: 'Erdäpfelpüree, Natursaft und Röstzwiebel', price: '18,20', allergens: 'A C G M L', plus: '' },
+      { name: 'Innsider Burger', note: '200g österreichisches Rindfleisch im hausgemachten Bun, BBQ Sauce, Cheddar, Bacon, Coleslaw und Süßkartoffelpommes', price: '18,40', allergens: 'A C G O', plus: '' },
+      { name: 'Im Erdäpfelteig frittierte Blunznknödel', note: 'Sauerkraut und Safterl', price: '15,20', allergens: 'A C G M', plus: '' },
+      { name: 'Pikantes rotes Gemüsecurry (vegan)', note: 'Biryanireis und Kokosmilch', price: '12,80', allergens: 'A E F L O', plus: 'mit Hühnerbrust + 6,00 · mit gegrilltem Fisch + 7,00' },
+      { name: 'Rote Rübenknödel', note: 'Krensauce, fermentierter Grünkohl und Salat', price: '13,80', allergens: 'A C G H', plus: '' },
+      { name: 'Feuriges Chili con Carne', note: 'Sauerrahm und hausgemachtes Fladenbrot', price: '12,50', allergens: 'A E G', plus: '' },
+      { name: 'Kürbisrisotto', note: 'Babyspinat, Feta und Walnuß', price: '15,80', allergens: 'A G', plus: '' },
+    ],
+  },
+  {
+    // Der Salat steht nicht auf den Seiten der Speisekarte, sondern auf dem
+    // Wochenblatt — dort erscheint er Woche für Woche unverändert, zuletzt
+    // auf dem von KW 47. Wer die Karte abgleicht, sucht ihn also im
+    // falschen Dokument und darf ihn nicht für ausgelistet halten.
+    title: 'Salat',
+    column: 1,
+    items: [
+      { name: 'Caesar Salad', note: 'Römersalat, Kirschtomaten, original Caesar Dressing und Weißbrotcroutons', price: '9,80', allergens: 'A C G D O', plus: 'mit gegrillter Hühnerbrust + 6,00 · mit gegrilltem Fisch + 7,00' },
+    ],
+  },
+  {
+    title: 'Desserts',
+    column: 1,
+    items: [
+      { name: 'Innsider Kaiserschmarrn', note: 'Zwetschkenröster und hausgemachte Zwetschkeneis', price: '12,50', allergens: 'A C G', plus: '' },
+      { name: 'Hausgemachter Kuchen oder Desserts', note: 'aus unserer Vitrine', price: '', allergens: '', plus: '' },
+    ],
+  },
+]
+
 export const menu = {
   chapter: 'Kapitel Vier',
   overline: 'Gaumenfreuden',
@@ -206,52 +253,7 @@ export const menu = {
   // `column` verteilt die Abteilungen auf die zwei Spalten der Karte. Das
   // geschieht bewusst von Hand: „Hauptspeisen" ist für sich länger als alles
   // Übrige zusammen, ein automatischer Umbruch ließe eine Spalte halb leer.
-  sections: [
-    {
-      title: 'Vorspeisen und Suppen',
-      column: 1,
-      items: [
-        { name: 'Vegetarische Tagessuppe', note: 'wechselt wöchentlich', price: '5,80', allergens: '', plus: '' },
-        { name: 'Hausgemachte Rindsuppe', note: 'Kaspressknödel und Schnittlauch', price: '5,80', allergens: 'A C G L', plus: '' },
-        { name: 'Beef Tatar', note: 'hausgemachtes Kurkumabrot, Eiercreme, Kapernbeeren, Babyspinat und Grana', price: '19,20', allergens: 'A C G H L', plus: '' },
-        { name: 'Ziegenkäse', note: 'Schnittlauch, rote Zwiebel, Kernöl und hausgemachtes Kurkumabrot', price: '10,80', allergens: 'A C G', plus: '' },
-      ],
-    },
-    {
-      title: 'Hauptspeisen',
-      column: 2,
-      items: [
-        { name: 'Original indisches Butternut Chicken', note: 'Biryanireis und Blattsalat', price: '17,20', allergens: 'A O', plus: '' },
-        { name: 'Geschmorte Rindsrouladen', note: 'Serviettenknödel, Apfelrotkraut und Maroni', price: '20,80', allergens: 'A C G L M', plus: '' },
-        { name: 'Kalbsbutterschnitzel', note: 'Erdäpfelpüree, Natursaft und Röstzwiebel', price: '18,20', allergens: 'A C G M L', plus: '' },
-        { name: 'Innsider Burger', note: '200g österreichisches Rindfleisch im hausgemachten Bun, BBQ Sauce, Cheddar, Bacon, Coleslaw und Süßkartoffelpommes', price: '18,40', allergens: 'A C G O', plus: '' },
-        { name: 'Im Erdäpfelteig frittierte Blunznknödel', note: 'Sauerkraut und Safterl', price: '15,20', allergens: 'A C G M', plus: '' },
-        { name: 'Pikantes rotes Gemüsecurry (vegan)', note: 'Biryanireis und Kokosmilch', price: '12,80', allergens: 'A E F L O', plus: 'mit Hühnerbrust + 6,00 · mit gegrilltem Fisch + 7,00' },
-        { name: 'Rote Rübenknödel', note: 'Krensauce, fermentierter Grünkohl und Salat', price: '13,80', allergens: 'A C G H', plus: '' },
-        { name: 'Feuriges Chili con Carne', note: 'Sauerrahm und hausgemachtes Fladenbrot', price: '12,50', allergens: 'A E G', plus: '' },
-        { name: 'Kürbisrisotto', note: 'Babyspinat, Feta und Walnuß', price: '15,80', allergens: 'A G', plus: '' },
-      ],
-    },
-    {
-      // Der Salat steht nicht auf den Seiten der Speisekarte, sondern auf dem
-      // Wochenblatt — dort erscheint er Woche für Woche unverändert, zuletzt
-      // auf dem von KW 47. Wer die Karte abgleicht, sucht ihn also im
-      // falschen Dokument und darf ihn nicht für ausgelistet halten.
-      title: 'Salat',
-      column: 1,
-      items: [
-        { name: 'Caesar Salad', note: 'Römersalat, Kirschtomaten, original Caesar Dressing und Weißbrotcroutons', price: '9,80', allergens: 'A C G D O', plus: 'mit gegrillter Hühnerbrust + 6,00 · mit gegrilltem Fisch + 7,00' },
-      ],
-    },
-    {
-      title: 'Desserts',
-      column: 1,
-      items: [
-        { name: 'Innsider Kaiserschmarrn', note: 'Zwetschkenröster und hausgemachte Zwetschkeneis', price: '12,50', allergens: 'A C G', plus: '' },
-        { name: 'Hausgemachter Kuchen oder Desserts', note: 'aus unserer Vitrine', price: '', allergens: '', plus: '' },
-      ],
-    },
-  ],
+  sections,
   // Auf der gedruckten Karte steht die Limonade mittig und für sich — hier
   // bekommt sie denselben eigenen Auftritt. Name wörtlich wie gedruckt:
   // „Hausgemacht" als Überschrift war meine Zutat, nicht ihre.
@@ -295,6 +297,22 @@ export const menu = {
  * Hauptspeisen müssen wöchentlich nachgezogen werden, sonst steht auf der
  * Website eine Woche, die vorbei ist.
  */
+/** Ein Gericht auf der Speisekarte. `price`, `allergens` und `plus` dürfen leer sein. */
+export interface MenuItem {
+  name: string
+  note: string
+  price: string
+  allergens: string
+  plus: string
+}
+
+/** Eine Abteilung der Karte. `column` ist Satz, nicht Inhalt. */
+export interface MenuSection {
+  title: string
+  column: 1 | 2
+  items: readonly MenuItem[]
+}
+
 /**
  * Ein Gericht auf dem Aushang.
  *

@@ -5,8 +5,10 @@ import { useReveal } from '../hooks/useReveal'
 import { gsap, scrollToId } from '../lib/scroll'
 import { openBooking } from '../lib/booking'
 import { prefersReducedMotion } from '../lib/useReducedMotion'
-import { menu, weekly, booking, contact } from '../content/site'
+import { menu, weekly, booking, contact, type WeeklySheet } from '../content/site'
+import { viennaNow } from '../lib/vienna'
 import { useCurrentSheet } from '../lib/weeklyPlan'
+import { useMenuFeed } from '../lib/useMenuFeed'
 import { media } from '../content/assets'
 import './menu.css'
 
@@ -30,12 +32,38 @@ const plates = [
  * auf der Seite lesbar, ohne Umweg über ein PDF. Bild und Gericht werden
  * bewusst nicht verknüpft, damit keine falschen Zuordnungen entstehen.
  */
+/**
+ * Gilt der Aushang der Quelle überhaupt heute?
+ *
+ * Die Quelle kennt kein Zeitfenster; `from` und `until` werden beim Lesen aus
+ * ihrem `stand` und dem Wochentext abgeleitet (lib/menuFeed.ts). Geprüft wird
+ * hier derselbe Weg wie beim eigenen Plan: eine Quelle, die vergessen wurde,
+ * soll keine abgelaufene Woche aushängen, nur weil sie antwortet.
+ */
+function sheetInForce(sheet: WeeklySheet | null): WeeklySheet | null {
+  if (!sheet) return null
+  const now = viennaNow()
+  if (!now) return null
+  if (now.stamp < sheet.from) return null
+  if (now.date > sheet.until) return null
+  return sheet
+}
+
 export function Menu() {
   const root = useRef<HTMLElement>(null)
   // Welche Woche gerade hängt, entscheidet der Plan in site.ts — siehe
   // lib/weeklyPlan.ts. Hängt keine, tritt der Hinweis an ihre Stelle.
-  const sheet = useCurrentSheet()
+  const planned = useCurrentSheet()
+
+  // Dazu die fremde Quelle, falls eine eingetragen ist. Sie tritt vor den
+  // eigenen Stand, aber nur dort, wo sie etwas Geprüftes liefert: fällt sie
+  // aus oder schickt sie Unsinn, bleibt der Aushang aus site.ts stehen. Die
+  // Zeitfenster gelten für beide gleich, damit auch eine stehengebliebene
+  // Quelle keine vergangene Woche aushängt.
+  const feed = useMenuFeed()
+  const sheet = sheetInForce(feed.weekly) ?? planned
   const expired = !sheet
+  const sections = feed.sections ?? menu.sections
   const headRef = useReveal<HTMLDivElement>({ selector: '[data-reveal]', y: 28 })
   const galleryRef = useReveal<HTMLDivElement>({ selector: '.menu__plate', y: 32, stagger: 0.07 })
   const cardRef = useReveal<HTMLDivElement>({ selector: '.menu__section', y: 30, stagger: 0.1 })
@@ -183,7 +211,7 @@ export function Menu() {
         <div className="menu__card" ref={cardRef}>
           {[1, 2].map((col) => (
             <div className="menu__col" key={col}>
-              {menu.sections
+              {sections
                 .filter((section) => section.column === col)
                 .map((section) => (
                   <div className="menu__section" key={section.title}>
