@@ -144,7 +144,7 @@ export function Menu() {
                   <br />
                 </>
               )}
-              {weekly.hours}
+              {sheet?.hours ?? weekly.hours}
             </p>
           </div>
 
@@ -200,7 +200,7 @@ export function Menu() {
           </div>
           )}
 
-          {!expired && <p className="menu__weekly-price">€ {weekly.price}</p>}
+          {!expired && <p className="menu__weekly-price">€ {sheet.price ?? weekly.price}</p>}
         </aside>
 
         {/* Real menu — categories, prices, allergens */}

@@ -337,6 +337,17 @@ export interface WeeklySheet {
   until: string
   starter: WeeklyDish
   mains: readonly WeeklyDish[]
+  /**
+   * Zeit und Preis, falls dieser Aushang eigene mitbringt.
+   *
+   * Auf den Blättern des Hauses stehen seit Monaten dieselben — „Von 11:30
+   * bis 15:00", „13,50" —, darum liegen sie als Vorgabe auf `weekly`. Eine
+   * fremde Quelle schickt sie aber pro Woche mit, und wenn sie dort einmal
+   * anders lauten, muss das auf der Seite ankommen und nicht an einer
+   * Vorgabe hängen bleiben.
+   */
+  hours?: string
+  price?: string
 }
 
 /**

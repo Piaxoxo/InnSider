@@ -203,6 +203,11 @@ function readWeekly(m: FeedPayload['menu'], standISO: unknown): WeeklySheet | nu
   })
   if (mains.some((d) => !d.name)) return null
 
+  // Die Quelle schreibt die Zeit ohne das „Von" der Hausform. Ergänzt wird es
+  // nur, wenn es fehlt — der Rest bleibt, wie er kommt.
+  const time = str(m.time)
+  const hours = time ? (/^von\s/i.test(time) ? time : `Von ${time}`) : undefined
+
   return {
     period: week,
     // Die Quelle sagt nicht, ab wann der Aushang hängt. Ihr `stand` ist das
@@ -211,6 +216,11 @@ function readWeekly(m: FeedPayload['menu'], standISO: unknown): WeeklySheet | nu
     until,
     starter,
     mains,
+    hours,
+    // Ein unlesbarer Preis wird nicht übernommen, aber er wirft die Woche auch
+    // nicht weg: dann gilt der Preis des Hauses weiter. Ein falscher Preis auf
+    // der Karte ist schlimmer als ein unveränderter.
+    price: price(m.price) ?? undefined,
   }
 }
 
